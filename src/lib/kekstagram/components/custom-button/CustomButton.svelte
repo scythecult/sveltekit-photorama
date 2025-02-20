@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { CustomComponentType, type CustomComponentTypeValue } from '$lib/constants/kekstagram';
   import type { Snippet } from 'svelte';
+  import { CustomComponentType, type CustomComponentTypeValue } from '$lib/constants/kekstagram';
 
   const CustomButtonType = {
     [CustomComponentType.USER_ACTION]: 'user-action',
@@ -17,7 +17,7 @@
   const { formaction, children, onclick, type = '' }: CustomButtonProps = $props();
   const className = CustomButtonType[type] || '';
 
-  const handleOnClick = async (evt?: Event) => {
+  const handleOnClick = async () => {
     disabled = !disabled;
 
     setTimeout(async () => {

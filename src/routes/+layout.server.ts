@@ -7,7 +7,5 @@ export function load() {
   //   error(401, { message: 'No such user' });
   // }
 
-  return {
-    navItems: headerNavItems
-  };
+  return { navItems: headerNavItems };
 }

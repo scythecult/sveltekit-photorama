@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Header from '$lib/components/header/Header.svelte';
-  import { i18n } from '$lib/i18n';
   import { ParaglideJS } from '@inlang/paraglide-sveltekit';
-  import { getAppState } from '$lib/store/store.svelte';
   import { onMount } from 'svelte';
   import { page } from '$app/state';
+  import Header from '$lib/components/header/Header.svelte';
+  import { i18n } from '$lib/i18n';
+  import { getAppState } from '$lib/store/store.svelte';
 
   const { data, children } = $props();
   const appState = getAppState();

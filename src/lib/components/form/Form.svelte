@@ -1,7 +1,7 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { enhance } from '$app/forms';
   import type { FormActionMapValue, FormTypeMapValue } from '$lib/constants/form';
-  import type { Snippet } from 'svelte';
 
   const Intl = {
     create: { loadingText: 'Adding...', buttonText: 'Add +' },

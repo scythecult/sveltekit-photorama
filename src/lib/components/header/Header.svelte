@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { getAppState } from '$lib/store/store.svelte';
   import type { HeaderNavItem } from '$lib/types/navigation';
   import Link from '../link/Link.svelte';
-  import { getAppState } from '$lib/store/store.svelte';
 
   type HeaderProps = {
     navItems?: HeaderNavItem[];

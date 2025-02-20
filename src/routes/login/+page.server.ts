@@ -1,4 +1,4 @@
-import { redirect, type Actions } from '@sveltejs/kit';
+import { type Actions,redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
   // default action работает если в форме в +page.svelte нет action

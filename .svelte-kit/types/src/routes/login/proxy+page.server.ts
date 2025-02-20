@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { redirect, type Actions } from '@sveltejs/kit';
+import { type Actions,redirect } from '@sveltejs/kit';
 
 export const actions = {
   // default action работает если в форме в +page.svelte нет action

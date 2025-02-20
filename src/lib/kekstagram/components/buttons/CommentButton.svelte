@@ -1,6 +1,5 @@
 <script lang="ts">
   import { pageSlice } from '$lib/store/store.svelte';
-  import type { Comment } from '$lib/types/picture';
   import { IconName } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';
 

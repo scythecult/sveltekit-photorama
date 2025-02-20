@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { IconName, type IconNameValue, IconSize, type IconSizeValue } from './constants';
   import Comment from './icons/Comment.svelte';
   import Like from './icons/Like.svelte';
-  import { IconName, IconSize, type IconNameValue, type IconSizeValue } from './constants';
 
   const Icon = {
     [IconName.COMMENT]: Comment,

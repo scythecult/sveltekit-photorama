@@ -1,10 +1,11 @@
+/* eslint-disable no-console */
 import { error } from '@sveltejs/kit';
+import { StatusCodes } from 'http-status-codes';
+import { ActionMap, ActionNameMap } from '$lib/constants/action';
 import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
 import type { Picture } from '$lib/types/picture';
-import type { Actions, PageServerLoad } from './$types';
-import { StatusCodes } from 'http-status-codes';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
-import { ActionMap, ActionNameMap } from '$lib/constants/action';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
   // TODO Auth
@@ -20,7 +21,10 @@ export const load: PageServerLoad = async () => {
     const rawPictures: Picture[] = (await rawData.json()) || [];
 
     if (!rawPictures.length) {
-      error(StatusCodes.NOT_FOUND, { code: StatusCodes.NOT_FOUND, message: 'No pictures found' });
+      error(StatusCodes.NOT_FOUND, {
+        code: StatusCodes.NOT_FOUND,
+        message: 'No pictures found',
+      });
     }
 
     const pictures = rawPictures.map((picture) => ({
@@ -56,7 +60,10 @@ export const actions: Actions = {
     const commentLikeId = data.get(ActionNameMap.COMMENT_LIKE_ID) as string;
     const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
 
-    console.log('update guest-users comment like count', { commentLikeId, isLiked });
+    console.log('update guest-users comment like count', {
+      commentLikeId,
+      isLiked,
+    });
 
     if (commentLikeId) {
       return { commentLikeId };

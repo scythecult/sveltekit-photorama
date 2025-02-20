@@ -8,7 +8,12 @@ export type AppState = {
   pictureId: string | null;
 };
 
-const appState = $state<AppState>({ navItems: [], isModalVisible: false, comments: [], pictureId: null });
+const appState = $state<AppState>({
+  navItems: [],
+  isModalVisible: false,
+  comments: [],
+  pictureId: null,
+});
 
 export const getAppState = () => {
   const setNavItems = (navItems: HeaderNavItem[]) => {
@@ -26,7 +31,9 @@ export const getAppState = () => {
   const getComments = (pictures: Picture[]) => {
     const { pictureId } = appState;
 
-    return pictureId ? pictures.find((picture) => +picture.id === +pictureId)?.comments || [] : [];
+    return pictureId
+      ? pictures.find((picture) => +picture.id === +pictureId)?.comments || []
+      : [];
   };
   const getModalState = () => appState.isModalVisible;
 
@@ -46,7 +53,11 @@ export const getAppState = () => {
 export type PageState = Omit<AppState, 'navItems'>;
 
 const createPageSlice = () => {
-  const pageSlice = $state<PageState>({ isModalVisible: false, comments: [], pictureId: null });
+  const pageSlice = $state<PageState>({
+    isModalVisible: false,
+    comments: [],
+    pictureId: null,
+  });
 
   return {
     setPictureId(pictureId: string) {
@@ -58,7 +69,9 @@ const createPageSlice = () => {
     getCommentsFromPictures(pictures: Picture[]) {
       const { pictureId } = pageSlice;
 
-      return pictureId ? pictures.find((picture) => +picture.id === +pictureId)?.comments || [] : [];
+      return pictureId
+        ? pictures.find((picture) => +picture.id === +pictureId)?.comments || []
+        : [];
     },
     getModalState() {
       return pageSlice.isModalVisible;

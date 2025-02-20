@@ -12,7 +12,10 @@
 
 <section class="todo">
   <div class="todo__container">
-    <h2 class="todo__title">Active {totalActive} {totalActive > 1 ? 'todos' : 'todo'}</h2>
+    <h2 class="todo__title">
+      Active {totalActive}
+      {totalActive > 1 ? 'todos' : 'todo'}
+    </h2>
     <ul class="todo__list">
       {#each todos as { id, title, completed } (id)}
         {#if !completed}
@@ -21,7 +24,7 @@
               {id}
               {title}
             </p>
-            <Form actionUrl={FormActionMap.COMPLETE} formType={FormTypeMap.COMPLETE}>
+            <Form actionUrl={FormActionMap.COMMENT} formType={FormTypeMap.COMPLETE}>
               {#snippet input(disabled)}
                 <Input {disabled} type="hidden" required name="id" value={id} placeholder="ID" />
               {/snippet}
@@ -47,7 +50,7 @@
               {title}
             </p>
             <div class="todo__buttons">
-              <Form actionUrl={FormActionMap.COMPLETE} formType={FormTypeMap.UNCOMPLETE}>
+              <Form actionUrl={FormActionMap.COMMENT} formType={FormTypeMap.UNCOMPLETE}>
                 {#snippet input(disabled)}
                   <Input {disabled} type="hidden" required name="id" value={id} placeholder="ID" />
                 {/snippet}
@@ -55,7 +58,7 @@
                   <Button>{text}</Button>
                 {/snippet}
               </Form>
-              <Form actionUrl={FormActionMap.DELETE} formType={FormTypeMap.DELETE}>
+              <Form actionUrl={FormActionMap.COMMENT} formType={FormTypeMap.DELETE}>
                 {#snippet input(disabled)}
                   <Input {disabled} type="hidden" required name="id" value={id} placeholder="ID" />
                 {/snippet}
@@ -72,7 +75,7 @@
     </ul>
   </div>
 
-  <Form actionUrl={FormActionMap.CREATE} formType={FormTypeMap.CREATE}>
+  <Form actionUrl={FormActionMap.COMMENT} formType={FormTypeMap.CREATE}>
     {#snippet input(disabled)}
       <Input {disabled} required name="title" placeholder="Title" />
     {/snippet}

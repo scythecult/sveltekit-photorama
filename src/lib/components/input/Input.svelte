@@ -14,7 +14,7 @@
     placeholder: string;
     disabled: boolean;
     required?: boolean;
-    className?: String;
+    className?: string;
   };
 
   const {

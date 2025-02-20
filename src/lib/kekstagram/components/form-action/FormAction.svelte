@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
   import type { SubmitFunction } from '@sveltejs/kit';
   import type { Snippet } from 'svelte';
+  import { enhance } from '$app/forms';
 
   type FormActionProps = {
     actionSegment: string;

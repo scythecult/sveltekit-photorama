@@ -1,12 +1,12 @@
 <script lang="ts">
   import { CustomComponentType } from '$lib/constants/kekstagram';
+  import type { Comment } from '$lib/types/picture';
   import CommentButton from '../../buttons/CommentButton.svelte';
+  import { LikeTypeMap } from '../../buttons/constants';
   import LikeButton from '../../buttons/LikeButton.svelte';
+  import Caption from '../../caption/Caption.svelte';
   import CustomLink from '../../custom-link/CustomLink.svelte';
   import UserLogo from '../../user-logo/UserLogo.svelte';
-  import Caption from '../../caption/Caption.svelte';
-  import { LikeTypeMap } from '../../buttons/constants';
-  import type { Comment } from '$lib/types/picture';
 
   type PublicationProps = {
     id: string;

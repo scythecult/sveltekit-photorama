@@ -1,7 +1,7 @@
 // @ts-nocheck
 import type { TodoItem } from '$lib/types/todo';
 import { todos } from '../../../mocks/data';
-import type { PageServerLoad, Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = async () => {
   const todoItems = await new Promise<TodoItem[]>((resolve) => {
@@ -11,7 +11,7 @@ export const load = async () => {
   });
 
   return {
-    todos: todoItems
+    todos: todoItems,
   };
 };
 
@@ -24,11 +24,11 @@ export const actions = {
       todos.push({
         id: crypto.randomUUID(),
         title: todo,
-        completed: false
+        completed: false,
       });
 
       return {
-        todos
+        todos,
       };
     }
   },
@@ -46,7 +46,7 @@ export const actions = {
       });
 
       return {
-        todos
+        todos,
       };
     }
   },
@@ -61,9 +61,9 @@ export const actions = {
       todos.splice(0, todos.length, ...newTodos);
 
       return {
-        todos
+        todos,
       };
     }
-  }
+  },
 };
 ;null as any as PageServerLoad;;null as any as Actions;

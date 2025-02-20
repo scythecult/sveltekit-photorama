@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { CustomComponentType } from '$lib/constants/kekstagram';
   import type { Snippet } from 'svelte';
+  import { CustomComponentType } from '$lib/constants/kekstagram';
 
   const CustomLinkType = {
     [CustomComponentType.HASHTAG]: 'hashtag',

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { ActionMap, ActionNameMap } from '$lib/constants/action';
   import type { SubmitFunction } from '@sveltejs/kit';
+  import { enhance } from '$app/forms';
+  import { ActionMap, ActionNameMap } from '$lib/constants/action';
   import { IconName, IconSize } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';
   import { LikeTypeMap, type LikeTypeMapValue } from './constants';
-  import { enhance } from '$app/forms';
 
   type LikeButtonProps = {
     id: string;

@@ -22,7 +22,7 @@
 <Modal isOpen={isModalOpen} onClose={togglePopup}>
   <!-- comment list component -->
   {#if comments?.length}
-    {#each comments as { id, avatar, message, name } (id)}
+    {#each comments as { id } (id)}
       <div>ID: {id}</div>
     {/each}
   {/if}
