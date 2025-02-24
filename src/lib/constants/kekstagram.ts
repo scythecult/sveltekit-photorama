@@ -1,4 +1,4 @@
-export const KEKSTAGRAM_BASE_URL = 'http://localhost:9666/kekstagram';
+export const KEKSTAGRAM_BASE_URL = 'http://localhost:9666/api/v1/kekstagram';
 
 // TODO remove nahuy
 export const CustomComponentType = {

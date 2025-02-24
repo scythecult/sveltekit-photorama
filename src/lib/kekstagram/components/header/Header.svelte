@@ -1,9 +1,10 @@
 <script>
+  import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
   import InteractionsButton from '../buttons/InteractionsButton.svelte';
 </script>
 
 <header class="header">
-  <img class="header__logo" src="http://localhost:9666/kekstagram/logo.png" alt="Kekstagram" />
+  <img class="header__logo" src={`${KEKSTAGRAM_BASE_URL}/logo.png`} alt="Kekstagram" />
   <InteractionsButton />
 </header>
 
