@@ -43,7 +43,7 @@
     --text-theme-light: #000000;
     --text-link-hashtag: #55d5ff;
     --color-main-red: red;
-
+    --color-gray: #b3b3b3;
     /* metrics */
     --padding-layout-d: 0 14px;
     --padding-d: 12px 12px 16px;

@@ -36,7 +36,7 @@ export const load: PageServerLoad = async () => {
     return { pictures };
   } catch (error) {
     throw new Error(
-      `${StatusCodes.INTERNAL_SERVER_ERROR}, Это сообщение не попадёт на клиент, тк может содержать чувствительную информацию`
+      `${StatusCodes.INTERNAL_SERVER_ERROR}, Это сообщение не попадёт на клиент, тк может содержать чувствительную информацию`,
     );
   }
 };
@@ -50,6 +50,7 @@ export const actions: Actions = {
     // get picture by id from db
     // update picture like count
     console.log('update picture like count', { pictureLikeId, isLiked });
+    // set liked picture id to user likedPictureIds:[] field
 
     if (pictureLikeId) {
       return { pictureLikeId };

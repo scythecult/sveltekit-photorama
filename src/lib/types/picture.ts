@@ -1,4 +1,4 @@
-export type Comment = { id: string; avatar: string; message: string; name: string };
+export type Comment = { id: string; avatar: string; message: string; name: string; likes?: string };
 
 export type Picture = {
   id: string;

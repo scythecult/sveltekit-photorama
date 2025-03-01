@@ -18,19 +18,37 @@
       document.body.classList.remove('modal-shown');
     }
   });
+
+  const handleCloseButtonAction = (evt: PointerEvent) => {
+    evt.preventDefault();
+
+    const closeButton = evt.currentTarget;
+    let touchStartPoint = evt.clientY;
+    let touchEndPoint = 0;
+
+    if (closeButton && closeButton instanceof HTMLButtonElement) {
+      closeButton.setPointerCapture(evt.pointerId);
+
+      closeButton.onpointermove = (evt: PointerEvent) => {
+        touchEndPoint = evt.clientY;
+      };
+
+      closeButton.onpointerup = () => {
+        if (touchStartPoint < touchEndPoint) {
+          onClose?.();
+        }
+
+        closeButton.onpointermove = null;
+        closeButton.onpointerup = null;
+      };
+    }
+  };
 </script>
 
-<!-- TODO overlay -->
-<!-- component -->
-<!-- close dash -->
-<!-- comment heading text (comments) -->
-<!-- comments list -->
-<!-- user avatar - username - time - author-like -->
-<!-- user avatar - comment - comment - author-like -->
-<!-- comment text-area -->
 <button class="overlay" onclick={onClose} aria-label="overlay"></button>
 <div class="modal">
-  <dir class="modal__content"> {@render children()} </dir>
+  <button class="modal__close" onpointerdown={handleCloseButtonAction} aria-label="close"></button>
+  <div class="modal__content">{@render children()}</div>
 </div>
 
 <style>
@@ -54,13 +72,32 @@
     position: fixed;
     bottom: 0;
     left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     width: 100%;
     max-width: 500px;
     min-height: 300px;
+    padding-top: 14px;
     background-color: var(--bg-theme-dark);
-    transform: translate(-50%, 300px);
+    border-radius: 32px 32px 0 0;
+    transform: translate(-50%, 100%);
     transition-property: transform;
-    transition-duration: 0.3s;
+    transition-duration: 0.7s;
+  }
+
+  .modal__close {
+    padding: 0;
+    width: 24px;
+    height: 3px;
+    background-color: var(--color-gray);
+    border: none;
+    touch-action: none;
+  }
+
+  .modal__content {
+    width: 100%;
   }
 
   :global(.modal-shown) {

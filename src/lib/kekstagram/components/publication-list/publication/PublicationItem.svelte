@@ -8,7 +8,7 @@
   import CustomLink from '../../custom-link/CustomLink.svelte';
   import UserLogo from '../../user-logo/UserLogo.svelte';
 
-  type PublicationProps = {
+  type PublicationItemProps = {
     id: string;
     url: string;
     description: string;
@@ -17,7 +17,7 @@
     comments?: Comment[];
   };
 
-  const { id, url, description, hashtags, likes, comments }: PublicationProps = $props();
+  const { id, url, description, hashtags, likes, comments }: PublicationItemProps = $props();
   // TODO move to picture-content separate component
   const pictureLikeCoords = $state({ xAxis: 0, yAxis: 0 });
   let isPictureLikeVisible = $state(false);
@@ -53,9 +53,9 @@
 <div class="publication">
   <!-- head -->
   <div class="head">
-    <UserLogo src="/" alt="User logo" href="/user" />
+    <UserLogo src="/" alt="User logo" href={`/user?name=${id}`} />
     <!-- TODO replace username spaces to lodash -->
-    <CustomLink type={CustomComponentType.USER_NAME} href="/user">veryfuckinglongusername</CustomLink>
+    <CustomLink type={CustomComponentType.USER_NAME} href={`/user?name=${id}`}>veryfuckinglongusername</CustomLink>
   </div>
   <!-- picture -->
   <div class="picture">

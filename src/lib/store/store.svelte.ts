@@ -31,9 +31,7 @@ export const getAppState = () => {
   const getComments = (pictures: Picture[]) => {
     const { pictureId } = appState;
 
-    return pictureId
-      ? pictures.find((picture) => +picture.id === +pictureId)?.comments || []
-      : [];
+    return pictureId ? pictures.find((picture) => +picture.id === +pictureId)?.comments || [] : [];
   };
   const getModalState = () => appState.isModalVisible;
 
@@ -60,6 +58,9 @@ const createPageSlice = () => {
   });
 
   return {
+    get state() {
+      return pageSlice;
+    },
     setPictureId(pictureId: string) {
       pageSlice.pictureId = pictureId;
     },
@@ -69,9 +70,7 @@ const createPageSlice = () => {
     getCommentsFromPictures(pictures: Picture[]) {
       const { pictureId } = pageSlice;
 
-      return pictureId
-        ? pictures.find((picture) => +picture.id === +pictureId)?.comments || []
-        : [];
+      return pictureId ? pictures.find((picture) => +picture.id === +pictureId)?.comments || [] : [];
     },
     getModalState() {
       return pageSlice.isModalVisible;
