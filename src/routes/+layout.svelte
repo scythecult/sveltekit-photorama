@@ -86,6 +86,7 @@
     }
 
     :global(.link) {
+      font-size: 15px;
       color: inherit;
       text-decoration: none;
       overflow-wrap: anywhere;

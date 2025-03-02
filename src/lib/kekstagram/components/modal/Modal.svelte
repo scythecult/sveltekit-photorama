@@ -47,6 +47,7 @@
 
 <button class="overlay" onclick={onClose} aria-label="overlay"></button>
 <div class="modal">
+  <!-- TODO Enlarge dash area -->
   <button class="modal__close" onpointerdown={handleCloseButtonAction} aria-label="close"></button>
   <div class="modal__content">{@render children()}</div>
 </div>
