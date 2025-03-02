@@ -10,6 +10,7 @@
     id: string;
     likeType: LikeTypeMapValue;
     likeCount?: string;
+    isLiked: boolean;
   };
 
   const LikeIconSizeMap = {
@@ -30,17 +31,22 @@
     [LikeTypeMap.PICTURE]: ActionNameMap.PICTURE_LIKE_ID,
   };
 
-  let isLiked = $state(false);
-  let disabled = $state(false);
-  const { id, likeType, likeCount }: LikeButtonProps = $props();
+  const { id, likeType, likeCount, isLiked }: LikeButtonProps = $props();
   const actionSegment = LikeActionSegmentMap[likeType];
   const actionName = LikeActionNameMap[likeType];
   const iconSize = LikeIconSizeMap[likeType];
   const isPictureMode = likeType === LikeTypeMap.PICTURE;
-  const classNameFinal = ['like', isPictureMode && 'like--picture'];
+  let disabled = $state(false);
+  let classNameFinal = $state(['like', isPictureMode && 'like--picture']);
 
   const handleSubmit: SubmitFunction = async () => {
     disabled = true;
+
+    if (isPictureMode) {
+      classNameFinal = ['like', isPictureMode && 'like--picture like--animate'];
+    } else {
+      classNameFinal = ['like', 'like--active'];
+    }
 
     return async ({ update }) => {
       disabled = false;
@@ -50,14 +56,7 @@
 </script>
 
 <form class={classNameFinal} action="?/{actionSegment}" method="POST" use:enhance={handleSubmit}>
-  <button
-    onclick={() => {
-      isLiked = !isLiked;
-    }}
-    class="like__button"
-    type="submit"
-    {disabled}
-  >
+  <button class="like__button" type="submit" {disabled}>
     <CustomIcon
       fill={isLiked ? 'var(--color-main-red)' : 'transparent'}
       stroke={isLiked ? 'var(--color-main-red)' : 'currentcolor'}
@@ -66,7 +65,8 @@
     />
   </button>
   <input type="hidden" name={actionName} value={id} />
-  <input type="hidden" name="isLiked" value={isLiked} />
+  <!-- TODO Check for correct work -->
+  <input type="hidden" name="isLiked" value={!isLiked} />
   {#if likeCount}
     <span class="like__count">{likeCount}</span>
   {/if}
@@ -75,16 +75,32 @@
 <style>
   @keyframes like {
     0% {
+      opacity: 1;
       transform: scale(1);
     }
     25% {
+      opacity: 1;
       transform: scale(1.2);
     }
     50% {
+      opacity: 1;
       transform: scale(1);
     }
     100% {
+      opacity: 1;
       transform: translateY(-1000%);
+    }
+  }
+
+  @keyframes active {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
     }
   }
 
@@ -97,12 +113,22 @@
     gap: 4px;
   }
 
-  .like--picture {
+  /* TODO Refactor css */
+  .like--active .like__button {
+    animation-name: active;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+  }
+  .like--picture .like__button {
     position: absolute;
     top: calc(var(--yAxis) - var(--width-button-picture-action) / 2);
     left: calc(var(--xAxis) - var(--height-button-picture-action) / 2);
     width: var(--width-button-picture-action);
     height: var(--height-button-picture-action);
+    opacity: 0;
+  }
+
+  .like--animate .like__button {
     animation-name: like;
     animation-duration: 1.5s;
     animation-timing-function: ease;

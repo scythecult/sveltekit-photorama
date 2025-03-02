@@ -1,18 +1,18 @@
 import type { HeaderNavItem } from '$lib/types/navigation';
-import type { Comment, Picture } from '$lib/types/picture';
+import type { Comment, Publication } from '$lib/types/publication';
 
 export type AppState = {
   navItems: HeaderNavItem[];
   isModalVisible: boolean;
   comments: Comment[];
-  pictureId: string | null;
+  publicationId: string | null;
 };
 
 const appState = $state<AppState>({
   navItems: [],
   isModalVisible: false,
   comments: [],
-  pictureId: null,
+  publicationId: null,
 });
 
 export const getAppState = () => {
@@ -22,23 +22,23 @@ export const getAppState = () => {
   const setComments = (comments: Comment[]) => {
     appState.comments = comments;
   };
-  const setPictureId = (pictureId: string) => {
-    appState.pictureId = pictureId;
+  const setPublicationId = (publicationId: string) => {
+    appState.publicationId = publicationId;
   };
   const toggleModalVisibility = () => {
     appState.isModalVisible = !appState.isModalVisible;
   };
-  const getComments = (pictures: Picture[]) => {
-    const { pictureId } = appState;
+  const getComments = (publications: Publication[]) => {
+    const { publicationId } = appState;
 
-    return pictureId ? pictures.find((picture) => +picture.id === +pictureId)?.comments || [] : [];
+    return publicationId ? publications.find((picture) => +picture.id === +publicationId)?.comments || [] : [];
   };
   const getModalState = () => appState.isModalVisible;
 
   return {
     setNavItems,
     setComments,
-    setPictureId,
+    setPublicationId,
     toggleModalVisibility,
     getComments,
     getModalState,
@@ -54,23 +54,25 @@ const createPageSlice = () => {
   const pageSlice = $state<PageState>({
     isModalVisible: false,
     comments: [],
-    pictureId: null,
+    publicationId: null,
   });
 
   return {
     get state() {
       return pageSlice;
     },
-    setPictureId(pictureId: string) {
-      pageSlice.pictureId = pictureId;
+    setPublicationId(publicationId: string) {
+      pageSlice.publicationId = publicationId;
     },
     toggleModalVisibility() {
       pageSlice.isModalVisible = !pageSlice.isModalVisible;
     },
-    getCommentsFromPictures(pictures: Picture[]) {
-      const { pictureId } = pageSlice;
+    getCommentsFromPublications(publications: Publication[]) {
+      const { publicationId } = pageSlice;
 
-      return pictureId ? pictures.find((picture) => +picture.id === +pictureId)?.comments || [] : [];
+      return publicationId
+        ? publications.find((publication) => +publication.id === +publicationId)?.comments || []
+        : [];
     },
     getModalState() {
       return pageSlice.isModalVisible;

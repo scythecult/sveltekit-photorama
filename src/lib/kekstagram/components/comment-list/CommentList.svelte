@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Action } from 'svelte/action';
   import { pageSlice } from '$lib/store/store.svelte';
-  import type { Comment } from '$lib/types/picture';
+  import type { Comment } from '$lib/types/publication';
   import Stub from '../stub/Stub.svelte';
   import CommentItem from './comment/CommentItem.svelte';
 
@@ -10,11 +10,11 @@
   };
 
   const { comments }: CommentListProps = $props();
-  const pictureId = $derived(pageSlice.state.pictureId);
+  const publicationId = $derived(pageSlice.state.publicationId);
 
   const scrollToTop: Action = (node) => {
     $effect(() => {
-      if (pictureId) {
+      if (publicationId) {
         node.scrollTo(0, 0);
       }
     });

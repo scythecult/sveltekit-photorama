@@ -8,7 +8,7 @@
 
   const { data }: PageProps = $props();
   const isModalOpen = $derived(pageSlice.state.isModalVisible);
-  const comments = $derived(pageSlice.getCommentsFromPictures(data.pictures));
+  const comments = $derived(pageSlice.getCommentsFromPublications(data.publications));
 
   const togglePopup = () => {
     pageSlice.toggleModalVisibility();
@@ -18,7 +18,7 @@
 <!-- header -->
 <Header />
 <!-- pictures -->
-<PublicationList pictures={data.pictures} />
+<PublicationList publications={data.publications} />
 <!-- comments modal-->
 <Modal isOpen={isModalOpen} onClose={togglePopup}>
   <!-- comment list -->

@@ -11,7 +11,7 @@
   const { id, commentCount }: CommentProps = $props();
 
   const handleCommentClick = () => {
-    pageSlice.setPictureId(`${id}`);
+    pageSlice.setPublicationId(`${id}`);
     pageSlice.toggleModalVisibility();
   };
 </script>

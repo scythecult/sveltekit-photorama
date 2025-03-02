@@ -1,22 +1,22 @@
 <script lang="ts">
-  import type { Picture } from '$lib/types/picture';
+  import type { Publication } from '$lib/types/publication';
   import Stub from '../stub/Stub.svelte';
   import PublicationItem from './publication/PublicationItem.svelte';
 
   type PublicationListProps = {
-    pictures?: Picture[];
+    publications?: Publication[];
     hashtags?: string[];
   };
 
-  const { pictures }: PublicationListProps = $props();
+  const { publications }: PublicationListProps = $props();
 </script>
 
 <div class="publication-list">
-  {#if !pictures?.length}
-    <Stub>No pictures found</Stub>
+  {#if !publications?.length}
+    <Stub>No publications found</Stub>
   {:else}
-    {#each pictures as { id, url, description, likes, hashtags, comments } (id)}
-      <PublicationItem {id} {url} {description} {hashtags} {likes} {comments} />
+    {#each publications as { id, url, description, likes, hashtags, comments, isLiked } (id)}
+      <PublicationItem {id} {url} {description} {hashtags} {likes} {comments} {isLiked} />
     {/each}
   {/if}
 </div>

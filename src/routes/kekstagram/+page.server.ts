@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
 import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
-import type { Picture } from '$lib/types/picture';
+import type { Publication } from '$lib/types/publication';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -18,22 +18,24 @@ export const load: PageServerLoad = async () => {
   try {
     const rawData = await fetch(KEKSTAGRAM_BASE_URL);
     // TODO Картинки пренадлежат конкретному пользователю
-    const rawPictures: Picture[] = (await rawData.json()) || [];
+    const rawPublication: Publication[] = (await rawData.json()) || [];
 
-    if (!rawPictures.length) {
+    if (!rawPublication.length) {
       error(StatusCodes.NOT_FOUND, {
         code: StatusCodes.NOT_FOUND,
         message: 'No pictures found',
       });
     }
 
-    const pictures = rawPictures.map((picture) => ({
-      ...picture,
-      hashtags: extractHashtagsFromDescription(picture.description),
-      description: clearDescriptionFromHashtags(picture.description),
+    // TODO Проверить если Publication.likes.user.id === currentUser.id => Publication.isLiked = true
+    const publications = rawPublication.map((publication) => ({
+      ...publication,
+      isLiked: true,
+      hashtags: extractHashtagsFromDescription(publication.description),
+      description: clearDescriptionFromHashtags(publication.description),
     }));
 
-    return { pictures };
+    return { publications };
   } catch (error) {
     throw new Error(
       `${StatusCodes.INTERNAL_SERVER_ERROR}, Это сообщение не попадёт на клиент, тк может содержать чувствительную информацию`,

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Comment } from '$lib/types/picture';
+  import type { Comment } from '$lib/types/publication';
   import { LikeTypeMap } from '../../buttons/constants';
   import LikeButton from '../../buttons/LikeButton.svelte';
   import UserLogo from '../../user-logo/UserLogo.svelte';
 
   type CommentProps = Comment & {};
 
-  const { id, avatar, name, message }: CommentProps = $props();
+  const { id, avatar, name, message, isLiked }: CommentProps = $props();
 </script>
 
 <div class="comment">
@@ -18,7 +18,7 @@
     <p class="comment__text">{message}</p>
     <div class="comment__actions">
       <button class="comment__reply-button">Reply</button>
-      <LikeButton {id} likeCount={'23'} likeType={LikeTypeMap.COMMENT} />
+      <LikeButton {id} {isLiked} likeCount={'23'} likeType={LikeTypeMap.COMMENT} />
     </div>
   </div>
 </div>
