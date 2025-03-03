@@ -58,8 +58,8 @@
 <form class={classNameFinal} action="?/{actionSegment}" method="POST" use:enhance={handleSubmit}>
   <button class="like__button" type="submit" {disabled}>
     <CustomIcon
-      fill={isLiked ? 'var(--color-main-red)' : 'transparent'}
-      stroke={isLiked ? 'var(--color-main-red)' : 'currentcolor'}
+      fill={isLiked ? 'var(--app-color-red)' : 'transparent'}
+      stroke={isLiked ? 'var(--app-color-red)' : 'currentcolor'}
       iconName={IconName.LIKE}
       {iconSize}
     />
@@ -105,27 +105,27 @@
   }
 
   .like {
-    --width-button-picture-action: 94px;
-    --height-button-picture-action: 94px;
+    --picture-action-button-width: 74px;
+    --picture-action-button-height: 74px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 4px;
   }
 
-  /* TODO Refactor css */
+  .like--picture .like__button {
+    position: absolute;
+    top: calc(var(--yAxis) - var(--picture-action-button-width) / 2);
+    left: calc(var(--xAxis) - var(--picture-action-button-height) / 2);
+    width: var(--picture-action-button-width);
+    height: var(--picture-action-button-height);
+    opacity: 0;
+  }
+
   .like--active .like__button {
     animation-name: active;
     animation-duration: 0.5s;
     animation-timing-function: linear;
-  }
-  .like--picture .like__button {
-    position: absolute;
-    top: calc(var(--yAxis) - var(--width-button-picture-action) / 2);
-    left: calc(var(--xAxis) - var(--height-button-picture-action) / 2);
-    width: var(--width-button-picture-action);
-    height: var(--height-button-picture-action);
-    opacity: 0;
   }
 
   .like--animate .like__button {
@@ -143,7 +143,7 @@
   }
 
   .like__count {
-    font-size: 12px;
+    font-size: var(--app-font-size);
     font-weight: 700;
   }
 </style>

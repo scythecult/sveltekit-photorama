@@ -32,35 +32,34 @@
 <style>
   :root {
     /* colors */
-    --bg-theme-dark: #28292a;
+    --theme-bg-dark: #28292a;
     /* слишком яркое изображение дискомфортно для глаз */
     /* вызывает эффект свечения и растекания по тёмному фону */
     /* по этому 250 */
-    --bg-theme-light: rgb(250, 250, 250);
-    --bg-kekstagram: transparent;
-    --bg-blur-amount: 2px;
-    --text-theme-dark: rgb(250, 250, 250);
-    --text-theme-light: #000000;
-    --text-link-hashtag: #55d5ff;
-    --color-main-red: red;
-    --color-gray: #b3b3b3;
+    --theme-bg-light: rgb(250, 250, 250);
+    --blur-bg-amount: 2px;
+    --theme-text-dark: rgb(250, 250, 250);
+    --theme-text-light: #000000;
+    --link-text-hashtag: #55d5ff;
+    --app-color-red: red;
+    --app-color-gray: #b3b3b3;
+    --kekstagram-bg-main: transparent;
     /* metrics */
-    --padding-layout-d: 0 14px;
-    --padding-d: 12px 12px 16px;
+    --app-layout-padding-d: 0 14px;
+    --app-common-padding-d: 12px 12px 16px;
+    --app-micro-layout-gap: 6px;
+    --action-button-size-mobile: 20px;
+    --action-button-size-tablet: 44px;
 
-    --size-button-action-mobile: 20px;
-    --size-button-action-tablet: 44px;
+    --user-action-button-width: var(--action-button-size-mobile);
+    --user-action-button-height: var(--action-button-size-mobile);
 
-    --width-button-user-action: var(--size-button-action-mobile);
-    --height-button-user-action: var(--size-button-action-mobile);
+    /* font */
+    --app-font-size: 12px;
 
     /* transitions */
     --transition-duration: 0.3s;
   }
-
-  /* :global(.layout .layout__header) {
-		background-color: black;
-	} */
 
   .layout {
     display: grid;
@@ -68,25 +67,25 @@
     grid-template-rows: max-content 1fr max-content;
     row-gap: 14px;
     min-height: 100dvh;
-    padding: var(--padding-layout-d);
+    padding: var(--app-layout-padding-d);
     font-family: sans-serif;
-    background-color: var(--bg-theme-light);
+    background-color: var(--theme-bg-light);
     transition-property: background-color, color;
     transition-duration: var(--transition-duration);
 
     @media (prefers-color-scheme: dark) {
-      color: var(--text-theme-dark);
-      background-color: var(--bg-theme-dark);
+      color: var(--theme-text-dark);
+      background-color: var(--theme-bg-dark);
     }
   }
 
   .kekstagram {
     :global(.header) {
-      background-color: var(--bg-kekstagram);
+      background-color: var(--kekstagram-bg-main);
     }
 
     :global(.link) {
-      font-size: 15px;
+      font-size: var(--app-font-size);
       color: inherit;
       text-decoration: none;
       overflow-wrap: anywhere;
@@ -111,12 +110,12 @@
       grid-template-columns: 100%;
       grid-auto-rows: max-content;
       row-gap: 14px;
-      background-color: var(--bg-kekstagram);
+      background-color: var(--kekstagram-bg-main);
     }
   }
 
   .main {
-    padding: var(--padding-d);
+    padding: var(--app-common-padding-d);
     background-color: lightgreen;
   }
 </style>

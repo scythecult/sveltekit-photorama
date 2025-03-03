@@ -23,6 +23,6 @@
   }
 
   .tag-link {
-    color: var(--text-link-hashtag);
+    color: var(--link-text-hashtag);
   }
 </style>

@@ -44,7 +44,7 @@
   }
 
   :global(.user-action) {
-    width: var(--width-button-user-action);
-    height: var(--height-button-user-action);
+    width: var(--user-action-button-width);
+    height: var(--user-action-button-height);
   }
 </style>

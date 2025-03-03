@@ -30,7 +30,7 @@ export const load: PageServerLoad = async () => {
     // TODO Проверить если Publication.likes.user.id === currentUser.id => Publication.isLiked = true
     const publications = rawPublication.map((publication) => ({
       ...publication,
-      isLiked: true,
+      isLiked: false,
       hashtags: extractHashtagsFromDescription(publication.description),
       description: clearDescriptionFromHashtags(publication.description),
     }));

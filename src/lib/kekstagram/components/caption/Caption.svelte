@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { AppRoute } from '$lib/constants/kekstagram';
   import HashtagList from '../hashtag-list/HashtagList.svelte';
+  import UserAvatar from '../user-avatar/UserAvatar.svelte';
 
   const MAX_CONTENT_LENGTH = 50;
 
@@ -18,9 +20,10 @@
   type DescriptionProps = {
     description: string;
     hashtags: string[];
+    id: string;
   };
 
-  const { description, hashtags }: DescriptionProps = $props();
+  const { description, hashtags, id }: DescriptionProps = $props();
 
   let isExpanded = $state(false);
   const isMoreButtonVisible = $derived(getFullContentLength(description, hashtags) > MAX_CONTENT_LENGTH && !isExpanded);
@@ -30,7 +33,7 @@
 </script>
 
 <div class="caption">
-  <a class="caption__username link" href="/user">veryfuckinglongusername</a>
+  <UserAvatar name="UsernameUsernameUsername" href={`${AppRoute.ROOT}${AppRoute.USER}?name=${id}`} />
   <div class="description">
     {#if isOnlyHashtagsVisible}
       <HashtagList {hashtags} />
@@ -51,11 +54,7 @@
 
 <style>
   .caption {
-    font-size: 15px;
-  }
-
-  .caption__username {
-    font-weight: 700;
+    font-size: var(--app-font-size);
   }
 
   .caption__expand-button {

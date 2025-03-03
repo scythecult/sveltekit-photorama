@@ -22,7 +22,7 @@
 
 <style>
   .header {
-    padding: var(--padding-d);
+    padding: var(--app-common-padding-d);
     color: #ffffff;
     background-color: violet;
   }

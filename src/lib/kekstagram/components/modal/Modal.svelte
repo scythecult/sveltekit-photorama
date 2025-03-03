@@ -47,7 +47,6 @@
 
 <button class="overlay" onclick={onClose} aria-label="overlay"></button>
 <div class="modal">
-  <!-- TODO Enlarge dash area -->
   <button class="modal__close" onpointerdown={handleCloseButtonAction} aria-label="close"></button>
   <div class="modal__content">{@render children()}</div>
 </div>
@@ -81,7 +80,7 @@
     max-width: 500px;
     min-height: 300px;
     padding-top: 14px;
-    background-color: var(--bg-theme-dark);
+    background-color: var(--theme-bg-dark);
     border-radius: 32px 32px 0 0;
     transform: translate(-50%, 100%);
     transition-property: transform;
@@ -89,12 +88,24 @@
   }
 
   .modal__close {
+    position: relative;
     padding: 0;
     width: 24px;
     height: 3px;
-    background-color: var(--color-gray);
+    background-color: var(--app-color-gray);
     border: none;
     touch-action: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      background-color: transparent;
+      transform: translate(-50%, 0);
+    }
   }
 
   .modal__content {
@@ -106,7 +117,7 @@
       opacity: 1;
       pointer-events: all;
       background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(var(--bg-blur-amount));
+      backdrop-filter: blur(var(--blur-bg-amount));
       transform: translateX(0);
     }
 

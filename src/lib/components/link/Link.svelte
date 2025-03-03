@@ -14,11 +14,11 @@
 
 <style>
   .link {
-    color: var(--text-theme-light);
+    color: var(--theme-text-light);
     text-decoration: none;
 
     @media (prefers-color-scheme: dark) {
-      color: var(--text-theme-dark);
+      color: var(--theme-text-dark);
     }
 
     &:hover {
@@ -26,7 +26,7 @@
       text-decoration: underline;
 
       @media (prefers-color-scheme: dark) {
-        color: var(--text-theme-dark);
+        color: var(--theme-text-dark);
       }
     }
   }
