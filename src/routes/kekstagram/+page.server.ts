@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
 import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
 import type { Publication } from '$lib/types/publication';
-import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
+import { clearDescriptionFromHashtags, convertStringToBoolean, extractHashtagsFromDescription } from '$lib/utils/utils';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -30,10 +30,11 @@ export const load: PageServerLoad = async () => {
     // TODO Проверить если Publication.likes.user.id === currentUser.id => Publication.isLiked = true
     const publications = rawPublication.map((publication) => ({
       ...publication,
-      isLiked: false,
       hashtags: extractHashtagsFromDescription(publication.description),
       description: clearDescriptionFromHashtags(publication.description),
     }));
+
+    console.log('"load" auto exec');
 
     return { publications };
   } catch (error) {
@@ -46,16 +47,30 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
   [ActionMap.LIKE]: async ({ request }) => {
     const data = await request.formData();
-    const pictureLikeId = data.get(ActionNameMap.PICTURE_LIKE_ID) as string;
+    const publicationLikeId = data.get(ActionNameMap.PUBLICATION_LIKE_ID) as string;
     const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
 
     // get picture by id from db
     // update picture like count
-    console.log('update picture like count', { pictureLikeId, isLiked });
+    console.log('update picture like count', { publicationLikeId, isLiked });
     // set liked picture id to user likedPictureIds:[] field
 
-    if (pictureLikeId) {
-      return { pictureLikeId };
+    if (publicationLikeId && isLiked) {
+      console.log('?');
+      // TODO Abstract fetch
+      const response = await fetch(`${KEKSTAGRAM_BASE_URL}/like`, {
+        method: 'POST',
+        body: JSON.stringify({ publicationLikeId, isLiked: convertStringToBoolean(isLiked) }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+
+      console.log({ result });
+
+      return { publicationLikeId };
     }
   },
   [ActionMap.COMMENT_LIKE]: async ({ request }) => {

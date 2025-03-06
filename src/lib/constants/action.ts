@@ -8,7 +8,7 @@ export type ActionMapKey = keyof typeof ActionMap;
 export type ActionMapValue = (typeof ActionMap)[ActionMapKey];
 
 export const ActionNameMap = {
-  PICTURE_LIKE_ID: 'pictureLikeId',
+  PUBLICATION_LIKE_ID: 'publicationLikeId',
   IS_LIKED: 'isLiked',
   COMMENT_LIKE_ID: 'commentLikeId',
   COMMENT_ID: 'commentId',

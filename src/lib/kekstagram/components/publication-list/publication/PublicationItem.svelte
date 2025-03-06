@@ -25,6 +25,7 @@
   <!-- head -->
   <div class="head">
     <!-- TODO get user info from user slice -->
+    <!-- TODO refactor href => move inside component and take query param name from name prop -->
     <UserAvatar
       src="/"
       alt="User logo"
@@ -45,7 +46,7 @@
     <button class="send">send</button>
     <!-- TODO make last item of action if more than 2 aligned right -->
     <!-- TODO mb should wrap "main action (like comment)" to separate block?  -->
-    <!-- <button class="bookmark">bookmark</button> -->
+    <button class="bookmark">bookmark</button>
   </div>
   <!-- caption -->
   <Caption {id} {description} {hashtags} />

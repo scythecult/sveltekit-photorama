@@ -27,8 +27,8 @@
 
   const LikeActionNameMap = {
     [LikeTypeMap.COMMENT]: ActionNameMap.COMMENT_LIKE_ID,
-    [LikeTypeMap.ACTIONS]: ActionNameMap.PICTURE_LIKE_ID,
-    [LikeTypeMap.PICTURE]: ActionNameMap.PICTURE_LIKE_ID,
+    [LikeTypeMap.ACTIONS]: ActionNameMap.PUBLICATION_LIKE_ID,
+    [LikeTypeMap.PICTURE]: ActionNameMap.PUBLICATION_LIKE_ID,
   };
 
   const { id, likeType, likeCount, isLiked }: LikeButtonProps = $props();
@@ -45,7 +45,7 @@
     if (isPictureMode) {
       classNameFinal = ['like', isPictureMode && 'like--picture like--animate'];
     } else {
-      classNameFinal = ['like', 'like--active'];
+      classNameFinal = ['like', !isLiked && 'like--active'];
     }
 
     return async ({ update }) => {
@@ -143,6 +143,7 @@
   }
 
   .like__count {
+    min-width: 14px;
     font-size: var(--app-font-size);
     font-weight: 700;
   }
