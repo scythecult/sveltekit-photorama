@@ -1,0 +1,25 @@
+.publication {
+  display: grid;
+  row-gap: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: var(--app-font-size);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(32px, max-content) minmax(0, max-content);
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--app-micro-layout-gap);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--app-micro-layout-gap);
+}
+
+.actions:has(.bookmark) .bookmark {
+  margin-left: auto;
+}

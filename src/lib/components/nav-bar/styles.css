@@ -1,0 +1,40 @@
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: var(--app-nav-bar-z-index);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px;
+}
+
+.nav-bar__button {
+  --home-button-fill: var(--app-color-white);
+  --add-button-fill: var(--app-color-white);
+  --add-button-stroke: var(--app-color-black);
+  transition-property: filter, transform;
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
+
+  @media (prefers-color-scheme: dark) {
+    --home-button-fill: var(--app-color-black);
+    --add-button-fill: var(--app-color-black);
+    --add-button-stroke: var(--app-color-white);
+  }
+}
+
+.nav-bar__button.active {
+  --home-button-fill: var(--app-color-black);
+  --add-button-fill: var(--app-color-black);
+  --add-button-stroke: var(--app-color-white);
+  transform: scale(1.2);
+
+  @media (prefers-color-scheme: dark) {
+    --home-button-fill: var(--app-color-white);
+    --add-button-fill: var(--app-color-white);
+    --add-button-stroke: var(--app-color-black);
+  }
+}

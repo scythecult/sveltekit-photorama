@@ -1,0 +1,7 @@
+.count {
+  display: block;
+  min-width: 14px;
+  font-size: var(--app-font-size);
+  font-weight: 700;
+  text-align: center;
+}

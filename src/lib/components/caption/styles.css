@@ -1,0 +1,10 @@
+.caption {
+  font-size: var(--app-font-size);
+}
+
+.caption__expand-button {
+  padding: 0;
+  font-weight: 700;
+  background-color: transparent;
+  border: none;
+}

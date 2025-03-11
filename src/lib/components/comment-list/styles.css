@@ -1,0 +1,17 @@
+.comments__list {
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 20px;
+  max-height: 60dvh;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  overflow-y: scroll;
+}
+
+.comments__title {
+  padding-bottom: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}

@@ -1,0 +1,38 @@
+.user-avatar {
+  --logo-size: 32px;
+  display: flex;
+  align-items: center;
+  gap: var(--app-micro-layout-gap);
+  text-decoration: none;
+}
+
+.user-avatar.small {
+  --logo-size: 24px;
+}
+
+.user-avatar.medium {
+  --logo-size: 32px;
+}
+
+.user-avatar.large {
+  --logo-size: 42px;
+}
+
+.user-avatar.inherit {
+  --logo-size: inherit;
+}
+
+.user-avatar__image {
+  display: block;
+  min-width: var(--logo-size);
+  width: var(--logo-size);
+  height: var(--logo-size);
+  background-color: var(--app-color-gray);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-avatar__name {
+  display: block;
+  font-weight: 700;
+}

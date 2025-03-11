@@ -1,0 +1,22 @@
+.icon {
+  --icon-size: 32px;
+  display: block;
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.icon.small {
+  --icon-size: 12px;
+}
+
+.icon.medium {
+  --icon-size: 20px;
+}
+
+.icon.large {
+  --icon-size: 32px;
+}
+
+.icon.inherit {
+  --icon-size: inherit;
+}
