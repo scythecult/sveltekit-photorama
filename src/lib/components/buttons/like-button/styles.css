@@ -1,0 +1,68 @@
+@keyframes like {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-1000%);
+  }
+}
+
+@keyframes active {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.like {
+  --picture-action-button-width: 74px;
+  --picture-action-button-height: 74px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.like--picture .like__button {
+  position: absolute;
+  top: calc(var(--yAxis) - var(--picture-action-button-width) / 2);
+  left: calc(var(--xAxis) - var(--picture-action-button-height) / 2);
+  width: var(--picture-action-button-width);
+  height: var(--picture-action-button-height);
+  opacity: 0;
+}
+
+.like--active .like__button {
+  animation-name: active;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+}
+
+.like--animate .like__button {
+  animation-name: like;
+  animation-duration: 1.5s;
+  animation-timing-function: ease;
+}
+
+.like__button {
+  width: inherit;
+  height: inherit;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
