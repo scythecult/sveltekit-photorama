@@ -1,10 +1,11 @@
 <script lang="ts">
   import './styles.css';
-  import { AppRoute } from '$lib/constants/kekstagram';
+  import CommentButton from '$lib/components/buttons/comment-button/CommentButton.svelte';
+  import LikeButton from '$lib/components/buttons/like-button/LikeButton.svelte';
+  import SendButton from '$lib/components/buttons/send-button/SendButton.svelte';
+  import { AppRoute } from '$lib/constants/common';
   import type { Comment } from '$lib/types/publication';
-  import CommentButton from '../../buttons/comment-button/CommentButton.svelte';
   import { LikeTypeMap } from '../../buttons/constants';
-  import LikeButton from '../../buttons/like-button/LikeButton.svelte';
   import Caption from '../../caption/Caption.svelte';
   import PublicationPicture from '../../publication-picture/PublicationPicture.svelte';
   import UserAvatar from '../../user-avatar/UserAvatar.svelte';
@@ -40,15 +41,18 @@
   </div>
   <!-- picture -->
   <PublicationPicture {isLiked} {url} {description} {id} />
-  <!-- actions -->
-  <div class="actions actions--caption">
-    <LikeButton {id} {isLiked} likeCount={likes} likeType={LikeTypeMap.ACTIONS} />
-    <CommentButton {id} commentCount={comments?.length} />
-    <button class="send">send</button>
-    <!-- TODO make last item of action if more than 2 aligned right -->
-    <!-- TODO mb should wrap "main action (like comment)" to separate block?  -->
-    <button class="bookmark">bookmark</button>
+  <div class="publication__feed">
+    <!-- actions -->
+    <div class="actions actions--caption">
+      <LikeButton className="actions__button" {id} {isLiked} likeCount={likes} likeType={LikeTypeMap.ACTIONS} />
+      <CommentButton className="actions__button" {id} commentCount={comments?.length} />
+      <SendButton className="actions__button" {id} />
+      <!-- <button class="actions__button send">send</button> -->
+      <!-- TODO make last item of action if more than 2 aligned right -->
+      <!-- TODO mb should wrap "main action (like comment)" to separate block?  -->
+      <button class="actions__button bookmark">bookmark</button>
+    </div>
+    <!-- caption -->
+    <Caption {id} {description} {hashtags} />
   </div>
-  <!-- caption -->
-  <Caption {id} {description} {hashtags} />
 </div>

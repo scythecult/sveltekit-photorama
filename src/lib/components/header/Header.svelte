@@ -1,6 +1,6 @@
 <script>
   import './styles.css';
-  import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
+  import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
   import InteractionsButton from '../buttons/interactions-button/InteractionsButton.svelte';
 </script>
 

@@ -1,11 +1,11 @@
 <script>
   import Modal from '$lib/components/modal/Modal.svelte';
-  import { pageSlice } from '$lib/store/store.svelte.js';
+  import { appSlice } from '$lib/store/appStore.svelte.js';
 
-  const isModalOpen = $derived(pageSlice.state.isModalVisible);
+  const isModalOpen = $derived(appSlice.state.isModalVisible);
 
   const togglePopup = () => {
-    pageSlice.toggleModalVisibility();
+    appSlice.toggleModalVisibility();
   };
 </script>
 

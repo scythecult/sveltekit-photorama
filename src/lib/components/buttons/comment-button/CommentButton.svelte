@@ -1,6 +1,7 @@
 <script lang="ts">
   import './styles.css';
-  import { pageSlice } from '$lib/store/store.svelte';
+  import { ModalTrigger } from '$lib/constants/common';
+  import { appSlice } from '$lib/store/appStore.svelte';
   import Count from '../../count/Count.svelte';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
@@ -8,17 +9,19 @@
   type CommentProps = {
     id: string;
     commentCount?: number;
+    className?: string;
   };
 
-  const { id, commentCount }: CommentProps = $props();
+  const { id, commentCount, className = '' }: CommentProps = $props();
 
   const handleCommentClick = () => {
-    pageSlice.setPublicationId(`${id}`);
-    pageSlice.toggleModalVisibility();
+    appSlice.setPublicationPayload({ modalTrigger: ModalTrigger.COMMENT, id });
+
+    appSlice.toggleModalVisibility();
   };
 </script>
 
-<button class="comment" type="button" onclick={handleCommentClick}>
+<button class={[className, 'comment-button']} type="button" onclick={handleCommentClick}>
   <CustomIcon iconName={IconName.COMMENT} />
 
   {#if commentCount}

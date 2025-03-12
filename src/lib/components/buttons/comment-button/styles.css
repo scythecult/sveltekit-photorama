@@ -1,9 +1,9 @@
-.comment {
+.comment-button {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2px;
-  padding: 0;
+  padding: var(--action-button-padding-mobile);
   background-color: transparent;
   border: none;
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import { AppRoute } from '$lib/constants/kekstagram';
+  import { AppRoute } from '$lib/constants/common';
   import HashtagList from '../hashtag-list/HashtagList.svelte';
   import UserAvatar from '../user-avatar/UserAvatar.svelte';
 

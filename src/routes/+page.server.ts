@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
+import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
 import { convertStringToBoolean } from '$lib/utils/utils';
 import type { Actions } from './$types';
 

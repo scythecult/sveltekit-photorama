@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import { AppRoute } from '$lib/constants/kekstagram';
+  import { AppRoute } from '$lib/constants/common';
   import AddButton from '../buttons/add-button/AddButton.svelte';
   import HomeButton from '../buttons/home-button/HomeButton.svelte';
   import SearchButton from '../buttons/search-button/SearchButton.svelte';
