@@ -1,10 +1,16 @@
 <script lang="ts">
   import './styles.css';
   import { ParaglideJS } from '@inlang/paraglide-sveltekit';
+  import { onMount } from 'svelte';
   import Navbar from '$lib/components/nav-bar/Navbar.svelte';
   import { i18n } from '$lib/i18n';
+  import { appSlice } from '$lib/store/appStore.svelte';
 
-  const { children } = $props();
+  const { data, children } = $props();
+
+  onMount(() => {
+    appSlice.setPublications(data.publications);
+  });
 </script>
 
 <!-- Общий компонент, который включает в себя компонент +page.svelte на текущем уровне вложенности -->

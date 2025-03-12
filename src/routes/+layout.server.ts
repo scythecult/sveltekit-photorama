@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
-import { KEKSTAGRAM_BASE_URL } from '$lib/constants/kekstagram';
+import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
 import type { Publication } from '$lib/types/publication';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
 import type { PageServerLoad } from './$types';
@@ -35,7 +35,7 @@ export const load: PageServerLoad = async () => {
 
     console.log('"load" auto exec');
 
-    return { publications };
+    return { publications, user: {} };
   } catch (error) {
     throw new Error(
       `${StatusCodes.INTERNAL_SERVER_ERROR}, Это сообщение не попадёт на клиент, тк может содержать чувствительную информацию`,

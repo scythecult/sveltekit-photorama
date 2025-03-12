@@ -3,24 +3,33 @@
   import Header from '$lib/components/header/Header.svelte';
   import Modal from '$lib/components/modal/Modal.svelte';
   import PublicationList from '$lib/components/publication-list/PublicationList.svelte';
-  import { pageSlice } from '$lib/store/store.svelte.js';
-  import type { PageProps } from './$types';
+  import { ModalTrigger } from '$lib/constants/common';
+  import { appSlice } from '$lib/store/appStore.svelte.js';
+  import { userSlice } from '$lib/store/userStore.svelte';
 
-  const { data }: PageProps = $props();
-  const isModalOpen = $derived(pageSlice.state.isModalVisible);
-  const comments = $derived(pageSlice.getCommentsFromPublications(data.publications));
+  const isModalOpen = $derived(appSlice.state.isModalVisible);
+  const publications = $derived(appSlice.state.publications);
+  const comments = $derived(appSlice.getComments());
+  const userContacts = $derived(userSlice.getContacts());
+  const modalTrigger = $derived(appSlice.getModalTrigger());
 
   const togglePopup = () => {
-    pageSlice.toggleModalVisibility();
+    appSlice.toggleModalVisibility();
   };
 </script>
 
 <!-- header -->
 <Header />
 <!-- pictures -->
-<PublicationList publications={data.publications} />
+<PublicationList {publications} />
 <!-- comments modal-->
 <Modal isOpen={isModalOpen} onClose={togglePopup}>
   <!-- comment list -->
-  <CommentList {comments} />
+  {#if modalTrigger === ModalTrigger.COMMENT}
+    <CommentList {comments} />
+  {/if}
+  <!-- contacts list -->
+  {#if modalTrigger === ModalTrigger.SEND}
+    {userContacts}
+  {/if}
 </Modal>

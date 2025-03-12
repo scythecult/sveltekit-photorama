@@ -6,6 +6,7 @@
   import Home from './icons/Home.svelte';
   import Like from './icons/Like.svelte';
   import Search from './icons/Search.svelte';
+  import Send from './icons/Send.svelte';
 
   const Icon = {
     [IconName.COMMENT]: Comment,
@@ -13,6 +14,7 @@
     [IconName.HOME]: Home,
     [IconName.SEACH]: Search,
     [IconName.ADD]: Add,
+    [IconName.SEND]: Send,
   };
 
   type CustomIconProps = {

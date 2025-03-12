@@ -4,6 +4,7 @@ export const IconName = {
   HOME: 'home',
   SEACH: 'search',
   ADD: 'add',
+  SEND: 'send',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;

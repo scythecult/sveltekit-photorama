@@ -1,0 +1,5 @@
+.send-button {
+  padding: var(--action-button-padding-mobile);
+  background-color: transparent;
+  border: none;
+}
