@@ -5,6 +5,7 @@
 .caption__expand-button {
   padding: 0;
   font-weight: 700;
+  color: rgb(var(--app-secondary-text));
   background-color: transparent;
   border: none;
 }

@@ -27,7 +27,7 @@
   min-width: var(--logo-size);
   width: var(--logo-size);
   height: var(--logo-size);
-  background-color: var(--app-color-gray);
+  background-color: rgb(var(--app-secondary-text));
   border-radius: 50%;
   overflow: hidden;
 }

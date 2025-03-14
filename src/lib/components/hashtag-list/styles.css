@@ -8,5 +8,6 @@
 }
 
 .tag-link {
-  color: var(--link-text-hashtag);
+  color: rgb(var(--app-primary-link));
+  text-decoration: none;
 }

@@ -12,29 +12,17 @@
 }
 
 .nav-bar__button {
-  --home-button-fill: var(--app-color-white);
-  --add-button-fill: var(--app-color-white);
-  --add-button-stroke: var(--app-color-black);
+  --home-button-fill: rgb(var(--app-primary-icon));
+  --add-button-fill: rgb(var(--app-primary-icon));
+  --add-button-stroke: rgb(var(--app-secondary-icon));
   transition-property: filter, transform;
   transition-timing-function: ease;
   transition-duration: 0.2s;
-
-  @media (prefers-color-scheme: dark) {
-    --home-button-fill: var(--app-color-black);
-    --add-button-fill: var(--app-color-black);
-    --add-button-stroke: var(--app-color-white);
-  }
 }
 
 .nav-bar__button.active {
-  --home-button-fill: var(--app-color-black);
-  --add-button-fill: var(--app-color-black);
-  --add-button-stroke: var(--app-color-white);
+  --home-button-fill: rgb(var(--app-primary-icon));
+  --add-button-fill: rgb(var(--app-primary-icon));
+  --add-button-stroke: rgb(var(--app-secondary-icon));
   transform: scale(1.2);
-
-  @media (prefers-color-scheme: dark) {
-    --home-button-fill: var(--app-color-white);
-    --add-button-fill: var(--app-color-white);
-    --add-button-stroke: var(--app-color-black);
-  }
 }

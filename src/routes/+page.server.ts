@@ -16,7 +16,6 @@ export const actions: Actions = {
     // set liked picture id to user likedPictureIds:[] field
 
     if (publicationLikeId && isLiked) {
-      console.log('?');
       // TODO Abstract fetch
       const response = await fetch(`${KEKSTAGRAM_BASE_URL}/like`, {
         method: 'POST',
@@ -26,9 +25,10 @@ export const actions: Actions = {
         },
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result = await response.json();
 
-      console.log({ result });
+      // console.log({ result });
 
       return { publicationLikeId };
     }

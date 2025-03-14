@@ -7,8 +7,8 @@
   import { appSlice } from '$lib/store/appStore.svelte.js';
   import { userSlice } from '$lib/store/userStore.svelte';
 
-  const isModalOpen = $derived(appSlice.state.isModalVisible);
-  const publications = $derived(appSlice.state.publications);
+  const publications = $derived(appSlice.getPublications());
+  const isModalOpen = $derived(appSlice.getModalState());
   const comments = $derived(appSlice.getComments());
   const userContacts = $derived(userSlice.getContacts());
   const modalTrigger = $derived(appSlice.getModalTrigger());

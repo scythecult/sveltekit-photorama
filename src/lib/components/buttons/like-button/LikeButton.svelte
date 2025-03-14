@@ -61,8 +61,8 @@
 <form class={classNameFinal} action="?/{actionSegment}" method="POST" use:enhance={handleSubmit}>
   <button class="like__button" type="submit" {disabled}>
     <CustomIcon
-      fill={isLiked ? 'var(--app-color-red)' : 'transparent'}
-      stroke={isLiked ? 'var(--app-color-red)' : 'currentcolor'}
+      fill={isLiked ? 'rgb(var(--app-badge))' : 'transparent'}
+      stroke={isLiked ? 'rgb(var(--app-badge))' : 'currentcolor'}
       iconName={IconName.LIKE}
       {iconSize}
     />

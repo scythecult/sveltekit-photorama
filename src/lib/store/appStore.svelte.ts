@@ -38,6 +38,9 @@ const createAppSlice = () => {
     toggleModalVisibility() {
       appSlice.isModalVisible = !appSlice.isModalVisible;
     },
+    getPublications() {
+      return appSlice.publications;
+    },
     getComments() {
       const {
         publications,

@@ -27,7 +27,6 @@
   max-width: 500px;
   min-height: 300px;
   padding-top: 14px;
-  background-color: var(--theme-bg-dark);
   border-radius: var(--app-border-radius) var(--app-border-radius) 0 0;
   transform: translate(-50%, 100%);
   transition-property: transform;
@@ -39,7 +38,8 @@
   padding: 0;
   width: 24px;
   height: 3px;
-  background-color: var(--app-color-gray);
+  background-color: rgb(var(--app-secondary-text));
+
   border: none;
   touch-action: none;
 

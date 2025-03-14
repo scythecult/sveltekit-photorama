@@ -1,14 +1,13 @@
 <script lang="ts">
   import './styles.css';
   import { ParaglideJS } from '@inlang/paraglide-sveltekit';
-  import { onMount } from 'svelte';
   import Navbar from '$lib/components/nav-bar/Navbar.svelte';
   import { i18n } from '$lib/i18n';
   import { appSlice } from '$lib/store/appStore.svelte';
 
   const { data, children } = $props();
 
-  onMount(() => {
+  $effect(() => {
     appSlice.setPublications(data.publications);
   });
 </script>
@@ -17,10 +16,8 @@
 <!-- ...то же самое верно и для компонентов в под-папках routes -->
 <!-- Так же рядом могут находиться компоненты с запросами +layout.server.ts, которые делают запрос в момент загрузки текущей страницы -->
 <ParaglideJS {i18n}>
-  <div class="layout">
-    <main class="main">
-      {@render children()}
-    </main>
+  <main class="layout">
+    {@render children()}
     <Navbar />
-  </div>
+  </main>
 </ParaglideJS>
