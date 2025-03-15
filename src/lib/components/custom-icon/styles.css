@@ -1,8 +1,11 @@
 .icon {
   --icon-size: 32px;
+
   display: block;
   width: var(--icon-size);
   height: var(--icon-size);
+  max-width: 100%;
+  color: rgb(var(--app-primary-icon));
 }
 
 .icon.small {
@@ -10,7 +13,7 @@
 }
 
 .icon.medium {
-  --icon-size: 20px;
+  --icon-size: 22px;
 }
 
 .icon.large {
@@ -19,4 +22,8 @@
 
 .icon.inherit {
   --icon-size: inherit;
+}
+
+.dislike {
+  color: rgb(var(--app-badge));
 }

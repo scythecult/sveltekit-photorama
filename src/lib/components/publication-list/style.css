@@ -1,11 +1,10 @@
 .publication-list {
   display: grid;
   grid-template-columns: 100%;
-  gap: 26px;
 
   @media (min-width: 500px) {
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 12px;
   }
 
   @media (min-width: 700px) {

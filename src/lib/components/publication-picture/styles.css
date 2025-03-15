@@ -1,5 +1,6 @@
 .picture {
   position: relative;
+  overflow: hidden;
 }
 
 .picture__button {

@@ -64,7 +64,7 @@
     opacity: 1;
     pointer-events: all;
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(var(--blur-bg-amount));
+    backdrop-filter: blur(var(--app-blur-amount));
     transform: translateX(0);
   }
 

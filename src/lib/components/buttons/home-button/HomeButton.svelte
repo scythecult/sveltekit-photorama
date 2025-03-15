@@ -12,5 +12,5 @@
 </script>
 
 <Link className={(isActive) => (isActive ? `${className} active` : className)} href={AppRoute.ROOT}>
-  <CustomIcon fill="var(--home-button-fill)" iconName={IconName.HOME} />
+  <CustomIcon iconName={IconName.HOME} />
 </Link>

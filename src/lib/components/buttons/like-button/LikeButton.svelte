@@ -40,15 +40,13 @@
   const iconSize = LikeIconSizeMap[likeType];
   const isPictureMode = likeType === LikeTypeMap.PICTURE;
   let disabled = $state(false);
-  let classNameFinal = $state(['like', className, isPictureMode && 'like--picture']);
+  let classNameFinal = $state(['like-button', className, isPictureMode && 'like-button--picture']);
 
   const handleSubmit: SubmitFunction = async () => {
     disabled = true;
 
     if (isPictureMode) {
-      classNameFinal = ['like', className, isPictureMode && 'like--picture like--animate'];
-    } else {
-      classNameFinal = ['like', className, !isLiked && 'like--active'];
+      classNameFinal = ['like-button', className, isPictureMode && 'like-button--picture like-button--animate'];
     }
 
     return async ({ update }) => {
@@ -59,16 +57,16 @@
 </script>
 
 <form class={classNameFinal} action="?/{actionSegment}" method="POST" use:enhance={handleSubmit}>
-  <button class="like__button" type="submit" {disabled}>
-    <CustomIcon
-      fill={isLiked ? 'rgb(var(--app-badge))' : 'transparent'}
-      stroke={isLiked ? 'rgb(var(--app-badge))' : 'currentcolor'}
-      iconName={IconName.LIKE}
-      {iconSize}
-    />
+  <button class="like-button__submit" type="submit" {disabled}>
+    {#if isPictureMode}
+      <CustomIcon iconName={IconName.PICTURE_LIKE} {iconSize} />
+    {:else if isLiked}
+      <CustomIcon className="dislike" iconName={IconName.DISLIKE} {iconSize} />
+    {:else}
+      <CustomIcon className="like" iconName={IconName.LIKE} {iconSize} />
+    {/if}
   </button>
   <input type="hidden" name={actionName} value={id} />
-  <!-- TODO Check for correct work -->
   <input type="hidden" name="isLiked" value={!isLiked} />
   {#if likeCount}
     <Count count={likeCount} />

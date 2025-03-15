@@ -1,5 +1,6 @@
 .publication {
   font-size: var(--app-font-size);
+  padding-bottom: 8px;
 }
 
 .head {
@@ -27,6 +28,6 @@
   margin-left: auto;
 }
 
-.actions:has(.like) .like {
+.actions:has(.like-button) .like-button {
   padding-left: 0;
 }

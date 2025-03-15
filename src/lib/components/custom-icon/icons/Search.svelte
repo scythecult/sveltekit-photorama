@@ -1,15 +1,26 @@
 <script lang="ts">
   import type { IconProps } from '../constants';
 
-  const { fill = 'transparent', stroke = 'currentcolor' }: IconProps = $props();
+  const { className }: IconProps = $props();
 </script>
 
-<svg viewBox="0 0 21 21" {fill} xmlns="http://www.w3.org/2000/svg">
-  <path
-    d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-    {stroke}
-    stroke-width="2"
+<svg class={className} aria-label="Search" fill="currentColor" role="img" viewBox="0 0 24 24"
+  ><title>Search</title><path
+    d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z"
+    fill="none"
+    stroke="currentColor"
     stroke-linecap="round"
     stroke-linejoin="round"
-  />
-</svg>
+    stroke-width="2"
+  ></path><line
+    fill="none"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    x1="16.511"
+    x2="22"
+    y1="16.511"
+    y2="22"
+  ></line></svg
+>

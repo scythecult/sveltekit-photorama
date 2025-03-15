@@ -1,10 +1,12 @@
 export const IconName = {
   LIKE: 'like',
+  PICTURE_LIKE: 'picture-like',
+  DISLIKE: 'dislike',
   COMMENT: 'comment',
   HOME: 'home',
   SEACH: 'search',
   ADD: 'add',
-  SEND: 'send',
+  SHARE: 'share',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;
@@ -20,7 +22,4 @@ export const IconSize = {
 export type IconSizeKey = keyof typeof IconSize;
 export type IconSizeValue = (typeof IconSize)[IconSizeKey];
 
-export type IconProps = {
-  fill?: string;
-  stroke?: string;
-};
+export type IconProps = { className?: string | string[] };

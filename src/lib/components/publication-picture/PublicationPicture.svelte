@@ -10,17 +10,29 @@
     isLiked: boolean;
   };
 
+  type PictureButtonHandler = Event & MouseEvent & { currentTarget: EventTarget & HTMLButtonElement };
+
   const LIKE_TIMEOUT = 1500;
 
   const { url, description, id, isLiked }: PublicationPictureProps = $props();
   const pictureLikeCoords = $state({ xAxis: 0, yAxis: 0 });
   let isPictureLikeVisible = $state(false);
+  let randomRotation = $state(0);
   let likeTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  const handlePictureDoubleClick = (evt: MouseEvent) => {
+  const handlePictureDoubleClick = (evt: PictureButtonHandler) => {
     evt.preventDefault();
 
-    const { offsetX, offsetY } = evt;
+    if (isLiked) {
+      return;
+    }
+
+    const { offsetX, offsetY, currentTarget } = evt;
+    const targetMiddle = currentTarget.offsetWidth / 2;
+
+    randomRotation = Math.floor(
+      offsetX < targetMiddle ? -((targetMiddle - offsetX) / 2) : (offsetX - targetMiddle) / 2,
+    );
 
     pictureLikeCoords.xAxis = offsetX;
     pictureLikeCoords.yAxis = offsetY;
@@ -53,8 +65,9 @@
       {id}
       {isLiked}
       likeType={LikeTypeMap.PICTURE}
-      --xAxis={`${pictureLikeCoords.xAxis}px`}
-      --yAxis={`${pictureLikeCoords.yAxis}px`}
+      --x-axis={`${pictureLikeCoords.xAxis}px`}
+      --y-axis={`${pictureLikeCoords.yAxis}px`}
+      --random-rotation-deg={`${randomRotation}deg`}
     />
   {/if}
 </div>

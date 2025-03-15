@@ -2,6 +2,7 @@
   import './styles.css';
   import type { Snippet } from 'svelte';
   import { afterNavigate, goto } from '$app/navigation';
+  import { QUERY_REGEXP } from '../buttons/constants';
 
   type LinkProps = {
     href: string;
@@ -14,11 +15,11 @@
   let isActive = $state(false);
 
   afterNavigate(() => {
-    isActive = location.pathname === href.replace(/\?.+/g, '');
+    isActive = location.pathname === href.replace(QUERY_REGEXP, '');
   });
 
   $effect(() => {
-    isActive = location.pathname === href.replace(/\?.+/g, '');
+    isActive = location.pathname === href.replace(QUERY_REGEXP, '');
   });
 
   const handleLinkClick = async (evt: MouseEvent) => {

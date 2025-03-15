@@ -34,5 +34,5 @@
 
 .user-avatar__name {
   display: block;
-  font-weight: 700;
+  font-weight: var(--app-font-weight-semibold);
 }

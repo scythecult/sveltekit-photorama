@@ -18,6 +18,6 @@
   };
 </script>
 
-<button class={[className, 'send-button']} type="button" onclick={handleSendClick}>
-  <CustomIcon iconName={IconName.SEND} />
+<button class={[className, 'share-button']} type="button" onclick={handleSendClick}>
+  <CustomIcon iconName={IconName.SHARE} />
 </button>

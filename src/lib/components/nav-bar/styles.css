@@ -5,24 +5,16 @@
   z-index: var(--app-nav-bar-z-index);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
-  height: 50px;
-  padding: 10px 20px;
+  min-height: var(--app-nav-bar-height);
 }
 
 .nav-bar__button {
-  --home-button-fill: rgb(var(--app-primary-icon));
-  --add-button-fill: rgb(var(--app-primary-icon));
-  --add-button-stroke: rgb(var(--app-secondary-icon));
-  transition-property: filter, transform;
-  transition-timing-function: ease;
-  transition-duration: 0.2s;
+  padding: var(--app-nav-button-padding);
 }
 
 .nav-bar__button.active {
-  --home-button-fill: rgb(var(--app-primary-icon));
-  --add-button-fill: rgb(var(--app-primary-icon));
-  --add-button-stroke: rgb(var(--app-secondary-icon));
-  transform: scale(1.2);
+  animation: 0.45s ease-in-out toggle;
+  border-bottom: 1px solid currentColor;
 }

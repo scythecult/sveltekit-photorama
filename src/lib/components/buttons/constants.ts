@@ -6,3 +6,5 @@ export const LikeTypeMap = {
 
 export type LikeTypeMapKey = keyof typeof LikeTypeMap;
 export type LikeTypeMapValue = (typeof LikeTypeMap)[LikeTypeMapKey];
+
+export const QUERY_REGEXP = /\?.+/g;

@@ -34,7 +34,7 @@
 </script>
 
 <div class="caption">
-  <UserAvatar name="UsernameUsernameUsername" href={`${AppRoute.ROOT}${AppRoute.USER}?name=UsernameUsernameUsername`} />
+  <UserAvatar name="UsernameUsernameUsername" href={`${AppRoute.USER}?name=UsernameUsernameUsername`} />
   <div class="description">
     {#if isOnlyHashtagsVisible}
       <HashtagList {hashtags} />

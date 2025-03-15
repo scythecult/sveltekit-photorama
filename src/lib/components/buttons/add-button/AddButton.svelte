@@ -12,5 +12,5 @@
 </script>
 
 <Link className={(isActive) => (isActive ? `${className}  active` : className)} href={AppRoute.ADD}>
-  <CustomIcon fill="var(--add-button-fill)" stroke="var(--add-button-stroke)" iconName={IconName.ADD} />
+  <CustomIcon iconName={IconName.ADD} />
 </Link>
