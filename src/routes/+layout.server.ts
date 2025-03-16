@@ -3,6 +3,7 @@ import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
 import type { Publication } from '$lib/types/publication';
+import type { UserInfo } from '$lib/types/userInfo';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
 import type { PageServerLoad } from './$types';
 
@@ -15,11 +16,20 @@ export const load: PageServerLoad = async () => {
   // Во время лайка/комментирования отправляем id картинки/комментария + id пользователя который совершил действие
   // Обновляем счетчик лайков конкретной картинки, добавляем комментарий в комментарии публикации
   try {
-    const rawData = await fetch(KEKSTAGRAM_BASE_URL);
+    const rawPublicationData = await fetch(KEKSTAGRAM_BASE_URL);
+    const rawUserInfoData = await fetch(`${KEKSTAGRAM_BASE_URL}/user`);
     // TODO Картинки пренадлежат конкретному пользователю
-    const rawPublication: Publication[] = (await rawData.json()) || [];
+    const rawPublications: Publication[] = (await rawPublicationData.json()) || [];
+    const userInfo: UserInfo = (await rawUserInfoData.json()) || {};
 
-    if (!rawPublication.length) {
+    if (!userInfo.name) {
+      error(StatusCodes.NOT_FOUND, {
+        code: StatusCodes.NOT_FOUND,
+        message: 'No user info found',
+      });
+    }
+
+    if (!rawPublications.length) {
       error(StatusCodes.NOT_FOUND, {
         code: StatusCodes.NOT_FOUND,
         message: 'No pictures found',
@@ -27,16 +37,16 @@ export const load: PageServerLoad = async () => {
     }
 
     // TODO Проверить если Publication.likes.user.id === currentUser.id => Publication.isLiked = true
-    const publications = rawPublication.map((publication) => ({
+    const publications = rawPublications.map((publication) => ({
       ...publication,
       hashtags: extractHashtagsFromDescription(publication.description),
       description: clearDescriptionFromHashtags(publication.description),
     }));
 
-    console.log('"load" auto exec');
-
-    return { publications, user: {} };
+    return { publications, userInfo };
   } catch (error) {
+    console.log({ error });
+
     throw new Error(
       `${StatusCodes.INTERNAL_SERVER_ERROR}, Это сообщение не попадёт на клиент, тк может содержать чувствительную информацию`,
     );

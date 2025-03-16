@@ -1,6 +1,5 @@
 <script lang="ts">
   import './styles.css';
-  import { AppRoute } from '$lib/constants/common';
   import HashtagList from '../hashtag-list/HashtagList.svelte';
   import UserAvatar from '../user-avatar/UserAvatar.svelte';
 
@@ -34,7 +33,7 @@
 </script>
 
 <div class="caption">
-  <UserAvatar name="UsernameUsernameUsername" href={`${AppRoute.USER}?name=UsernameUsernameUsername`} />
+  <UserAvatar className="caption__user-avatar" />
   <div class="description">
     {#if isOnlyHashtagsVisible}
       <HashtagList {hashtags} />

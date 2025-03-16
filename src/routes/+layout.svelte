@@ -4,11 +4,13 @@
   import Navbar from '$lib/components/nav-bar/Navbar.svelte';
   import { i18n } from '$lib/i18n';
   import { appSlice } from '$lib/store/appStore.svelte';
+  import { userSlice } from '$lib/store/userStore.svelte';
 
   const { data, children } = $props();
 
   $effect(() => {
     appSlice.setPublications(data.publications);
+    userSlice.setUserInfo(data.userInfo);
   });
 </script>
 

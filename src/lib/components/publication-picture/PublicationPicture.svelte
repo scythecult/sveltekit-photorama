@@ -31,7 +31,7 @@
     const targetMiddle = currentTarget.offsetWidth / 2;
 
     randomRotation = Math.floor(
-      offsetX < targetMiddle ? -((targetMiddle - offsetX) / 2) : (offsetX - targetMiddle) / 2,
+      offsetX < targetMiddle ? (targetMiddle - offsetX) / 2 : -((offsetX - targetMiddle) / 2),
     );
 
     pictureLikeCoords.xAxis = offsetX;

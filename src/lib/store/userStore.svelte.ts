@@ -1,4 +1,5 @@
 import type { Publication } from '$lib/types/publication';
+import type { UserInfo } from '$lib/types/userInfo';
 
 export type UserState = {
   name: string;
@@ -14,7 +15,7 @@ const createUserSlice = () => {
     name: 'UsernameUsernameUsername',
     email: '',
     password: '',
-    avatar: '',
+    avatar: '/',
     subscribedUsers: ['user1', 'user2'],
   });
 
@@ -23,6 +24,19 @@ const createUserSlice = () => {
       return userSlice;
     },
 
+    setUserInfo(userInfo: UserInfo) {
+      const { name, email, password, avatar, subscribedUsers } = userInfo;
+
+      userSlice.name = name;
+      userSlice.email = email;
+      userSlice.password = password;
+      userSlice.avatar = avatar;
+      userSlice.subscribedUsers = subscribedUsers;
+    },
+
+    getUserInfo() {
+      return userSlice;
+    },
     getContacts() {
       return userSlice.subscribedUsers;
     },

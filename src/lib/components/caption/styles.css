@@ -9,3 +9,7 @@
   background-color: transparent;
   border: none;
 }
+
+.caption__user-avatar .user-avatar__image {
+  display: none;
+}

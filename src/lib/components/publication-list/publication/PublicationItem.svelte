@@ -3,7 +3,6 @@
   import CommentButton from '$lib/components/buttons/comment-button/CommentButton.svelte';
   import LikeButton from '$lib/components/buttons/like-button/LikeButton.svelte';
   import ShareButton from '$lib/components/buttons/share-button/ShareButton.svelte';
-  import { AppRoute } from '$lib/constants/common';
   import type { Comment } from '$lib/types/publication';
   import { LikeTypeMap } from '../../buttons/constants';
   import Caption from '../../caption/Caption.svelte';
@@ -26,14 +25,7 @@
 <article class="publication">
   <!-- head -->
   <div class="head">
-    <!-- TODO get user info from user slice -->
-    <!-- TODO refactor href => move inside component and take query param name from name prop -->
-    <UserAvatar
-      src="/"
-      alt="User logo"
-      name="UsernameUsernameUsername"
-      href={`${AppRoute.USER}?name=UsernameUsernameUsername`}
-    />
+    <UserAvatar className="publication__user-avatar" />
     <div class="head__actions">
       <button>subscribe</button>
       <button>more</button>
@@ -47,9 +39,6 @@
       <LikeButton className="actions__button" {id} {isLiked} likeCount={likes} likeType={LikeTypeMap.ACTIONS} />
       <CommentButton className="actions__button" {id} commentCount={comments?.length} />
       <ShareButton className="actions__button" {id} />
-      <!-- <button class="actions__button send">send</button> -->
-      <!-- TODO make last item of action if more than 2 aligned right -->
-      <!-- TODO mb should wrap "main action (like comment)" to separate block?  -->
       <button class="actions__button bookmark">bookmark</button>
     </div>
     <!-- caption -->

@@ -14,6 +14,10 @@
   padding: var(--app-nav-button-padding);
 }
 
+.nav-bar__button .user-avatar__name {
+  display: none;
+}
+
 .nav-bar__button.active {
   animation: 0.45s ease-in-out toggle;
   border-bottom: 1px solid currentColor;

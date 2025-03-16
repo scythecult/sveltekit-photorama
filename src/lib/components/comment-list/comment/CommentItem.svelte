@@ -7,19 +7,18 @@
 
   type CommentProps = Comment & {};
 
-  const { id, avatar, name, message, isLiked }: CommentProps = $props();
+  const { id, name, message, isLiked }: CommentProps = $props();
 </script>
 
 <div class="comment">
-  <!-- TODO refactor href string -->
-  <UserAvatar src={avatar} alt={name} href={`/user?name=${name}`} />
+  <UserAvatar className="comment__user-avatar" />
 
   <div class="comment__body">
     <a class="comment__user link" href="/user?name={name}" target="_top" rel="noopener noreferrer">{name}</a>
     <p class="comment__text">{message}</p>
     <div class="comment__actions">
       <button class="comment__reply-button">Reply</button>
-      <LikeButton {id} {isLiked} likeCount={'23'} likeType={LikeTypeMap.COMMENT} />
+      <LikeButton {id} {isLiked} likeCount="23" likeType={LikeTypeMap.COMMENT} />
     </div>
   </div>
 </div>

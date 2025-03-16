@@ -12,8 +12,12 @@
   row-gap: var(--app-micro-layout-gap);
 }
 
+.comment__user-avatar .user-avatar__name {
+  display: none;
+}
+
 .comment__user {
-  font-weight: 700;
+  font-weight: var(--app-font-weight-semibold);
 }
 
 .comment__actions {
@@ -24,7 +28,7 @@
 
 .comment__reply-button {
   padding: 0;
-  font-weight: 700;
+  font-weight: var(--app-font-weight-semibold);
   color: rgb(var(--app-secondary-text));
   background-color: transparent;
   border: none;
