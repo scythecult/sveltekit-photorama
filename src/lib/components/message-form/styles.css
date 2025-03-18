@@ -1,0 +1,46 @@
+.message-form {
+  position: relative;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  line-height: 24px;
+  font-size: var(--app-font-size);
+}
+
+.message-form .user-avatar__name {
+  display: none;
+}
+
+.message-form__textarea {
+  display: flex;
+  height: var(--app-line-height);
+  padding: 0;
+  line-height: var(--app-line-height);
+  color: var(--app-primary-text);
+  background-color: inherit;
+  border: none;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+}
+
+.message-form__counter {
+  position: absolute;
+  display: flex;
+  min-height: var(--app-line-height);
+  word-break: break-all;
+  font-size: inherit;
+  line-height: var(--app-line-height);
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.message-form__submit {
+  padding: 2px 10px;
+  background-color: rgb(var(--app-primary-button));
+  border: none;
+  border-radius: 14px;
+}

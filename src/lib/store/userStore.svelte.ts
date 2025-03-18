@@ -2,6 +2,7 @@ import type { Publication } from '$lib/types/publication';
 import type { UserInfo } from '$lib/types/userInfo';
 
 export type UserState = {
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -12,6 +13,7 @@ export type UserState = {
 
 const createUserSlice = () => {
   const userSlice = $state<UserState>({
+    id: '',
     name: 'UsernameUsernameUsername',
     email: '',
     password: '',
@@ -25,8 +27,9 @@ const createUserSlice = () => {
     },
 
     setUserInfo(userInfo: UserInfo) {
-      const { name, email, password, avatar, subscribedUsers } = userInfo;
+      const { id, name, email, password, avatar, subscribedUsers } = userInfo;
 
+      userSlice.id = id;
       userSlice.name = name;
       userSlice.email = email;
       userSlice.password = password;

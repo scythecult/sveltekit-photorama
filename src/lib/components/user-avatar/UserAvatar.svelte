@@ -17,7 +17,7 @@
 
 <Link
   className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)}
-  href={`${AppRoute.USER}?name=${name}`}
+  href="{AppRoute.USER}?name={name}"
 >
   {#if avatar}
     {#if avatar.includes('http') || avatar.includes('https')}

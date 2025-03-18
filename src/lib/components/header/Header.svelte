@@ -5,6 +5,6 @@
 </script>
 
 <header class="header">
-  <img class="header__logo" src={`${KEKSTAGRAM_BASE_URL}/logo.png`} alt="Kekstagram" />
+  <img class="header__logo" src="{KEKSTAGRAM_BASE_URL}/logo.png" alt="Kekstagram" />
   <InteractionsButton />
 </header>

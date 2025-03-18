@@ -7,6 +7,7 @@ export const IconName = {
   SEACH: 'search',
   ADD: 'add',
   SHARE: 'share',
+  ARROW: 'arrow',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;

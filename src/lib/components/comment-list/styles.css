@@ -15,3 +15,22 @@
   font-weight: 700;
   text-align: center;
 }
+
+.comments__stub-container {
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 12px;
+  align-self: center;
+}
+
+.comments__stub {
+  font-size: 20px;
+  color: var(--app-primary-text);
+  font-weight: var(--app-font-weight-semibold);
+}
+
+.comments__stub--smaller {
+  font-size: 14px;
+  font-weight: var(--app-font-weight-regular);
+  color: rgb(var(--app-secondary-text));
+}

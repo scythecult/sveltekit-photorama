@@ -65,9 +65,9 @@
       {id}
       {isLiked}
       likeType={LikeTypeMap.PICTURE}
-      --x-axis={`${pictureLikeCoords.xAxis}px`}
-      --y-axis={`${pictureLikeCoords.yAxis}px`}
-      --random-rotation-deg={`${randomRotation}deg`}
+      --x-axis="{pictureLikeCoords.xAxis}px"
+      --y-axis="{pictureLikeCoords.yAxis}px"
+      --random-rotation-deg="{randomRotation}deg"
     />
   {/if}
 </div>

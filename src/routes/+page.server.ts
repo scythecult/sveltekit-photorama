@@ -53,4 +53,29 @@ export const actions: Actions = {
 
     console.log('do comment', { commentId });
   },
+  [ActionMap.COMMENT_MESSAGE]: async ({ request }) => {
+    const data = await request.formData();
+    const userId = data.get(ActionNameMap.USER_ID) as string;
+    const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
+    const commentMessage = data.get(ActionNameMap.COMMENT_MESSAGE) as string;
+
+    // TODO mb should validate comment message?
+    if (publicationId && userId && commentMessage) {
+      // TODO Abstract fetch
+      const response = await fetch(`${KEKSTAGRAM_BASE_URL}/comments`, {
+        method: 'POST',
+        body: JSON.stringify({ publicationId, userId, commentMessage }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const result = await response.json();
+
+      return { userId, commentMessage };
+    }
+
+    console.log('success', { userId, commentMessage });
+  },
 };

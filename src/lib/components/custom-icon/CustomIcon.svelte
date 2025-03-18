@@ -2,6 +2,7 @@
   import './styles.css';
   import { IconName, type IconNameValue, IconSize, type IconSizeValue } from './constants';
   import Add from './icons/Add.svelte';
+  import Arrow from './icons/Arrow.svelte';
   import Comment from './icons/Comment.svelte';
   import Dislike from './icons/Dislike.svelte';
   import Home from './icons/Home.svelte';
@@ -19,6 +20,7 @@
     [IconName.SEACH]: Search,
     [IconName.ADD]: Add,
     [IconName.SHARE]: Share,
+    [IconName.ARROW]: Arrow,
   };
 
   type CustomIconProps = {

@@ -10,6 +10,6 @@
   const { className = '', children }: StubProps = $props();
 </script>
 
-<div class={['stub', className]}>
+<div class={[className, 'stub']}>
   {@render children()}
 </div>
