@@ -1,10 +1,16 @@
-<script>
+<script lang="ts">
   import './styles.css';
-  import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
-  import InteractionsButton from '../buttons/interactions-button/InteractionsButton.svelte';
+  import type { Snippet } from 'svelte';
+
+  type HeaderProps = {
+    className?: string;
+    children: Snippet;
+  };
+
+  const { className = '', children }: HeaderProps = $props();
+  const classNameFinal = [className, 'header'];
 </script>
 
-<header class="header">
-  <img class="header__logo" src="{KEKSTAGRAM_BASE_URL}/logo.png" alt="Kekstagram" />
-  <InteractionsButton />
+<header class={classNameFinal}>
+  {@render children()}
 </header>

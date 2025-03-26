@@ -29,9 +29,9 @@
   };
 
   const LikeActionNameMap = {
-    [LikeTypeMap.COMMENT]: ActionNameMap.COMMENT_LIKE_ID,
-    [LikeTypeMap.ACTIONS]: ActionNameMap.PUBLICATION_LIKE_ID,
-    [LikeTypeMap.PICTURE]: ActionNameMap.PUBLICATION_LIKE_ID,
+    [LikeTypeMap.COMMENT]: ActionNameMap.COMMENT_ID,
+    [LikeTypeMap.ACTIONS]: ActionNameMap.PUBLICATION_ID,
+    [LikeTypeMap.PICTURE]: ActionNameMap.PUBLICATION_ID,
   };
 
   const { className = '', id, likeType, likeCount, isLiked }: LikeButtonProps = $props();

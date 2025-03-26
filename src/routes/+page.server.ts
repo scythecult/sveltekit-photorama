@@ -1,50 +1,73 @@
 /* eslint-disable no-console */
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/common';
 import { convertStringToBoolean } from '$lib/utils/utils';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
+  // TODO Add User Login Route
+  [ActionMap.LOGIN]: async ({ request }) => {
+    const data = await request.formData();
+    const username = data.get(ActionNameMap.USERNAME) as string;
+    const password = data.get(ActionNameMap.PASSWORD) as string;
+
+    const response = await fetch(`${PHOTORAMA_BASE_URL}`, {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await response.json();
+    console.log({ result });
+  },
   [ActionMap.LIKE]: async ({ request }) => {
     const data = await request.formData();
-    const publicationLikeId = data.get(ActionNameMap.PUBLICATION_LIKE_ID) as string;
+    const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
     const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
 
     // get picture by id from db
     // update picture like count
-    console.log('update picture like count', { publicationLikeId, isLiked });
+    console.log('update picture like count', { publicationId, isLiked });
     // set liked picture id to user likedPictureIds:[] field
 
-    if (publicationLikeId && isLiked) {
+    if (publicationId && isLiked) {
       // TODO Abstract fetch
-      const response = await fetch(`${KEKSTAGRAM_BASE_URL}/like`, {
+      const response = await fetch(`${PHOTORAMA_BASE_URL}/publications/likes/${publicationId}`, {
         method: 'POST',
-        body: JSON.stringify({ publicationLikeId, isLiked: convertStringToBoolean(isLiked) }),
+        body: JSON.stringify({ publicationId, isLiked: convertStringToBoolean(isLiked) }),
+
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // TODO Add error handling
+      if (!response.ok) {
+        console.log('not OK');
+      }
+
       const result = await response.json();
 
-      // console.log({ result });
+      console.log({ result });
 
-      return { publicationLikeId };
+      return { publicationId };
     }
   },
   [ActionMap.COMMENT_LIKE]: async ({ request }) => {
     const data = await request.formData();
-    const commentLikeId = data.get(ActionNameMap.COMMENT_LIKE_ID) as string;
+    const commentId = data.get(ActionNameMap.COMMENT_ID) as string;
     const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
 
     console.log('update guest-users comment like count', {
-      commentLikeId,
+      commentId,
       isLiked,
     });
 
-    if (commentLikeId) {
-      return { commentLikeId };
+    if (commentId) {
+      return { commentId };
     }
   },
   [ActionMap.COMMENT]: async ({ request }) => {
@@ -57,25 +80,25 @@ export const actions: Actions = {
     const data = await request.formData();
     const userId = data.get(ActionNameMap.USER_ID) as string;
     const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
-    const commentMessage = data.get(ActionNameMap.COMMENT_MESSAGE) as string;
+    const message = data.get(ActionNameMap.MESSAGE) as string;
 
     // TODO mb should validate comment message?
-    if (publicationId && userId && commentMessage) {
+    if (publicationId && userId && message) {
       // TODO Abstract fetch
-      const response = await fetch(`${KEKSTAGRAM_BASE_URL}/comments`, {
+      const response = await fetch(`${PHOTORAMA_BASE_URL}/publications/comments`, {
         method: 'POST',
-        body: JSON.stringify({ publicationId, userId, commentMessage }),
+        body: JSON.stringify({ publicationId, userId, message }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result = await response.json();
+      console.log({ result });
 
-      return { userId, commentMessage };
+      return { userId, message };
     }
 
-    console.log('success', { userId, commentMessage });
+    console.log('success', { userId, message });
   },
 };

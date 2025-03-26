@@ -1,0 +1,85 @@
+.input {
+  --input-height: 38px;
+  --input-top-offset: 9px;
+  --input-right-offset: 8px;
+  --input-bottom-offset: 7px;
+  --input-left-offset: 8px;
+  width: 100%;
+  font-size: var(--app-12-font-size);
+}
+
+.input--error .input__label {
+  border-color: rgb(var(--app-error-or-destructive));
+}
+
+.input:has(.input__field:-webkit-autofill) .input__placeholder,
+.input--active .input__placeholder {
+  transform: scale(calc(10 / 12)) translateY(-10px);
+}
+
+.input:has(.input__field:-webkit-autofill) .input__field,
+.input--active .input__field {
+  padding: 14px 0 2px 8px;
+}
+
+.input__label {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: var(--input-height);
+  background-color: rgb(var(--app-secondary-background));
+  border: 1px solid rgb(var(--app-stroke));
+  border-radius: 3px;
+}
+
+.input__placeholder {
+  position: absolute;
+  top: 0;
+  left: var(--input-left-offset);
+  height: var(--input-height);
+  font-size: inherit;
+  line-height: var(--input-height);
+  text-overflow: ellipsis;
+  vertical-align: baseline;
+  white-space: nowrap;
+  color: rgb(var(--app-secondary-text));
+  overflow: hidden;
+  transform-origin: left;
+  transition: transform ease-out 0.1s;
+  user-select: none;
+}
+
+.input__field {
+  width: 100%;
+  height: var(--input-height);
+  padding: var(--input-top-offset) var(--input-right-offset) var(--input-bottom-offset) var(--input-left-offset);
+  background-color: inherit;
+  border: none;
+}
+
+.input__field:-webkit-autofill,
+.input__field:-webkit-autofill:hover,
+.input__field:-webkit-autofill:focus,
+.input__field:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px rgb(var(--app-secondary-background));
+}
+
+.input__show-password {
+  padding: 0 8px;
+  font-size: var(--app-14-font-size);
+  font-weight: var(--app-font-weight-semibold);
+  color: rgb(var(--app-secondary-text));
+  background-color: transparent;
+  border: none;
+}
+
+.input--password-shown .input__show-password {
+  color: rgb(var(--app-primary-text));
+}
+
+.input__error-message {
+  padding: 4px;
+  font-size: var(--app-12-font-size);
+  color: rgb(var(--app-error-or-destructive));
+}

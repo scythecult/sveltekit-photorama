@@ -1,4 +1,4 @@
-export const KEKSTAGRAM_BASE_URL = 'http://localhost:9666/api/v1/kekstagram';
+export const PHOTORAMA_BASE_URL = 'http://localhost:9666/photorama/api/v1';
 
 export const AppRoute = {
   ROOT: '/',
@@ -7,6 +7,8 @@ export const AppRoute = {
   INTERATIONS: '/interactions',
   ADD: '/add',
   SEND: '/send',
+  SIGNUP: '/signup',
+  RESET_PASSWORD: '/reset-password',
 };
 
 export const ModalTrigger = {

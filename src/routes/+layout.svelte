@@ -9,8 +9,11 @@
   const { data, children } = $props();
 
   $effect(() => {
-    appSlice.setPublications(data.publications);
-    userSlice.setUserInfo(data.userInfo);
+    if (data.publications && data.userData) {
+      // TODO Make store field unnecessary
+      appSlice.setPublications(data.publications);
+      userSlice.setUserInfo(data.userData);
+    }
   });
 </script>
 

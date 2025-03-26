@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
-import { KEKSTAGRAM_BASE_URL } from '$lib/constants/common';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/common';
 import type { Publication } from '$lib/types/publication';
 import type { UserInfo } from '$lib/types/userInfo';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
@@ -16,18 +16,31 @@ export const load: PageServerLoad = async () => {
   // Во время лайка/комментирования отправляем id картинки/комментария + id пользователя который совершил действие
   // Обновляем счетчик лайков конкретной картинки, добавляем комментарий в комментарии публикации
   try {
-    const rawPublicationData = await fetch(KEKSTAGRAM_BASE_URL);
-    const rawUserInfoData = await fetch(`${KEKSTAGRAM_BASE_URL}/user`);
+    const rawUserData = await fetch(`${PHOTORAMA_BASE_URL}`);
+    const userData: UserInfo = (await rawUserData.json()) || {};
+
+    if (!userData.name) {
+      console.log('No user info found, render login page');
+
+      return;
+      // error(StatusCodes.NOT_FOUND, {
+      //   code: StatusCodes.NOT_FOUND,
+      //   message: 'No user info found',
+      // });
+    }
+
+    const rawPublicationData = await fetch(`${PHOTORAMA_BASE_URL}/publications`);
+    // const rawUserInfoData = await fetch(`${KEKSTAGRAM_BASE_URL}/user`);
     // TODO Картинки пренадлежат конкретному пользователю
     const rawPublications: Publication[] = (await rawPublicationData.json()) || [];
-    const userInfo: UserInfo = (await rawUserInfoData.json()) || {};
+    // const userInfo: UserInfo = (await rawUserInfoData.json()) || {};
 
-    if (!userInfo.name) {
-      error(StatusCodes.NOT_FOUND, {
-        code: StatusCodes.NOT_FOUND,
-        message: 'No user info found',
-      });
-    }
+    // if (!userInfo.name) {
+    //   error(StatusCodes.NOT_FOUND, {
+    //     code: StatusCodes.NOT_FOUND,
+    //     message: 'No user info found',
+    //   });
+    // }
 
     if (!rawPublications.length) {
       error(StatusCodes.NOT_FOUND, {
@@ -43,7 +56,7 @@ export const load: PageServerLoad = async () => {
       description: clearDescriptionFromHashtags(publication.description),
     }));
 
-    return { publications, userInfo };
+    return { publications, userData };
   } catch (error) {
     console.log({ error });
 

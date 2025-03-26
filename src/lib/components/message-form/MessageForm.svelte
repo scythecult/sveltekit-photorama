@@ -50,7 +50,7 @@
 
   <textarea
     class="message-form__textarea"
-    name={ActionNameMap.COMMENT_MESSAGE}
+    name={ActionNameMap.MESSAGE}
     placeholder="Add comment..."
     autocomplete="off"
     aria-label="Add comment..."
