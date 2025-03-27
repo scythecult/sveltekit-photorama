@@ -20,6 +20,7 @@ export const load: PageServerLoad = async () => {
     const userData: UserInfo = (await rawUserData.json()) || {};
 
     if (!userData.name) {
+      // TODO Move user to login page
       console.log('No user info found, render login page');
 
       return;

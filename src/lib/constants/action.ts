@@ -1,6 +1,7 @@
 export const ActionMap = {
   LOGIN: 'login',
   LIKE: 'like',
+  SIGNUP_EMAIL: 'signup-email',
   COMMENT_LIKE: 'comment-like',
   COMMENT: 'comment',
   COMMENT_MESSAGE: 'comment-message',
@@ -12,6 +13,7 @@ export type ActionMapValue = (typeof ActionMap)[ActionMapKey];
 export const ActionNameMap = {
   USERNAME: 'username',
   PASSWORD: 'password',
+  EMAIL: 'email',
   USER_ID: 'userId',
   PUBLICATION_ID: 'publicationId',
   IS_LIKED: 'isLiked',

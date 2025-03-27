@@ -25,7 +25,7 @@
   const handleLinkClick = async (evt: MouseEvent) => {
     evt.preventDefault();
 
-    await goto(href);
+    await goto(href, { keepFocus: true });
   };
 </script>
 

@@ -13,12 +13,10 @@
   const { avatar, name } = $derived(userSlice.getUserInfo());
   const { className = '', avatarSize = UserAvatarSize.MEDIUM }: UserAvatarProps = $props();
   const classNameFinal = ['user-avatar', className, avatarSize];
+  const userLinkHref = $derived(name ? `${AppRoute.USER}?name=${name}` : AppRoute.LOGIN);
 </script>
 
-<Link
-  className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)}
-  href="{AppRoute.USER}?name={name}"
->
+<Link className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)} href={userLinkHref}>
   {#if avatar}
     {#if avatar.includes('http') || avatar.includes('https')}
       <img class="user-avatar__image" src={avatar} alt={name} />

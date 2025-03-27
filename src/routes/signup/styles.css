@@ -1,0 +1,32 @@
+.signup-header {
+  display: grid;
+  min-height: 44px;
+  padding: var(--app-layout-padding-d);
+  grid-template-columns: 100%;
+  gap: 10px;
+}
+
+.signup-nav {
+  --nav-back-link-size: 34px;
+  display: grid;
+  grid-template-columns: var(--nav-back-link-size) 1fr;
+  align-items: center;
+  min-height: 44px;
+  padding-right: var(--nav-back-link-size);
+  border-bottom: 1px solid rgb(var(--app-stroke));
+}
+
+.signup-nav__back-link {
+  padding: var(--app-action-button-padding);
+  transform: rotate(-90deg);
+}
+
+.signup-nav__title {
+  font-size: var(--app-16-font-size);
+  text-align: center;
+  font-weight: var(--app-font-weight-semibold);
+}
+
+.signup__form {
+  padding-top: 24px;
+}

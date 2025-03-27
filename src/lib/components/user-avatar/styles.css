@@ -4,22 +4,22 @@
   align-items: center;
   gap: var(--app-micro-layout-gap);
   text-decoration: none;
-}
 
-.user-avatar.small {
-  --logo-size: 24px;
-}
+  &.small {
+    --logo-size: 24px;
+  }
 
-.user-avatar.medium {
-  --logo-size: 32px;
-}
+  &.medium {
+    --logo-size: 32px;
+  }
 
-.user-avatar.large {
-  --logo-size: 42px;
-}
+  &.large {
+    --logo-size: 42px;
+  }
 
-.user-avatar.inherit {
-  --logo-size: inherit;
+  &.inherit {
+    --logo-size: inherit;
+  }
 }
 
 .user-avatar__image {

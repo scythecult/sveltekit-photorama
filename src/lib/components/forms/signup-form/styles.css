@@ -1,0 +1,52 @@
+.signup-email-form {
+  --child-height: 44px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: repeat(3, minmax(var(--child-height), max-content));
+  align-items: center;
+  gap: 6px;
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+.signup-email-form--disabled {
+  pointer-events: none;
+}
+
+.signup-email-form__submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: var(--child-height);
+  font-size: var(--app-14-font-size);
+  font-weight: var(--app-font-weight-semibold);
+  color: rgb(var(--app-always-white));
+  padding: 7px 16px;
+  background-color: rgb(var(--app-primary-button));
+  border: none;
+  border-radius: 8px;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
+.signup-email-form__suggested-email-domains {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: var(--child-height);
+
+  overflow-x: scroll;
+}
+
+.signup-email-form__suggested-email-domain {
+  padding: 7px 16px;
+  font-size: var(--app-14-font-size);
+  font-weight: var(--app-font-weight-semibold);
+  color: rgb(var(--app-always-white));
+  background-color: rgb(var(--app-stroke));
+  border: none;
+  border-radius: 8px;
+}

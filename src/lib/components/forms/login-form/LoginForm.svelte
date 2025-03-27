@@ -64,6 +64,7 @@
     onInput={handleUsernameInput}
     isError={!isUsernameValid}
     errorMessage="Pease enter name in&nbsp;correct format"
+    userValue={usernameValue}
   />
 
   <Input
@@ -74,6 +75,7 @@
     onInput={handlePasswordInput}
     isError={!isPasswordValid}
     errorMessage={`Password should contain at&nbsp;least ${MIN_PASSWORD_LENGTH} characters`}
+    userValue={passwordValue}
   />
 
   <Link className="login-form__link" href={AppRoute.RESET_PASSWORD}>Forgot password?</Link>

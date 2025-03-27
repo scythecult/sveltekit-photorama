@@ -14,11 +14,11 @@ export type UserState = {
 const createUserSlice = () => {
   const userSlice = $state<UserState>({
     id: '',
-    name: 'UsernameUsernameUsername',
+    name: '',
     email: '',
     password: '',
     avatar: '/',
-    subscribedUsers: ['user1', 'user2'],
+    subscribedUsers: [],
   });
 
   return {

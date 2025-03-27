@@ -29,9 +29,9 @@
     className?: string;
   };
 
-  const { iconName, iconSize = IconSize.MEDIUM }: CustomIconProps = $props();
+  const { iconName, iconSize = IconSize.MEDIUM, className = '' }: CustomIconProps = $props();
   const IconComponent = Icon[iconName] || '';
-  const classNameFinal = ['icon', iconSize, iconName];
+  const classNameFinal = ['icon', iconSize, iconName, className];
 </script>
 
 {#if IconComponent}

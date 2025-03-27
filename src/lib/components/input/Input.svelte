@@ -10,10 +10,11 @@
     minlength?: number;
     className?: string;
     errorMessage?: string;
+    userValue?: string;
     onInput?: (value: string) => void;
   };
 
-  const {
+  let {
     isError,
     type,
     className,
@@ -23,9 +24,9 @@
     minlength,
     onInput,
     errorMessage = '',
+    userValue = $bindable(''),
   }: InputProps = $props();
-  let value = $state('');
-  let isActive = $derived(value.length > 0);
+  let isActive = $derived(userValue.length > 0);
   let isPasswordVisible = $state(false);
 
   const classNameFinal = $derived([
@@ -55,7 +56,7 @@
       aria-label={placeholder}
       aria-required="true"
       id={name}
-      bind:value
+      bind:value={userValue}
       oninput={(evt: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
         onInput?.(evt.currentTarget?.value);
       }}

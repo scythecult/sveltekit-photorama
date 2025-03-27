@@ -7,6 +7,7 @@ export const AppRoute = {
   INTERATIONS: '/interactions',
   ADD: '/add',
   SEND: '/send',
+  LOGIN: '/login',
   SIGNUP: '/signup',
   RESET_PASSWORD: '/reset-password',
 };

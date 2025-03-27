@@ -1,0 +1,8 @@
+.lang-switcher {
+  padding: var(--app-action-button-padding);
+  font-size: var(--app-12-font-size);
+  text-align: center;
+  color: rgb(var(--app-secondary-text));
+  background-color: transparent;
+  border: none;
+}

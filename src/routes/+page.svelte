@@ -21,22 +21,23 @@
 </script>
 
 <!-- header -->
-<div class="main-page">
-  <Header>
-    <Logo />
-    <InteractionsButton />
-  </Header>
+<Header className="main-page-header">
+  <Logo />
+  <InteractionsButton />
+</Header>
+
+<section class="main-page">
   <!-- pictures -->
   <PublicationList {publications} />
-  <!-- comments modal-->
-  <Modal isOpen={isModalOpen} onClose={togglePopup}>
-    <!-- comment list -->
-    {#if modalTrigger === ModalTrigger.COMMENT}
-      <CommentList {comments} />
-    {/if}
-    <!-- contacts list -->
-    {#if modalTrigger === ModalTrigger.SEND}
-      {userContacts}
-    {/if}
-  </Modal>
-</div>
+</section>
+<!-- comments modal-->
+<Modal isOpen={isModalOpen} onClose={togglePopup}>
+  <!-- comment list -->
+  {#if modalTrigger === ModalTrigger.COMMENT}
+    <CommentList {comments} />
+  {/if}
+  <!-- contacts list -->
+  {#if modalTrigger === ModalTrigger.SEND}
+    {userContacts}
+  {/if}
+</Modal>
