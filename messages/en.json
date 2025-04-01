@@ -1,4 +1,17 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+	"common_user_error": "Pease enter name in correct format",
+	"login_slogan_1": "Register to see $life moments$ of your friends",
+	"login_slogan_2": "Share interesting moments with those who $understand you$",
+	"login_button_login": "Login",
+	"login_or": "or",
+	"login_user_placeholder": "Phone, username or email",
+	"login_password_placeholder": "Password",
+	"login_password_error": "Password should contain at least {value} characters",
+	"login_password_reset": "Forgot password?",
+	"signup_welcome_text": "Don't have an account?",
+	"signup_button_register": "Register",
+	"signup_email_placeholder": "Email",
+	"page_register_title": "Register",
+	"aria_lang": "Switch language"
 }

@@ -8,6 +8,7 @@
   import Link from '$lib/components/link/Link.svelte';
   import { ActionMap } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/common';
+  import { m } from '$lib/paraglide/messages';
 
   let usernameValue = $state('');
   let passwordValue = $state('');
@@ -59,31 +60,30 @@
   <Input
     name="username"
     type="text"
-    placeholder="Phone, username of&nbsp;email"
+    placeholder={m.login_user_placeholder()}
     maxlength={MAX_NAME_LENGTH}
     onInput={handleUsernameInput}
     isError={!isUsernameValid}
-    errorMessage="Pease enter name in&nbsp;correct format"
+    errorMessage={m.common_user_error({ field: 'имя' })}
     userValue={usernameValue}
   />
 
   <Input
     name="password"
     type="password"
-    placeholder="Password"
+    placeholder={m.login_password_placeholder()}
     minlength={MIN_PASSWORD_LENGTH}
     onInput={handlePasswordInput}
     isError={!isPasswordValid}
-    errorMessage={`Password should contain at&nbsp;least ${MIN_PASSWORD_LENGTH} characters`}
+    errorMessage={m.login_password_error({ value: MIN_PASSWORD_LENGTH })}
     userValue={passwordValue}
   />
 
-  <Link className="login-form__link" href={AppRoute.RESET_PASSWORD}>Forgot password?</Link>
-  <button class="login-form__submit" type="submit" disabled={isSubmitButtonDisabled}>Login</button>
+  <Link className="login-form__link" href={AppRoute.RESET_PASSWORD}>{m.login_password_reset()}</Link>
+  <button class="login-form__submit" type="submit" disabled={isSubmitButtonDisabled}>{m.login_button_login()}</button>
 
   <p class="login-form__register">
-    Don&rsquo;t have an&nbsp;account? <Link className="login-form__link login-form__link--bold" href={AppRoute.SIGNUP}
-      >Register</Link
-    >
+    {m.signup_welcome_text()}
+    <Link className="login-form__link login-form__link--bold" href={AppRoute.SIGNUP}>{m.signup_button_register()}</Link>
   </p>
 </form>

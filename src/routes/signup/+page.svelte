@@ -7,6 +7,7 @@
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import { AppRoute } from '$lib/constants/common';
+  import { m } from '$lib/paraglide/messages';
 </script>
 
 <Header className="signup-header">
@@ -14,7 +15,7 @@
     <Link className="signup-nav__back-link" href={AppRoute.LOGIN}>
       <CustomIcon iconName={IconName.ARROW} />
     </Link>
-    <h2 class="signup-nav__title">Registration</h2>
+    <h2 class="signup-nav__title">{m.page_register_title()}</h2>
   </nav>
   <LangSwitcher />
 </Header>
