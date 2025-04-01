@@ -30,7 +30,8 @@ p {
 }
 
 button,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
