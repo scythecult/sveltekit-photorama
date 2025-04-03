@@ -2,5 +2,5 @@
 
 export const load = async () => {
   // eslint-disable-next-line no-console
-  console.log('load from user page');
+  console.log('load from profile page');
 };

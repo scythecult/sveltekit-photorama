@@ -11,6 +11,6 @@
   const { className = '' }: HomeButtonProps = $props();
 </script>
 
-<Link className={(isActive) => (isActive ? `${className} active` : className)} href={AppRoute.SEARCH}>
+<Link className={(isActive) => (isActive ? `${className} active` : className)} href={AppRoute.EXPLORE}>
   <CustomIcon iconName={IconName.SEACH} />
 </Link>

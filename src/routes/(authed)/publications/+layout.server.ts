@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
-import { error } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { PHOTORAMA_BASE_URL } from '$lib/constants/common';
 import type { Publication } from '$lib/types/publication';
 import type { UserInfo } from '$lib/types/userInfo';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
-import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const load = async ({ fetch }) => {
   // TODO Auth
 
   // TODO
@@ -15,26 +13,46 @@ export const load: PageServerLoad = async () => {
   // Если пользователь авторизован/зарегестрирован -> даём возможность лайкать/комментировать
   // Во время лайка/комментирования отправляем id картинки/комментария + id пользователя который совершил действие
   // Обновляем счетчик лайков конкретной картинки, добавляем комментарий в комментарии публикации
+
   try {
-    const rawUserData = await fetch(`${PHOTORAMA_BASE_URL}`);
-    const userData: UserInfo = (await rawUserData.json()) || {};
+    // Сервер пытается проверить знает ли он пользователя по куки
+    // Нужно отсылать какой-то признак с бекенда, что бы тут проверять
+    // если признака нет, то свелте редиректит на страницу логина
+    // если есть то мы получаем публикации
+    // const response = await fetch(`${PHOTORAMA_BASE_URL}`);
+    // const sessionId = cookies.get(CookieName.USER_SESSION_ID);
+    // const cookies = parseCookieHeaderValues(response.headers.getSetCookie());
+    // console.log('cookies in LAYOUT', { sessionId });
 
-    if (!userData.name) {
-      // TODO Move user to login page
-      console.log('No user info found, render login page');
+    // console.log('???', response.headers.getSetCookie());
+    // console.log('???', sessionIdEntity);
+    // console.log('???', cookie);
 
-      return;
-      // error(StatusCodes.NOT_FOUND, {
-      //   code: StatusCodes.NOT_FOUND,
-      //   message: 'No user info found',
-      // });
-    }
+    // console.log(!sessionId);
+
+    // if (!sessionId) {
+    //   return {
+    //     userInfo: null,
+    //   };
+    // }
+    // console.log('get user data, publications');
+
+    // const userData: UserInfo = (await rawUserData.json()) || {};
+
+    // if (!userData.name) {
+    // TODO Move user to login page
+    // return;
+    // error(StatusCodes.NOT_FOUND, {
+    //   code: StatusCodes.NOT_FOUND,
+    //   message: 'No user info found',
+    // });
+    // }
+    // TODO Картинки пренадлежат конкретному пользователю
 
     const rawPublicationData = await fetch(`${PHOTORAMA_BASE_URL}/publications`);
-    // const rawUserInfoData = await fetch(`${KEKSTAGRAM_BASE_URL}/user`);
-    // TODO Картинки пренадлежат конкретному пользователю
+    const rawUserInfoData = await fetch(`${PHOTORAMA_BASE_URL}/accounts`);
     const rawPublications: Publication[] = (await rawPublicationData.json()) || [];
-    // const userInfo: UserInfo = (await rawUserInfoData.json()) || {};
+    const userInfo: UserInfo = (await rawUserInfoData.json()) || {};
 
     // if (!userInfo.name) {
     //   error(StatusCodes.NOT_FOUND, {
@@ -43,12 +61,12 @@ export const load: PageServerLoad = async () => {
     //   });
     // }
 
-    if (!rawPublications.length) {
-      error(StatusCodes.NOT_FOUND, {
-        code: StatusCodes.NOT_FOUND,
-        message: 'No pictures found',
-      });
-    }
+    // if (!rawPublications.length) {
+    //   error(StatusCodes.NOT_FOUND, {
+    //     code: StatusCodes.NOT_FOUND,
+    //     message: 'No pictures found',
+    //   });
+    // }
 
     // TODO Проверить если Publication.likes.user.id === currentUser.id => Publication.isLiked = true
     const publications = rawPublications.map((publication) => ({
@@ -57,7 +75,7 @@ export const load: PageServerLoad = async () => {
       description: clearDescriptionFromHashtags(publication.description),
     }));
 
-    return { publications, userData };
+    return { publications, userInfo };
   } catch (error) {
     console.log({ error });
 

@@ -1,0 +1,26 @@
+.layout {
+  min-height: 100dvh;
+  font-family: var(--app-font-family);
+  color: var(--app-primary-text);
+  background-color: rgb(var(--app-primary-bg));
+  transition-property: background-color, color;
+  transition-duration: var(--app-transition-duration);
+
+  /* Components theme appearence */
+  .nav-bar,
+  .user-avatar,
+  .modal {
+    background-color: rgb(var(--app-primary-bg));
+  }
+}
+
+.layout:has(.nav-bar) {
+  padding-bottom: var(--app-nav-bar-height);
+}
+
+.main-page-header {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -13,7 +13,7 @@
   const { avatar, name } = $derived(userSlice.getUserInfo());
   const { className = '', avatarSize = UserAvatarSize.MEDIUM }: UserAvatarProps = $props();
   const classNameFinal = ['user-avatar', className, avatarSize];
-  const userLinkHref = $derived(name ? `${AppRoute.USER}?name=${name}` : AppRoute.LOGIN);
+  const userLinkHref = $derived(name ? name : AppRoute.PROFILE);
 </script>
 
 <Link className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)} href={userLinkHref}>

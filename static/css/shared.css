@@ -35,9 +35,84 @@ select {
   font: inherit;
 }
 
+:root {
+  /* font */
+  --app-font-family:
+    system-ui, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  --app-12-font-size: 12px;
+  --app-14-font-size: 14px;
+  --app-16-font-size: 16px;
+  --app-24-font-size: 24px;
+  --app-line-height: 18px;
+  --app-font-weight-semibold: 600;
+  --app-font-weight-regular: 400;
+
+  /* colors */
+  --app-primary-text: 0, 0, 0;
+  --app-always-white: 255, 255, 255;
+  --app-secondary-text: 115, 115, 115;
+  --app-primary-bg: 250, 250, 250;
+  --app-primary-link: 0, 55, 107;
+  --app-primary-button: 0, 149, 246;
+  --app-secondary-button: 54, 54, 54;
+  --app-badge: 255, 48, 64;
+  --app-primary-icon: 38, 38, 38;
+  --app-secondary-icon: 38, 38, 38;
+  --app-gradient: 43.83deg, #ffd400 -48.57%, #ff7000 -5.59%, #ff0067 38.42%, #e700cb 83.44%;
+  --app-stroke: 85, 85, 85;
+  --app-secondary-background: 250, 250, 250;
+  --app-error-or-destructive: 237, 73, 86;
+
+  @media (prefers-color-scheme: dark) {
+    --app-primary-text: 245, 245, 245;
+    --app-secondary-text: 168, 168, 168;
+    --app-primary-bg: 40, 41, 42;
+    --app-primary-link: 224, 241, 255;
+    --app-primary-icon: 245, 245, 245;
+    --app-secondary-icon: 245, 245, 245;
+    --app-secondary-background: 18, 18, 18;
+  }
+
+  --app-nav-bar-z-index: 1;
+  --app-modal-z-index: 2;
+  --app-blur-amount: 2px;
+
+  /* metrics */
+  --app-nav-bar-height: 60px;
+  --app-layout-padding-d: 0 16px;
+  --app-common-padding-d: 12px 12px 16px;
+  --app-micro-layout-gap: 4px;
+  --app-border-radius: 32px;
+  --app-action-button-padding: 6px;
+  --app-nav-button-padding: 12px;
+
+  /* transitions */
+  --app-transition-duration: 0.3s;
+
+  /* animation */
+  --app-toggle-animation: 0.45s ease-in-out toggle;
+}
+
 @media (prefers-color-scheme: dark) {
   /* слишком яркое изображение дискомфортно для глаз */
   img {
     filter: brightness(90%);
+  }
+}
+
+/* animations */
+@keyframes toggle {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
   }
 }

@@ -62,7 +62,7 @@
       await update();
 
       // TODO MB should wait for confirmation
-      goto(AppRoute.ROOT);
+      goto(AppRoute.PUBLICATIONS);
     };
   };
 

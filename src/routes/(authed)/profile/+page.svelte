@@ -9,6 +9,6 @@
   };
 </script>
 
-<p>user page</p>
+<p>PROFILE page</p>
 <button onclick={togglePopup}>open modal</button>
-<Modal isOpen={isModalOpen} onClose={togglePopup}>user actions</Modal>
+<Modal isOpen={isModalOpen} onClose={togglePopup}>PROFILE actions</Modal>

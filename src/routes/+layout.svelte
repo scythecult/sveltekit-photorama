@@ -1,28 +1,21 @@
 <script lang="ts">
-  import './styles.css';
-  import { ParaglideJS } from '@inlang/paraglide-sveltekit';
+  import './layout.css';
+  import { page } from '$app/state';
   import Navbar from '$lib/components/nav-bar/Navbar.svelte';
-  import { i18n } from '$lib/i18n';
-  import { appSlice } from '$lib/store/appStore.svelte';
-  import { userSlice } from '$lib/store/userStore.svelte';
+  import { locales, localizeHref } from '$lib/paraglide/runtime';
 
-  const { data, children } = $props();
-
-  $effect(() => {
-    if (data.publications && data.userData) {
-      // TODO Make store field unnecessary
-      appSlice.setPublications(data.publications);
-      userSlice.setUserInfo(data.userData);
-    }
-  });
+  const { children } = $props();
 </script>
 
-<!-- Общий компонент, который включает в себя компонент +page.svelte на текущем уровне вложенности -->
-<!-- ...то же самое верно и для компонентов в под-папках routes -->
-<!-- Так же рядом могут находиться компоненты с запросами +layout.server.ts, которые делают запрос в момент загрузки текущей страницы -->
-<ParaglideJS {i18n}>
-  <main class="layout">
-    {@render children()}
-    <Navbar />
-  </main>
-</ParaglideJS>
+<!-- Root Layout -->
+<main class="layout">
+  {@render children()}
+  <Navbar />
+</main>
+
+<!-- Paraglide -->
+<div style="display:none">
+  {#each locales as locale (locale)}
+    <a href={localizeHref(page.url.pathname, { locale })}>{locale}</a>
+  {/each}
+</div>
