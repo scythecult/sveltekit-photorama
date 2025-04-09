@@ -1,0 +1,12 @@
+.greet-text {
+  font-size: var(--app-24-font-size);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.greet-text--highlight {
+  background-image: linear-gradient(var(--app-gradient));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
