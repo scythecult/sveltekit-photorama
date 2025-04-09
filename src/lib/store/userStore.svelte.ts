@@ -11,8 +11,8 @@ export type UserState = {
   subscribedUsers?: string[];
 };
 
-const createUserSlice = () => {
-  const userSlice = $state<UserState>({
+const createUserStore = () => {
+  const userStore = $state<UserState>({
     id: '',
     name: '',
     email: '',
@@ -23,27 +23,27 @@ const createUserSlice = () => {
 
   return {
     get state() {
-      return userSlice;
+      return userStore;
     },
 
     setUserInfo(userInfo: UserInfo) {
       const { id, name, email, password, avatar, subscribedUsers } = userInfo;
 
-      userSlice.id = id;
-      userSlice.name = name;
-      userSlice.email = email;
-      userSlice.password = password;
-      userSlice.avatar = avatar;
-      userSlice.subscribedUsers = subscribedUsers;
+      userStore.id = id;
+      userStore.name = name;
+      userStore.email = email;
+      userStore.password = password;
+      userStore.avatar = avatar;
+      userStore.subscribedUsers = subscribedUsers;
     },
 
     getUserInfo() {
-      return userSlice;
+      return userStore;
     },
     getContacts() {
-      return userSlice.subscribedUsers;
+      return userStore.subscribedUsers;
     },
   };
 };
 
-export const userSlice = createUserSlice();
+export const userStore = createUserStore();

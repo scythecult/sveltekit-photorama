@@ -1,7 +1,7 @@
 <script lang="ts">
   import './styles.css';
-  import { AppRoute } from '$lib/constants/common';
-  import { userSlice } from '$lib/store/userStore.svelte';
+  import { AppRoute } from '$lib/constants/url';
+  import { userStore } from '$lib/store/userStore.svelte';
   import Link from '../link/Link.svelte';
   import { UserAvatarSize } from './constants';
 
@@ -10,7 +10,7 @@
     avatarSize?: string;
   };
 
-  const { avatar, name } = $derived(userSlice.getUserInfo());
+  const { avatar, name } = $derived(userStore.getUserInfo());
   const { className = '', avatarSize = UserAvatarSize.MEDIUM }: UserAvatarProps = $props();
   const classNameFinal = ['user-avatar', className, avatarSize];
   const userLinkHref = $derived(name ? name : AppRoute.PROFILE);

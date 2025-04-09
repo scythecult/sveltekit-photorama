@@ -1,4 +1,7 @@
 .lang-switcher {
+  justify-self: center;
+  max-width: max-content;
+  margin: 0 auto;
   padding: var(--app-action-button-padding);
   font-size: var(--app-12-font-size);
   text-align: center;

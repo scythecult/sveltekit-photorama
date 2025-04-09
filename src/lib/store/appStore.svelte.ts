@@ -1,62 +1,24 @@
-import type { Comment, Publication } from '$lib/types/publication';
-
-export type PublicationPayload = {
-  id: string | null;
-  modalTrigger: string;
-};
-
 export type AppState = {
-  isModalVisible: boolean;
-  comments: Comment[];
-  publicationPayload: PublicationPayload;
-  publications: Publication[];
+  publicationId: string;
 };
 
-const createAppSlice = () => {
-  const appSlice = $state<AppState>({
-    isModalVisible: false,
-    publications: [],
-    comments: [],
-    publicationPayload: {
-      id: null,
-      modalTrigger: '',
-    },
+const createAppStore = () => {
+  const appStore = $state<AppState>({
+    publicationId: '',
   });
 
   return {
     get state() {
-      return appSlice;
+      return appStore;
     },
 
-    setPublications(publications: Publication[]) {
-      appSlice.publications = publications;
+    setPublicationId(id: string) {
+      appStore.publicationId = id;
     },
-
-    setPublicationPayload(payload: PublicationPayload) {
-      appSlice.publicationPayload = payload;
-    },
-    toggleModalVisibility() {
-      appSlice.isModalVisible = !appSlice.isModalVisible;
-    },
-    getPublications() {
-      return appSlice.publications;
-    },
-    getComments() {
-      const {
-        publications,
-        publicationPayload: { id },
-      } = appSlice;
-
-      return id !== null ? publications.find((publication) => +publication.id === +id)?.comments || [] : [];
-    },
-    getModalTrigger() {
-      return appSlice.publicationPayload.modalTrigger;
-    },
-
-    getModalState() {
-      return appSlice.isModalVisible;
+    getPublicationId() {
+      return appStore.publicationId;
     },
   };
 };
 
-export const appSlice = createAppSlice();
+export const appStore = createAppStore();

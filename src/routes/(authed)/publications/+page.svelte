@@ -1,33 +1,38 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import InteractionsButton from '$lib/components/buttons/interactions-button/InteractionsButton.svelte';
   import CommentList from '$lib/components/comment-list/CommentList.svelte';
   import Header from '$lib/components/header/Header.svelte';
   import Logo from '$lib/components/logo/Logo.svelte';
   import Modal from '$lib/components/modal/Modal.svelte';
   import PublicationList from '$lib/components/publication-list/PublicationList.svelte';
-  import { ModalTrigger } from '$lib/constants/common';
-  import { appSlice } from '$lib/store/appStore.svelte.js';
-  import { userSlice } from '$lib/store/userStore.svelte';
+  import { ModalId } from '$lib/constants/modal.js';
+  import { appStore } from '$lib/store/appStore.svelte.js';
+  import { modalStore } from '$lib/store/modalStore.svelte.js';
+  import { userStore } from '$lib/store/userStore.svelte';
+  import type { Publication } from '$lib/types/publication.js';
 
   const { data } = $props();
 
-  // TODO REFACTOR THIS SHIT
-  $effect(() => {
-    if (data.publications && data.userInfo) {
-      // TODO Make store field unnecessary
-      appSlice.setPublications(data.publications);
-      userSlice.setUserInfo(data.userInfo);
+  const getComments = (publications: Publication[] | undefined, commentId: string) => {
+    return commentId !== null
+      ? publications?.find((publication) => +publication.id === +commentId)?.comments || []
+      : [];
+  };
+
+  onMount(() => {
+    if (data.userInfo) {
+      userStore.setUserInfo(data.userInfo);
     }
   });
 
-  const publications = $derived(appSlice.getPublications());
-  const isModalOpen = $derived(appSlice.getModalState());
-  const comments = $derived(appSlice.getComments());
-  const userContacts = $derived(userSlice.getContacts());
-  const modalTrigger = $derived(appSlice.getModalTrigger());
+  const comments = $derived(getComments(data.publications, appStore.getPublicationId()));
+  const userContacts = $derived(userStore.getContacts());
+  const modalId = $derived(modalStore.getId());
+  const isModalOpen = $derived(modalStore.getVisibilityState());
 
   const togglePopup = () => {
-    appSlice.toggleModalVisibility();
+    modalStore.toggleModalVisibility();
   };
 </script>
 
@@ -36,19 +41,18 @@
   <Logo />
   <InteractionsButton />
 </Header>
-
 <section class="main-page">
   <!-- pictures -->
-  <PublicationList {publications} />
+  <PublicationList publications={data.publications} />
 </section>
 <!-- comments modal-->
 <Modal isOpen={isModalOpen} onClose={togglePopup}>
   <!-- comment list -->
-  {#if modalTrigger === ModalTrigger.COMMENT}
+  {#if modalId === ModalId.COMMENT}
     <CommentList {comments} />
   {/if}
   <!-- contacts list -->
-  {#if modalTrigger === ModalTrigger.SEND}
+  {#if modalId === ModalId.SEND}
     {userContacts}
   {/if}
 </Modal>

@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
+import { redirect } from '@sveltejs/kit';
+import { StatusCodes } from 'http-status-codes';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { PHOTORAMA_BASE_URL } from '$lib/constants/common';
 import { CookieName } from '$lib/constants/cookies';
+import { AppRoute, PHOTORAMA_BASE_URL } from '$lib/constants/url';
 import { getCookieByName, parseCookieHeaderValues } from '$lib/utils/utils';
 import type { Actions } from './$types';
 
@@ -25,17 +27,21 @@ export const actions: Actions = {
       },
     });
 
-    const parsedCookies = parseCookieHeaderValues(response.headers.getSetCookie());
-    const sessionId = getCookieByName(parsedCookies, CookieName.USER_SESSION_ID);
+    if (response.ok) {
+      const parsedCookies = parseCookieHeaderValues(response.headers.getSetCookie());
+      const sessionId = getCookieByName(parsedCookies, CookieName.USER_SESSION_ID);
 
-    if (sessionId) {
-      cookies.set(CookieName.USER_SESSION_ID, sessionId, {
-        path: '/',
-      });
+      if (sessionId) {
+        cookies.set(CookieName.USER_SESSION_ID, sessionId, {
+          path: '/',
+        });
+
+        redirect(StatusCodes.PERMANENT_REDIRECT, AppRoute.PUBLICATIONS);
+      }
+
+      console.log('cookie in SIGNUP', { sessionId });
+      const result = await response.json();
+      console.log({ result });
     }
-    console.log('cookie in SIGNUP', { sessionId });
-
-    const result = await response.json();
-    console.log({ result });
   },
 };

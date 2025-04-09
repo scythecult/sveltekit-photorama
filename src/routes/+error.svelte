@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { page } from '$app/state';
+  import './error.css';
   import Link from '$lib/components/link/Link.svelte';
-  import { AppRoute } from '$lib/constants/common';
+  import { AppRoute } from '$lib/constants/url';
+  import { m } from '$lib/paraglide/messages';
 </script>
 
-<h2>{page.status} {page.error?.message} !</h2>
-
-<Link href={AppRoute.ROOT}>Go Home</Link>
+<section class="error">
+  <h2 class="error__title">{m.not_found_error_title()}</h2>
+  <p class="error__description">
+    {m.not_found_error_description()}
+    <Link className="error__link" href={AppRoute.ROOT}>{m.not_found_error_link()}</Link>
+  </p>
+</section>

@@ -1,7 +1,8 @@
 <script lang="ts">
   import './styles.css';
-  import { ModalTrigger } from '$lib/constants/common';
-  import { appSlice } from '$lib/store/appStore.svelte';
+  import { ModalId } from '$lib/constants/modal';
+  import { appStore } from '$lib/store/appStore.svelte';
+  import { modalStore } from '$lib/store/modalStore.svelte';
   import Count from '../../count/Count.svelte';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
@@ -15,9 +16,9 @@
   const { id, commentCount, className = '' }: CommentProps = $props();
 
   const handleCommentClick = () => {
-    appSlice.setPublicationPayload({ modalTrigger: ModalTrigger.COMMENT, id });
-
-    appSlice.toggleModalVisibility();
+    appStore.setPublicationId(id);
+    modalStore.setId(ModalId.COMMENT);
+    modalStore.toggleModalVisibility();
   };
 </script>
 

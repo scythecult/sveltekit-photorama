@@ -1,7 +1,7 @@
 <script lang="ts">
   import './styles.css';
   import type { Action } from 'svelte/action';
-  import { appSlice } from '$lib/store/appStore.svelte';
+  import { appStore } from '$lib/store/appStore.svelte';
   import type { Comment } from '$lib/types/publication';
   import MessageForm from '../message-form/MessageForm.svelte';
   import Stub from '../stub/Stub.svelte';
@@ -12,7 +12,7 @@
   };
 
   const { comments }: CommentListProps = $props();
-  const publicationId = $derived(appSlice.state.publicationPayload.id);
+  const publicationId = $derived(appStore.getPublicationId());
 
   const scrollToTop: Action = (node) => {
     $effect(() => {

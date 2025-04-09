@@ -28,19 +28,6 @@
   width: 196px;
 }
 
-.login__greet-text {
-  font-size: var(--app-24-font-size);
-  text-align: center;
-  text-wrap: balance;
-}
-
-.login__greet-text--highlight {
-  background-image: linear-gradient(var(--app-gradient));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .login__actions {
   font-size: var(--app-14-font-size);
   font-weight: var(--app-font-weight-semibold);

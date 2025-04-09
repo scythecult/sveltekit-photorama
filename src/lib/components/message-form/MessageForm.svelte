@@ -1,9 +1,10 @@
 <script lang="ts">
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
+  import { StatusCodes } from 'http-status-codes';
   import { enhance } from '$app/forms';
   import { ActionMap, ActionNameMap } from '$lib/constants/action';
-  import { userSlice } from '$lib/store/userStore.svelte';
+  import { userStore } from '$lib/store/userStore.svelte';
   import { IconName } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';
   import UserAvatar from '../user-avatar/UserAvatar.svelte';
@@ -14,20 +15,26 @@
     onSubmit?: () => void;
   };
 
-  type MessageTextareaHandler = Event & { currentTarget: EventTarget & HTMLTextAreaElement };
+  type MessageTextareaHandler = Event & KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement };
 
-  const { id } = $derived(userSlice.getUserInfo());
+  const { id } = $derived(userStore.getUserInfo());
   const { publicationId, className = '', onSubmit }: MessageFormProps = $props();
   const classNameFinal = ['message-form', className];
   let creating = $state(false);
   let message = $state('');
+  let errorMessage = $state('');
 
   let textareaWidth = $state(0);
   let counterHeight = $state(0);
   const isSubmitButtonVisible = $derived(message.length > 0 && !creating);
 
-  const handleMessageInput = (evt: MessageTextareaHandler) => {
+  const handleMessageKeydown = (evt: MessageTextareaHandler) => {
+    const { key } = evt;
     const { offsetWidth } = evt.currentTarget;
+
+    if (key === 'Enter') {
+      evt.preventDefault();
+    }
 
     textareaWidth = offsetWidth;
   };
@@ -35,11 +42,18 @@
   const handleSubmit: SubmitFunction = async () => {
     creating = true;
 
-    return async ({ update }) => {
-      creating = false;
-
+    return async ({ update, result }) => {
       await update();
 
+      creating = false;
+
+      if (result.status !== StatusCodes.OK) {
+        errorMessage = result.type;
+
+        return;
+      }
+
+      errorMessage = '';
       onSubmit?.();
     };
   };
@@ -55,7 +69,7 @@
     autocomplete="off"
     aria-label="Add comment..."
     style="height: {counterHeight}px"
-    oninput={handleMessageInput}
+    onkeydown={handleMessageKeydown}
     bind:value={message}
   ></textarea>
   <pre
@@ -67,5 +81,9 @@
 
   {#if isSubmitButtonVisible}
     <button class="message-form__submit" type="submit"><CustomIcon iconName={IconName.ARROW} /></button>
+  {/if}
+
+  {#if errorMessage}
+    <p class="message-form__error-message">{errorMessage}</p>
   {/if}
 </form>

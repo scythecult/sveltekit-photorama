@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
+import { fail } from '@sveltejs/kit';
+import { StatusCodes } from 'http-status-codes';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { PHOTORAMA_BASE_URL } from '$lib/constants/common';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/url';
 import { convertStringToBoolean } from '$lib/utils/utils';
 import type { Actions } from '../../$types';
 
@@ -89,6 +91,10 @@ export const actions: Actions = {
           'Content-Type': 'application/json',
         },
       });
+
+      if (!response.ok) {
+        return fail(StatusCodes.BAD_REQUEST, { message: 'Failed to create comment' });
+      }
 
       const result = await response.json();
       console.log({ result });

@@ -1,4 +1,4 @@
 export const load = async () => {
   // eslint-disable-next-line no-console
-  console.log('EXPLORE page load');
+  console.log('STUB EXPLORE page load');
 };

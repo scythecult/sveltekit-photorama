@@ -2,16 +2,19 @@
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
   import { enhance } from '$app/forms';
-  import { goto } from '$app/navigation';
   import { EMAIL_REGEXP, MIN_PASSWORD_LENGTH } from '$lib/components/input/constants';
   import Input from '$lib/components/input/Input.svelte';
   import { ActionMap } from '$lib/constants/action';
-  import { AppRoute } from '$lib/constants/common';
+  import { AppLocaleName } from '$lib/constants/locales';
   import { m } from '$lib/paraglide/messages';
+  import { getLocale } from '$lib/paraglide/runtime';
 
-  // TODO Populate domains array based on most 'popular' email providers in user location
-  const SUGGESTED_EMAIL_DOMAINS = ['@gmail.com', '@outlook.com', '@yahoo.com', '@hotmail.com', '@aol.com'];
+  const SuggestedLocalEmailDomain = {
+    [AppLocaleName.RU]: ['@yandex.ru', '@mail.ru', '@rambler.ru', '@bk.ru', '@list.ru'],
+    [AppLocaleName.EN]: ['@gmail.com', '@outlook.com', '@yahoo.com', '@hotmail.com', '@aol.com'],
+  };
 
+  let currentLocale = $derived(getLocale());
   let emailValue = $state('');
   let currentEmailDomain = $state('');
   let passwordValue = $state('');
@@ -19,8 +22,8 @@
 
   let suggestedEmailDomains = $derived(
     !currentEmailDomain
-      ? SUGGESTED_EMAIL_DOMAINS
-      : SUGGESTED_EMAIL_DOMAINS.filter((domain) => domain === currentEmailDomain),
+      ? SuggestedLocalEmailDomain[currentLocale]
+      : SuggestedLocalEmailDomain[currentLocale].filter((domain) => domain === currentEmailDomain),
   );
   let isEmailValid = $state(true);
   let isFormDisabled = $state(false);
@@ -40,7 +43,7 @@
   const handleEmailDomainClick = (domain: string) => {
     if (!currentEmailDomain) {
       currentEmailDomain = domain;
-      emailValue = `${emailValue}${domain}`;
+      emailValue = `${emailValue.replace(/@/g, '')}${domain}`;
       isEmailValid = EMAIL_REGEXP.test(emailValue);
     }
   };
@@ -57,12 +60,8 @@
     isFormDisabled = true;
 
     return async ({ update }) => {
-      isFormDisabled = false;
-
       await update();
-
-      // TODO MB should wait for confirmation
-      goto(AppRoute.PUBLICATIONS);
+      isFormDisabled = false;
     };
   };
 
@@ -83,9 +82,9 @@
     onInput={handleEmailInput}
     isError={!isEmailValid}
     userValue={emailValue}
-    errorMessage={m.common_user_error({ field: 'почту' })}
+    errorMessage={m.email_error()}
   />
-  <!-- TODO Move to separate component -->
+
   <div class="signup-email-form__suggested-email-domains">
     {#each suggestedEmailDomains as domain (domain)}
       <button
@@ -100,11 +99,11 @@
     name="password"
     type="password"
     placeholder={m.login_password_placeholder()}
-    minlength={MIN_PASSWORD_LENGTH}
     onInput={handlePasswordInput}
     isError={!isPasswordValid}
-    errorMessage={m.login_password_error({ value: MIN_PASSWORD_LENGTH })}
+    minlength={MIN_PASSWORD_LENGTH}
     userValue={passwordValue}
+    errorMessage={m.login_password_error({ value: MIN_PASSWORD_LENGTH })}
   />
   <button class="signup-email-form__submit" type="submit" disabled={isSubmitButtonDisabled}
     >{m.signup_button_register()}</button

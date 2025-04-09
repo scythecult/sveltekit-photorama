@@ -15,11 +15,11 @@
   let isActive = $state(false);
 
   afterNavigate(() => {
-    isActive = location.pathname === href.replace(QUERY_REGEXP, '');
+    isActive = location.pathname.includes(href.replace(QUERY_REGEXP, ''));
   });
 
   $effect(() => {
-    isActive = location.pathname === href.replace(QUERY_REGEXP, '');
+    isActive = location.pathname.includes(href.replace(QUERY_REGEXP, ''));
   });
 
   const handleLinkClick = async (evt: MouseEvent) => {

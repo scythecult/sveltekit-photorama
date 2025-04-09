@@ -44,3 +44,10 @@
   border: none;
   border-radius: 14px;
 }
+
+.message-form__error-message {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: var(--app-12-font-size);
+  color: rgb(var(--app-error-or-destructive));
+}
