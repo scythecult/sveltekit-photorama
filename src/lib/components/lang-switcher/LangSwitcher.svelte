@@ -1,13 +1,8 @@
 <script lang="ts">
   import './styles.css';
+  import { APP_LOCALES } from '$lib/constants/locales';
   import { m } from '$lib/paraglide/messages';
   import { getLocale, setLocale } from '$lib/paraglide/runtime';
-
-  // TODO Check inlang docks for automatic locale detection
-  const APP_LOCALES = [
-    { value: 'ru', text: 'Русский' },
-    { value: 'en', text: 'English' },
-  ];
 
   let selected = $state(getLocale());
 
