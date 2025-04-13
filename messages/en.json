@@ -19,6 +19,15 @@
 	"signup_welcome_text": "Don't have an account?",
 	"signup_button_register": "Register",
 	"signup_email_placeholder": "Email",
+	"page_explore_title": "Interesting",
 	"page_register_title": "Register",
-	"aria_lang": "Switch language"
+	"page_publications_comments_title": "Comments",
+	"page_publications_comments_no_comments": "There is no comments yet",
+	"page_publications_comments_first_comment": "Post your first comment",
+	"page_explore_no_topics": "There is no related topics yet, $but you can find it$",
+	"page_explore_no_topics_here": "Here",
+	"aria_lang": "Switch language",
+	"aria_close": "Close",
+	"floating_modal_title": "More content in app",
+	"floating_modal_description": "Search for information about what interests you and find new inspiring topics."
 }

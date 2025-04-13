@@ -7,11 +7,12 @@
   type LinkProps = {
     href: string;
     target?: string;
+    onClick?: (evt: MouseEvent) => void;
     children: Snippet;
     className?: ((isActive: boolean) => string | string[]) | string;
   };
 
-  const { href, children, target = '_top', className }: LinkProps = $props();
+  const { href, children, target = '_top', className, onClick }: LinkProps = $props();
   let isActive = $state(false);
 
   afterNavigate(() => {
@@ -24,6 +25,8 @@
 
   const handleLinkClick = async (evt: MouseEvent) => {
     evt.preventDefault();
+
+    onClick?.(evt);
 
     await goto(href, { keepFocus: true });
   };

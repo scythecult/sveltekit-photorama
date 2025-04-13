@@ -8,6 +8,7 @@
   import Home from './icons/Home.svelte';
   import Like from './icons/Like.svelte';
   import PictureLike from './icons/PictureLike.svelte';
+  import Profile from './icons/Profile.svelte';
   import Search from './icons/Search.svelte';
   import Share from './icons/Share.svelte';
 
@@ -21,6 +22,7 @@
     [IconName.ADD]: Add,
     [IconName.SHARE]: Share,
     [IconName.ARROW]: Arrow,
+    [IconName.PROFILE]: Profile,
   };
 
   type CustomIconProps = {

@@ -13,33 +13,6 @@
   pointer-events: none;
 }
 
-.login-form__link {
-  color: rgb(var(--app-primary-button));
-}
-
-.login-form__link--bold {
-  font-weight: var(--app-font-weight-semibold);
-}
-
-.login-form__submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 32px;
-  font-size: var(--app-14-font-size);
-  font-weight: var(--app-font-weight-semibold);
-  color: rgb(var(--app-always-white));
-  padding: 7px 16px;
-  background-color: rgb(var(--app-primary-button));
-  border: none;
-  border-radius: 8px;
-
-  &:disabled {
-    opacity: 0.7;
-  }
-}
-
 .login-form__register {
   justify-self: center;
   padding: 1rem 0;

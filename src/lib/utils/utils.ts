@@ -26,3 +26,17 @@ export const getCookieByName = (cookies: SimpleCookie[], name: string) =>
   cookies.find((item) => item.name === name)?.value;
 
 export const getRandomInteger = (min: number, max: number) => Math.floor(min + Math.random() * (max + 1 - min));
+
+export const createSlogan = (rawSlogan: string) => {
+  const startIndex = rawSlogan.indexOf('$');
+  const endIndex = rawSlogan.lastIndexOf('$') + 1;
+  const start = rawSlogan.slice(0, startIndex);
+  const middle = rawSlogan.slice(startIndex, endIndex).replace(/\$/g, '');
+  const end = rawSlogan.slice(endIndex).trim();
+
+  return {
+    start,
+    middle,
+    end,
+  };
+};

@@ -3,6 +3,7 @@ export const PHOTORAMA_BASE_URL = 'http://localhost:9666/photorama/api/v1';
 export const AppRoute = {
   ROOT: '/',
   EXPLORE: '/explore',
+  TOPICS: '/topics',
   INTERATIONS: '/interactions',
   PUBLICATIONS: '/publications',
   ADD: '/add',

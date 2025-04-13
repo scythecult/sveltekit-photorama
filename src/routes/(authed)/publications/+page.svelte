@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
   import InteractionsButton from '$lib/components/buttons/interactions-button/InteractionsButton.svelte';
   import CommentList from '$lib/components/comment-list/CommentList.svelte';
-  import Header from '$lib/components/header/Header.svelte';
-  import Logo from '$lib/components/logo/Logo.svelte';
+  import Header from '$lib/components/headers/basic/Header.svelte';
+  import Logo from '$lib/components/logos/main-logo/Logo.svelte';
   import Modal from '$lib/components/modal/Modal.svelte';
   import PublicationList from '$lib/components/publication-list/PublicationList.svelte';
   import { ModalId } from '$lib/constants/modal.js';

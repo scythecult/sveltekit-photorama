@@ -79,11 +79,11 @@
     userValue={passwordValue}
   />
 
-  <Link className="login-form__link" href={AppRoute.RESET_PASSWORD}>{m.login_password_reset()}</Link>
-  <button class="login-form__submit" type="submit" disabled={isSubmitButtonDisabled}>{m.login_button_login()}</button>
+  <Link className="login-form__link plain-button" href={AppRoute.RESET_PASSWORD}>{m.login_password_reset()}</Link>
+  <button class="primary-button" type="submit" disabled={isSubmitButtonDisabled}>{m.login_button_login()}</button>
 
   <p class="login-form__register">
     {m.signup_welcome_text()}
-    <Link className="login-form__link login-form__link--bold" href={AppRoute.SIGNUP}>{m.signup_button_register()}</Link>
+    <Link className="plain-button" href={AppRoute.SIGNUP}>{m.signup_button_register()}</Link>
   </p>
 </form>

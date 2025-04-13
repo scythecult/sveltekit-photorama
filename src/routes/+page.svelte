@@ -1,13 +1,26 @@
 <script lang="ts">
   import './page.css';
   import LoginForm from '$lib/components/forms/login-form/LoginForm.svelte';
-  import Greet from '$lib/components/greet/Greet.svelte';
-  import Header from '$lib/components/header/Header.svelte';
+  import Header from '$lib/components/headers/basic/Header.svelte';
+  import HighlightedText from '$lib/components/highlighted-text/HighlightedText.svelte';
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
-  import Logo from '$lib/components/logo/Logo.svelte';
+  import Logo from '$lib/components/logos/main-logo/Logo.svelte';
   import { AppRoute } from '$lib/constants/url';
   import { m } from '$lib/paraglide/messages';
+  import { getRandomInteger } from '$lib/utils/utils';
+
+  const SloganMap: Record<string, string> = {
+    1: m.login_slogan_1(),
+    2: m.login_slogan_2(),
+    3: m.login_slogan_3(),
+  };
+
+  const getRawSlogan = () => {
+    const randomIndex = getRandomInteger(1, 3);
+
+    return SloganMap[randomIndex];
+  };
 
   let isLoginFormVisible = $state(false);
 
@@ -23,13 +36,11 @@
   <Logo className="login__greet-logo" />
   {#if !isLoginFormVisible}
     <div class="login__greet">
-      <Greet />
+      <HighlightedText phrase={getRawSlogan()} />
       <p class="login__actions">
-        <button class="login__login-button" onclick={handleLoginButtonClick} type="button"
-          >{m.login_button_login()}</button
-        >
+        <button class="plain-button" onclick={handleLoginButtonClick} type="button">{m.login_button_login()}</button>
         {m.login_or()}
-        <Link className="login__register-link" href={AppRoute.SIGNUP}>{m.signup_button_register()}</Link>
+        <Link className="plain-button" href={AppRoute.SIGNUP}>{m.signup_button_register()}</Link>
       </p>
     </div>
   {:else}

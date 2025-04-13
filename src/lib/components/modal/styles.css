@@ -2,6 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: var(--app-modal-z-index);
   width: 100%;
   min-height: 100dvh;
   padding: 0;
@@ -33,13 +34,70 @@
   transition-duration: 0.7s;
 }
 
+.modal-shown {
+  .overlay {
+    opacity: 1;
+    pointer-events: all;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(var(--app-blur-amount));
+    transform: translateX(0);
+  }
+
+  .modal {
+    transform: translate(-50%, 0);
+  }
+
+  .modal.floating {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.modal.floating {
+  top: 50%;
+  bottom: auto;
+  width: calc(100% - 80px);
+  padding: 28px;
+  border-radius: var(--app-border-radius);
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 0.2s;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  .modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 3px;
+      background-color: rgb(var(--app-secondary-text));
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+}
+
 .modal__close {
   position: relative;
   padding: 0;
   width: 24px;
   height: 3px;
   background-color: rgb(var(--app-secondary-text));
-
   border: none;
   touch-action: none;
 
@@ -57,18 +115,4 @@
 
 .modal__content {
   width: 100%;
-}
-
-.modal-shown {
-  .overlay {
-    opacity: 1;
-    pointer-events: all;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(var(--app-blur-amount));
-    transform: translateX(0);
-  }
-
-  .modal {
-    transform: translate(-50%, 0);
-  }
 }

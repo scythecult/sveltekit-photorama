@@ -2,6 +2,8 @@
   import './styles.css';
   import { AppRoute } from '$lib/constants/url';
   import { userStore } from '$lib/store/userStore.svelte';
+  import { IconName } from '../custom-icon/constants';
+  import CustomIcon from '../custom-icon/CustomIcon.svelte';
   import Link from '../link/Link.svelte';
   import { UserAvatarSize } from './constants';
 
@@ -21,7 +23,7 @@
     {#if avatar.includes('http') || avatar.includes('https')}
       <img class="user-avatar__image" src={avatar} alt={name} />
     {:else}
-      <span class="user-avatar__image user-avatar__image--placeholder"></span>
+      <CustomIcon iconName={IconName.PROFILE} />
     {/if}
   {/if}
   {#if name}

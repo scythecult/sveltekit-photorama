@@ -28,7 +28,7 @@
   width: 100%;
   min-height: var(--input-height);
   background-color: rgb(var(--app-secondary-background));
-  border: 1px solid rgb(var(--app-stroke));
+  border: 1px solid rgb(var(--app-border-color));
   border-radius: 3px;
 }
 

@@ -3,7 +3,7 @@
   import { IconName } from '$lib/components/custom-icon/constants';
   import CustomIcon from '$lib/components/custom-icon/CustomIcon.svelte';
   import SignupEmailForm from '$lib/components/forms/signup-form/SignupEmailForm.svelte';
-  import Header from '$lib/components/header/Header.svelte';
+  import Header from '$lib/components/headers/basic/Header.svelte';
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import Loader from '$lib/components/loader/Loader.svelte';

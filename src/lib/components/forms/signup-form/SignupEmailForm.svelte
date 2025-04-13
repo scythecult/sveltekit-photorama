@@ -88,7 +88,7 @@
   <div class="signup-email-form__suggested-email-domains">
     {#each suggestedEmailDomains as domain (domain)}
       <button
-        class="signup-email-form__suggested-email-domain"
+        class="signup-email-form__suggested-email-domain primary-button"
         onclick={() => handleEmailDomainClick(domain)}
         type="button">{domain}</button
       >
@@ -105,7 +105,5 @@
     userValue={passwordValue}
     errorMessage={m.login_password_error({ value: MIN_PASSWORD_LENGTH })}
   />
-  <button class="signup-email-form__submit" type="submit" disabled={isSubmitButtonDisabled}
-    >{m.signup_button_register()}</button
-  >
+  <button class="primary-button" type="submit" disabled={isSubmitButtonDisabled}>{m.signup_button_register()}</button>
 </form>

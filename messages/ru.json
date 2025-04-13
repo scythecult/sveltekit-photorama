@@ -19,6 +19,15 @@
 	"signup_welcome_text": "Пока нет аккаунта?",
 	"signup_button_register": "Зарегистрироваться",
 	"signup_email_placeholder": "Эл. почта",
+	"page_explore_title": "Интересное",
 	"page_register_title": "Зарегистрироваться",
-	"aria_lang": "Изменить язык отображения"
+	"page_publications_comments_title": "Комментарии",
+	"page_publications_comments_no_comments": "У этой публикации пока нет комментариев",
+	"page_publications_comments_first_comment": "Опубликуйте ваш первый комментарий",
+	"page_explore_no_topics": "Пока нет связных тем, но $вы можете найти их$",
+	"page_explore_no_topics_here": "Здесь",
+	"aria_lang": "Изменить язык отображения",
+	"aria_close": "Закрыть",
+	"floating_modal_title": "Больше контента в приложении",
+	"floating_modal_description": "Ищите информацию о том, что вас интересует, и находите новые вдохновляющие темы."
 }

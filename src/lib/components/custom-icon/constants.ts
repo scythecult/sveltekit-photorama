@@ -8,6 +8,7 @@ export const IconName = {
   ADD: 'add',
   SHARE: 'share',
   ARROW: 'arrow',
+  PROFILE: 'profile',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;
