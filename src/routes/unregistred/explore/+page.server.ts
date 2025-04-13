@@ -1,4 +1,10 @@
+import { MOCK_TOPICS } from './mocks/mocks';
+
 export const load = async () => {
   // eslint-disable-next-line no-console
-  console.log('STUB EXPLORE page load');
+  console.log('STUB EXPLORE page load top 10 categories of posts');
+
+  return {
+    topics: MOCK_TOPICS,
+  };
 };

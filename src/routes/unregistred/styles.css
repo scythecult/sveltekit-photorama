@@ -1,0 +1,25 @@
+.unregistered-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: var(--app-primary-text);
+}
+
+.unregistered-modal__logo {
+  align-self: center;
+}
+
+.unregistered-modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.unregistered-modal__title {
+  font-size: var(--app-24-font-size);
+  text-align: left;
+}
+
+.unregistered-modal__description {
+  font-size: var(--app-14-font-size);
+}
