@@ -2,6 +2,7 @@
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
   import { enhance } from '$app/forms';
+  import Carousel from '$lib/components/carousel/Carousel.svelte';
   import { EMAIL_REGEXP, MIN_PASSWORD_LENGTH } from '$lib/components/input/constants';
   import Input from '$lib/components/input/Input.svelte';
   import { ActionMap } from '$lib/constants/action';
@@ -85,15 +86,13 @@
     errorMessage={m.email_error()}
   />
 
-  <div class="signup-email-form__suggested-email-domains">
+  <Carousel className="suggested-email-domains">
     {#each suggestedEmailDomains as domain (domain)}
-      <button
-        class="signup-email-form__suggested-email-domain primary-button"
-        onclick={() => handleEmailDomainClick(domain)}
-        type="button">{domain}</button
+      <button class="suggested-email-domain primary-button" onclick={() => handleEmailDomainClick(domain)} type="button"
+        >{domain}</button
       >
     {/each}
-  </div>
+  </Carousel>
 
   <Input
     name="password"

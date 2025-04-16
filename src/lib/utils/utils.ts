@@ -27,12 +27,12 @@ export const getCookieByName = (cookies: SimpleCookie[], name: string) =>
 
 export const getRandomInteger = (min: number, max: number) => Math.floor(min + Math.random() * (max + 1 - min));
 
-export const createSlogan = (rawSlogan: string) => {
-  const startIndex = rawSlogan.indexOf('$');
-  const endIndex = rawSlogan.lastIndexOf('$') + 1;
-  const start = rawSlogan.slice(0, startIndex);
-  const middle = rawSlogan.slice(startIndex, endIndex).replace(/\$/g, '');
-  const end = rawSlogan.slice(endIndex).trim();
+export const dividePhrase = (rawPhrase: string) => {
+  const startIndex = rawPhrase.indexOf('$');
+  const endIndex = rawPhrase.lastIndexOf('$') + 1;
+  const start = rawPhrase.slice(0, startIndex);
+  const middle = rawPhrase.slice(startIndex, endIndex).replace(/\$/g, '');
+  const end = rawPhrase.slice(endIndex).trim();
 
   return {
     start,

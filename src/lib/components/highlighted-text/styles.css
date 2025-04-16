@@ -4,7 +4,7 @@
   text-wrap: balance;
 }
 
-.highlighted-text--highlight {
+.highlighted-text--colored {
   background-image: linear-gradient(var(--app-gradient));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

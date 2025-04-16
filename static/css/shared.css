@@ -130,7 +130,7 @@ select {
 
 @media (prefers-color-scheme: dark) {
   /* слишком яркое изображение дискомфортно для глаз */
-  img {
+  img:not([alt*='Photorama']) {
     filter: brightness(90%);
   }
 }

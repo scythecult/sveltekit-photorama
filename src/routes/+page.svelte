@@ -1,7 +1,7 @@
 <script lang="ts">
   import './page.css';
   import LoginForm from '$lib/components/forms/login-form/LoginForm.svelte';
-  import Header from '$lib/components/headers/basic/Header.svelte';
+  import Header from '$lib/components/header/Header.svelte';
   import HighlightedText from '$lib/components/highlighted-text/HighlightedText.svelte';
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
@@ -16,16 +16,16 @@
     3: m.login_slogan_3(),
   };
 
-  const getRawSlogan = () => {
-    const randomIndex = getRandomInteger(1, 3);
-
-    return SloganMap[randomIndex];
-  };
-
   let isLoginFormVisible = $state(false);
 
   const handleLoginButtonClick = () => {
     isLoginFormVisible = !isLoginFormVisible;
+  };
+
+  const getRawSlogan = () => {
+    const randomIndex = getRandomInteger(1, 3);
+
+    return SloganMap[randomIndex];
   };
 </script>
 

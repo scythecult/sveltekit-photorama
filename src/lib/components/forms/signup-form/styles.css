@@ -13,16 +13,12 @@
   pointer-events: none;
 }
 
-.signup-email-form__suggested-email-domains {
-  display: flex;
-  align-items: center;
+.suggested-email-domains {
   gap: 4px;
   height: var(--child-height);
-
-  overflow-x: scroll;
 }
 
-.signup-email-form__suggested-email-domain {
+.suggested-email-domain {
   color: var(--app-primary-text);
   background-color: rgb(var(--app-stroke));
 }

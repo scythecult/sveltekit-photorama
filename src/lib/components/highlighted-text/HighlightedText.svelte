@@ -1,17 +1,22 @@
 <script lang="ts">
   import './styles.css';
-  import { createSlogan } from '$lib/utils/utils';
+  import { onMount } from 'svelte';
+  import { dividePhrase } from '$lib/utils/utils';
 
   type HighlightedTextProps = {
     phrase: string;
   };
 
   const { phrase }: HighlightedTextProps = $props();
-  const slogan = $state(createSlogan(phrase));
+  let dividedPhrase = $state({ start: '', middle: '', end: '' });
+
+  onMount(() => {
+    dividedPhrase = dividePhrase(phrase);
+  });
 </script>
 
 <div class="highlighted-text">
-  {slogan.start}
-  <span class="highlighted-text highlighted-text--highlight"> {slogan.middle}</span>
-  {slogan.end}
+  {dividedPhrase.start}
+  <span class="highlighted-text highlighted-text--colored"> {dividedPhrase.middle}</span>
+  {dividedPhrase.end}
 </div>
