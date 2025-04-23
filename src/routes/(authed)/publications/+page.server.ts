@@ -2,7 +2,7 @@
 import { fail } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { PHOTORAMA_BASE_URL } from '$lib/constants/url';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import { convertStringToBoolean } from '$lib/utils/utils';
 import type { Actions } from '../../$types';
 

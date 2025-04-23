@@ -5,7 +5,7 @@ export const IconName = {
   COMMENT: 'comment',
   HOME: 'home',
   SEACH: 'search',
-  ADD: 'add',
+  CREATE: 'create',
   SHARE: 'share',
   ARROW: 'arrow',
   PROFILE: 'profile',

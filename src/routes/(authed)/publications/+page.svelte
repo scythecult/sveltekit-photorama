@@ -6,7 +6,7 @@
   import Logo from '$lib/components/logos/main-logo/Logo.svelte';
   import Modal from '$lib/components/modal/Modal.svelte';
   import PublicationList from '$lib/components/publication-list/PublicationList.svelte';
-  import { ModalId } from '$lib/constants/modal.js';
+  import { ModalId } from '$lib/constants/common';
   import { appStore } from '$lib/store/appStore.svelte.js';
   import { modalStore } from '$lib/store/modalStore.svelte.js';
   import { userStore } from '$lib/store/userStore.svelte';

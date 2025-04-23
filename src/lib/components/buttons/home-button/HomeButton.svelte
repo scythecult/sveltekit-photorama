@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
   import Link from '../../link/Link.svelte';

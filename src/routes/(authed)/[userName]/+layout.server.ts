@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
-import { CookieName } from '$lib/constants/cookies.js';
-import { AppRoute } from '$lib/constants/url.js';
+import { AppRoute } from '$lib/constants/app';
+import { CookieName } from '$lib/constants/common';
 
 export const load = async ({ params, cookies }) => {
   const { userName = '' } = params;

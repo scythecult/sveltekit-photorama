@@ -3,7 +3,7 @@
   import Header from '$lib/components/header/Header.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import Logo from '$lib/components/logos/main-logo/Logo.svelte';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
 
   const { children } = $props();

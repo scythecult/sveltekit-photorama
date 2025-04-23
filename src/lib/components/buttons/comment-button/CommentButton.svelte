@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import { ModalId } from '$lib/constants/modal';
+  import { ModalId } from '$lib/constants/common';
   import { appStore } from '$lib/store/appStore.svelte';
   import { modalStore } from '$lib/store/modalStore.svelte';
   import Count from '../../count/Count.svelte';

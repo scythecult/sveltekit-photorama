@@ -7,7 +7,7 @@
   import Input from '$lib/components/input/Input.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import { ActionMap } from '$lib/constants/action';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
 
   let usernameValue = $state('');

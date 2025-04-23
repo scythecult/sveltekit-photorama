@@ -1,6 +1,6 @@
 import { type Handle, type HandleFetch } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import { PHOTORAMA_BASE_URL } from '$lib/constants/url';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 
 const paraglideHandle: Handle = ({ event, resolve }) =>

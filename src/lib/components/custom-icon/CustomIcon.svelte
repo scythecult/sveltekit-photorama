@@ -1,9 +1,9 @@
 <script lang="ts">
   import './styles.css';
   import { IconName, type IconNameValue, IconSize, type IconSizeValue } from './constants';
-  import Add from './icons/Add.svelte';
   import Arrow from './icons/Arrow.svelte';
   import Comment from './icons/Comment.svelte';
+  import Create from './icons/Create.svelte';
   import Dislike from './icons/Dislike.svelte';
   import Home from './icons/Home.svelte';
   import Like from './icons/Like.svelte';
@@ -19,7 +19,7 @@
     [IconName.DISLIKE]: Dislike,
     [IconName.HOME]: Home,
     [IconName.SEACH]: Search,
-    [IconName.ADD]: Add,
+    [IconName.CREATE]: Create,
     [IconName.SHARE]: Share,
     [IconName.ARROW]: Arrow,
     [IconName.PROFILE]: Profile,

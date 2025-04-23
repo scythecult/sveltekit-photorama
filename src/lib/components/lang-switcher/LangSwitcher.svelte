@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import { APP_LOCALES } from '$lib/constants/locales';
+  import { APP_LOCALES } from '$lib/constants/common';
   import { m } from '$lib/paraglide/messages';
   import { getLocale, setLocale } from '$lib/paraglide/runtime';
 

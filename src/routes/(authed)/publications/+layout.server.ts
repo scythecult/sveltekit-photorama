@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { CookieName } from '$lib/constants/cookies';
-import { PHOTORAMA_BASE_URL } from '$lib/constants/url';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import { CookieName } from '$lib/constants/common';
 import type { Publication } from '$lib/types/publication';
 import type { UserInfo } from '$lib/types/userInfo';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';

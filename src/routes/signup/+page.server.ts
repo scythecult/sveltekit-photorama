@@ -2,8 +2,8 @@
 import { redirect } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { CookieName } from '$lib/constants/cookies';
-import { AppRoute, PHOTORAMA_BASE_URL } from '$lib/constants/url';
+import { AppRoute, PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import { CookieName } from '$lib/constants/common';
 import { getCookieByName, parseCookieHeaderValues } from '$lib/utils/utils';
 import type { Actions } from './$types';
 

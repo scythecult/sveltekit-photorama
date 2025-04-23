@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PHOTORAMA_BASE_URL } from '$lib/constants/url';
+  import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
 
   type LogoProps = {
     className?: string;

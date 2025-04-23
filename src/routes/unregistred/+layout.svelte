@@ -6,8 +6,8 @@
   import IconLogo from '$lib/components/logos/icon-logo/IconLogo.svelte';
   import { ModalType } from '$lib/components/modal/constants';
   import Modal from '$lib/components/modal/Modal.svelte';
-  import { LocalStorageName } from '$lib/constants/ls';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
+  import { LocalStorageName } from '$lib/constants/common';
   import { m } from '$lib/paraglide/messages';
 
   const { children } = $props();

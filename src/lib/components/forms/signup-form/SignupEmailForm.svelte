@@ -6,7 +6,7 @@
   import { EMAIL_REGEXP, MIN_PASSWORD_LENGTH } from '$lib/components/input/constants';
   import Input from '$lib/components/input/Input.svelte';
   import { ActionMap } from '$lib/constants/action';
-  import { AppLocaleName } from '$lib/constants/locales';
+  import { AppLocaleName } from '$lib/constants/common';
   import { m } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
 

@@ -3,7 +3,7 @@
   import { IconName, IconSize } from '$lib/components/custom-icon/constants';
   import CustomIcon from '$lib/components/custom-icon/CustomIcon.svelte';
   import Link from '$lib/components/link/Link.svelte';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app.js';
   import { m } from '$lib/paraglide/messages';
 
   const NAV_TOPIC_AMOUNT = 5;

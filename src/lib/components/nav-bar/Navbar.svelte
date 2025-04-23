@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import AddButton from '../buttons/add-button/AddButton.svelte';
+  import AddButton from '../buttons/create-button/CreateButton.svelte';
   import HomeButton from '../buttons/home-button/HomeButton.svelte';
   import SearchButton from '../buttons/search-button/SearchButton.svelte';
   import { UserAvatarSize } from '../user-avatar/constants';

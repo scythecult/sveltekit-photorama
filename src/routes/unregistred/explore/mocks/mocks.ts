@@ -1,4 +1,4 @@
-import { PHOTORAMA_BASE_URL } from '$lib/constants/url';
+import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
 
 export const MOCK_TOPICS = [
   { id: '7', topic: 'haircuts', items: [] },

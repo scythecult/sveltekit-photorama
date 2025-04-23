@@ -1,7 +1,7 @@
 <script lang="ts">
   import './error.css';
   import Link from '$lib/components/link/Link.svelte';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
 </script>
 

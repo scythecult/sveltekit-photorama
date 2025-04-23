@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
   import { userStore } from '$lib/store/userStore.svelte';
   import { IconName } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';
@@ -18,6 +18,7 @@
   const userLinkHref = $derived(name ? name : AppRoute.PROFILE);
 </script>
 
+<!-- TODO Fix appearance -->
 <Link className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)} href={userLinkHref}>
   {#if avatar}
     {#if avatar.includes('http') || avatar.includes('https')}

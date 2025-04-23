@@ -1,7 +1,7 @@
 <script lang="ts">
   import HighlightedText from '$lib/components/highlighted-text/HighlightedText.svelte';
   import Link from '$lib/components/link/Link.svelte';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app.js';
   import { m } from '$lib/paraglide/messages.js';
 
   const { data } = $props();

@@ -1,4 +1,4 @@
-import type { ModalIdValue } from '$lib/constants/modal';
+import type { ModalIdValue } from '$lib/constants/common';
 
 type ModalState = {
   id: ModalIdValue | null;

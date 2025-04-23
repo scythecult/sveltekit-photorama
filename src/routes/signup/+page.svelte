@@ -7,7 +7,7 @@
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import Loader from '$lib/components/loader/Loader.svelte';
-  import { AppRoute } from '$lib/constants/url';
+  import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
 </script>
 

@@ -2,9 +2,9 @@ import { AppTitle } from '$lib/constants/app';
 
 export const load = async () => {
   // eslint-disable-next-line no-console
-  console.log('load from search');
+  console.log('create page load');
 
   return {
-    title: AppTitle.EXPLORE,
+    title: AppTitle.CREATE,
   };
 };
