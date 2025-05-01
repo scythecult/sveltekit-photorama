@@ -6,6 +6,7 @@ export type UserInfo = {
   email: string;
   password: string;
   avatar: string;
+  noteMessage?: string;
   publications?: Publication[];
   subscribedUsers?: string[];
 };

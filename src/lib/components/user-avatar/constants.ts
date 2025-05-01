@@ -2,6 +2,7 @@ export const UserAvatarSize = {
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large',
+  XLARGE: 'xlarge',
   INHERIT: 'inherit',
 } as const;
 

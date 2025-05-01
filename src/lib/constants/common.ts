@@ -19,6 +19,8 @@ export const APP_LOCALES = [
 export const ModalId = {
   SEND: 'send',
   COMMENT: 'comment',
+  PROFILE_NAME: 'profile-name',
+  NOTE: 'note',
 } as const;
 
 export type ModalIdKey = keyof typeof ModalId;

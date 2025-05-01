@@ -4,7 +4,7 @@
   import { m } from '$lib/paraglide/messages';
   import { appStore } from '$lib/store/appStore.svelte';
   import type { Comment } from '$lib/types/publication';
-  import MessageForm from '../message-form/MessageForm.svelte';
+  import MessageForm from '../forms/message-form/MessageForm.svelte';
   import Stub from '../stub/Stub.svelte';
   import CommentItem from './comment/CommentItem.svelte';
 
@@ -47,6 +47,8 @@
     {/if}
   </div>
   {#if publicationId !== null}
-    <MessageForm {publicationId} onSubmit={handleMessageFormSubmit} />
+    {#key publicationId}
+      <MessageForm {publicationId} onSubmit={handleMessageFormSubmit} />
+    {/key}
   {/if}
 </div>

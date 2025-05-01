@@ -12,7 +12,7 @@
   };
 
   const { isOpen, children, onClose, type = ModalType.SLIDE }: ModalProps = $props();
-  const classNameFinal = ['modal', type];
+  let classNameFinal = $derived(['modal', type]);
 
   $effect(() => {
     if (isOpen) {

@@ -30,7 +30,8 @@
   position: absolute;
   display: flex;
   min-height: var(--app-line-height);
-  word-break: break-all;
+  word-break: break-word;
+  white-space: pre-wrap;
   font-size: inherit;
   line-height: var(--app-line-height);
 

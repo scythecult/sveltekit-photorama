@@ -5,7 +5,6 @@
   width: var(--icon-size);
   height: var(--icon-size);
   max-width: 100%;
-  color: rgb(var(--app-primary-icon));
 }
 
 .icon.small {
@@ -13,7 +12,7 @@
 }
 
 .icon.medium {
-  --icon-size: 22px;
+  --icon-size: 24px;
 }
 
 .icon.large {

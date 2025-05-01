@@ -5,6 +5,7 @@ export const ActionMap = {
   COMMENT_LIKE: 'comment-like',
   COMMENT: 'comment',
   COMMENT_MESSAGE: 'comment-message',
+  CREATE_NOTE: 'create-note',
 } as const;
 
 export type ActionMapKey = keyof typeof ActionMap;
@@ -19,6 +20,7 @@ export const ActionNameMap = {
   IS_LIKED: 'isLiked',
   COMMENT_ID: 'commentId',
   MESSAGE: 'message',
+  NOTE_MESSAGE: 'note-message',
 } as const;
 
 export const HASHTAG_REGEX = /#[a-zA-Z|а-яА-Я]+/gi;

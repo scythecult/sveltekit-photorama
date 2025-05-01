@@ -1,0 +1,41 @@
+.bubble {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  min-width: 74px;
+  min-height: 42px;
+  max-width: 94px;
+  padding: 8px;
+  font-size: var(--app-12-font-size);
+  user-select: text;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-align: center;
+  color: rgb(var(--app-always-white));
+  background-color: rgb(var(--app-bubble-background));
+  border-radius: 14px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 12px;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(var(--app-bubble-background));
+    box-shadow: 4px 7px 0 -3px rgb(var(--app-bubble-background));
+    border-radius: 50%;
+  }
+}
+
+.bubble--presentation {
+  min-width: 42px;
+  color: rgb(var(--app-secondary-text));
+  border: none;
+}
+
+.bubble--active {
+  color: rgb(var(--app-always-white));
+}

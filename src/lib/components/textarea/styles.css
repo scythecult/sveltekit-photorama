@@ -1,0 +1,27 @@
+.textarea {
+  display: flex;
+  width: 100%;
+  height: var(--app-line-height);
+  padding: 0;
+  line-height: var(--app-line-height);
+  text-align: inherit;
+  color: var(--app-primary-text);
+  background-color: inherit;
+  border: none;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+}
+
+.textarea__counter {
+  position: absolute;
+  display: flex;
+  min-height: var(--app-line-height);
+  word-break: break-word;
+  white-space: pre-line;
+  font-size: inherit;
+  line-height: var(--app-line-height);
+
+  opacity: 0;
+  pointer-events: none;
+}

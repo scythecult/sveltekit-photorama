@@ -10,8 +10,7 @@
   border: none;
   backdrop-filter: blur(0px);
   pointer-events: none;
-  transform: translateX(-100%);
-  transition-property: backdrop-filter;
+  transition-property: backdrop-filter, background-color;
   transition-duration: 0.3s;
 }
 
@@ -31,37 +30,39 @@
   border-radius: var(--app-border-radius) var(--app-border-radius) 0 0;
   transform: translate(-50%, 100%);
   transition-property: transform;
-  transition-duration: 0.7s;
+  transition-duration: 0.3s;
 }
 
 .modal-shown {
   .overlay {
     opacity: 1;
     pointer-events: all;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--app-overlay-background));
     backdrop-filter: blur(var(--app-blur-amount));
-    transform: translateX(0);
   }
 
   .modal {
     transform: translate(-50%, 0);
+    animation-name: slideBottomToTop;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
   }
 
   .modal.floating {
-    opacity: 1;
+    display: block;
     pointer-events: all;
+    animation-name: none;
   }
 }
 
 .modal.floating {
   top: 50%;
+  left: 50%;
   bottom: auto;
+  display: none;
   width: calc(100% - 80px);
   padding: 28px;
   border-radius: var(--app-border-radius);
-  opacity: 0;
-  transition-property: opacity;
-  transition-duration: 0.2s;
   transform: translate(-50%, -50%);
   pointer-events: none;
 

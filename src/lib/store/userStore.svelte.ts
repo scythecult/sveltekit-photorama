@@ -8,6 +8,7 @@ export type UserState = {
   password: string;
   avatar: string;
   publications?: Publication[];
+  noteMessage?: string;
   subscribedUsers?: string[];
 };
 
@@ -18,6 +19,7 @@ const createUserStore = () => {
     email: '',
     password: '',
     avatar: '/',
+    noteMessage: 'Bla bla check',
     subscribedUsers: [],
   });
 
@@ -27,12 +29,13 @@ const createUserStore = () => {
     },
 
     setUserInfo(userInfo: UserInfo) {
-      const { id, name, email, password, avatar, subscribedUsers } = userInfo;
+      const { id, name, email, password, avatar, subscribedUsers, noteMessage } = userInfo;
 
       userStore.id = id;
       userStore.name = name;
       userStore.email = email;
       userStore.password = password;
+      userStore.noteMessage = noteMessage;
       userStore.avatar = avatar;
       userStore.subscribedUsers = subscribedUsers;
     },

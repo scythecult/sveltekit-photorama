@@ -17,6 +17,10 @@
     --logo-size: 42px;
   }
 
+  &.xlarge {
+    --logo-size: 77px;
+  }
+
   &.inherit {
     --logo-size: inherit;
   }

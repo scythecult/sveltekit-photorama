@@ -12,6 +12,7 @@
 
 .nav-bar__button {
   padding: var(--app-nav-button-padding);
+  color: rgb(var(--app-primary-text));
 
   .user-avatar__name {
     display: none;

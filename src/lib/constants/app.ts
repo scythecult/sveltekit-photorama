@@ -11,6 +11,15 @@ const AppName = {
   RESET_PASSWORD: 'RESET_PASSWORD',
   UNREGISTRED: 'UNREGISTRED',
   PROFILE: 'PROFILE',
+  SETTINGS: 'SETTINGS',
+  ACCOUNTS: 'ACCOUNTS',
+  EDIT: 'EDIT',
+  FOLLOWERS: 'FOLLOWERS',
+  FOLLOWING: 'FOLLOWING',
+  FEED: 'FEED',
+  SAVED: 'SAVED',
+  TAGGED: 'TAGGED',
+  ARCHIVE: 'ARCHIVE',
 } as const;
 
 export const PHOTORAMA_BASE_URL = 'http://localhost:9666/photorama/api/v1';
@@ -27,6 +36,15 @@ export const AppRoute = {
   [AppName.RESET_PASSWORD]: '/reset-password',
   [AppName.UNREGISTRED]: '/unregistred',
   [AppName.PROFILE]: '/profile',
+  [AppName.ACCOUNTS]: '/accounts',
+  [AppName.SETTINGS]: '/settings',
+  [AppName.EDIT]: '/edit',
+  [AppName.FOLLOWERS]: '/followers',
+  [AppName.FOLLOWING]: '/following',
+  [AppName.FEED]: '/feed',
+  [AppName.SAVED]: '/saved',
+  [AppName.TAGGED]: '/tagged',
+  [AppName.ARCHIVE]: '/archive',
 };
 
 export const AUTHED_FORBIDDEN_URLS = [AppRoute.ROOT, AppRoute.SIGNUP];

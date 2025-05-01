@@ -9,6 +9,12 @@ export const IconName = {
   SHARE: 'share',
   ARROW: 'arrow',
   PROFILE: 'profile',
+  OPTIONS: 'options',
+  CHEVRON: 'chevron',
+  SAVED: 'saved',
+  TAGGED: 'tagged',
+  FEED: 'feed',
+  POSTS: 'posts',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;

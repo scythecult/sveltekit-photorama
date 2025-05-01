@@ -10,15 +10,15 @@
   type UserAvatarProps = {
     className?: string;
     avatarSize?: string;
+    isAvatarOnly?: boolean;
   };
 
   const { avatar, name } = $derived(userStore.getUserInfo());
-  const { className = '', avatarSize = UserAvatarSize.MEDIUM }: UserAvatarProps = $props();
+  const { className = '', avatarSize = UserAvatarSize.MEDIUM, isAvatarOnly = false }: UserAvatarProps = $props();
   const classNameFinal = ['user-avatar', className, avatarSize];
-  const userLinkHref = $derived(name ? name : AppRoute.PROFILE);
+  const userLinkHref = $derived(name ? `/${name}` : AppRoute.PROFILE);
 </script>
 
-<!-- TODO Fix appearance -->
 <Link className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)} href={userLinkHref}>
   {#if avatar}
     {#if avatar.includes('http') || avatar.includes('https')}
@@ -27,7 +27,7 @@
       <CustomIcon iconName={IconName.PROFILE} />
     {/if}
   {/if}
-  {#if name}
+  {#if name && !isAvatarOnly}
     <span class="user-avatar__name link">{name}</span>
   {/if}
 </Link>

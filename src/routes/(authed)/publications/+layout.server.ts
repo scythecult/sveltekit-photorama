@@ -1,11 +1,9 @@
 /* eslint-disable no-console */
 import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
-import { CookieName } from '$lib/constants/common';
 import type { Publication } from '$lib/types/publication';
-import type { UserInfo } from '$lib/types/userInfo';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
 
-export const load = async ({ cookies, fetch }) => {
+export const load = async ({ fetch }) => {
   // TODO Auth
 
   // TODO
@@ -48,22 +46,20 @@ export const load = async ({ cookies, fetch }) => {
   // });
   // }
   // TODO Картинки пренадлежат конкретному пользователю
-  const sessionId = cookies.get(CookieName.USER_SESSION_ID);
+  // const sessionId = cookies.get(CookieName.USER_SESSION_ID);
 
-  if (!sessionId) {
-    return;
-  }
+  // if (!sessionId) {
+  //   return;
+  // }
 
   const rawPublicationData = await fetch(`${PHOTORAMA_BASE_URL}/publications`);
-  const rawUserInfoData = await fetch(`${PHOTORAMA_BASE_URL}/accounts`);
 
   console.log('TRIGGERED LOAD PUBLICATIONS');
-  if (!rawPublicationData.ok || !rawUserInfoData.ok) {
+  if (!rawPublicationData.ok) {
     return;
   }
 
   const rawPublications: Publication[] = (await rawPublicationData.json()) || [];
-  const userInfo: UserInfo = (await rawUserInfoData.json()) || {};
   // if (!rawPublicationData.ok) {
 
   //   error(StatusCodes.NOT_FOUND, {
@@ -92,7 +88,7 @@ export const load = async ({ cookies, fetch }) => {
     description: clearDescriptionFromHashtags(publication.description),
   }));
 
-  return { publications, userInfo };
+  return { publications };
   // } catch (error) {
   //   console.log({ error });
 

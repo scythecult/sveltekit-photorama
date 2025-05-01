@@ -18,6 +18,7 @@
 
 .signup-nav__back-link {
   padding: var(--app-action-button-padding);
+  color: rgb(var(--app-primary-text));
   transform: rotate(-90deg);
 }
 

@@ -21,6 +21,10 @@
   color: var(--app-primary-text);
 }
 
+.comment__text {
+  word-break: break-word;
+}
+
 .comment__actions {
   display: flex;
   justify-content: space-between;

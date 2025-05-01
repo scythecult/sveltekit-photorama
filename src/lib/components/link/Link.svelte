@@ -1,6 +1,6 @@
 <script lang="ts">
   import './styles.css';
-  import type { Snippet } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
   import { afterNavigate, goto } from '$app/navigation';
   import { QUERY_REGEXP } from '../buttons/constants';
 
@@ -16,11 +16,11 @@
   let isActive = $state(false);
 
   afterNavigate(() => {
-    isActive = location.pathname.includes(href.replace(QUERY_REGEXP, ''));
+    isActive = location.pathname === href.replace(QUERY_REGEXP, '');
   });
 
-  $effect(() => {
-    isActive = location.pathname.includes(href.replace(QUERY_REGEXP, ''));
+  onMount(() => {
+    isActive = location.pathname === href.replace(QUERY_REGEXP, '');
   });
 
   const handleLinkClick = async (evt: MouseEvent) => {

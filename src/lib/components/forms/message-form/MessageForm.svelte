@@ -3,11 +3,12 @@
   import type { SubmitFunction } from '@sveltejs/kit';
   import { StatusCodes } from 'http-status-codes';
   import { enhance } from '$app/forms';
+  import Textarea from '$lib/components/textarea/Textarea.svelte';
   import { ActionMap, ActionNameMap } from '$lib/constants/action';
   import { userStore } from '$lib/store/userStore.svelte';
-  import { IconName } from '../custom-icon/constants';
-  import CustomIcon from '../custom-icon/CustomIcon.svelte';
-  import UserAvatar from '../user-avatar/UserAvatar.svelte';
+  import { IconName } from '../../custom-icon/constants';
+  import CustomIcon from '../../custom-icon/CustomIcon.svelte';
+  import UserAvatar from '../../user-avatar/UserAvatar.svelte';
 
   type MessageFormProps = {
     publicationId: string;
@@ -15,28 +16,18 @@
     onSubmit?: () => void;
   };
 
-  type MessageTextareaHandler = Event & KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement };
-
   const { id } = $derived(userStore.getUserInfo());
   const { publicationId, className = '', onSubmit }: MessageFormProps = $props();
   const classNameFinal = ['message-form', className];
   let creating = $state(false);
   let message = $state('');
   let errorMessage = $state('');
+  let isSubmitButtonVisible = $state(false);
 
-  let textareaWidth = $state(0);
-  let counterHeight = $state(0);
-  const isSubmitButtonVisible = $derived(message.length > 0 && !creating);
+  const handleMessageInput = (value: string) => {
+    message = value;
 
-  const handleMessageKeydown = (evt: MessageTextareaHandler) => {
-    const { key } = evt;
-    const { offsetWidth } = evt.currentTarget;
-
-    if (key === 'Enter') {
-      evt.preventDefault();
-    }
-
-    textareaWidth = offsetWidth;
+    isSubmitButtonVisible = message.length > 0 && !creating;
   };
 
   const handleSubmit: SubmitFunction = async () => {
@@ -62,20 +53,12 @@
 <form class={classNameFinal} use:enhance={handleSubmit} action="?/{ActionMap.COMMENT_MESSAGE}" method="POST">
   <UserAvatar />
 
-  <textarea
-    class="message-form__textarea"
+  <Textarea
     name={ActionNameMap.MESSAGE}
     placeholder="Add comment..."
-    autocomplete="off"
-    aria-label="Add comment..."
-    style="height: {counterHeight}px"
-    onkeydown={handleMessageKeydown}
-    bind:value={message}
-  ></textarea>
-  <pre
-    class="message-form__counter"
-    style="max-width: {textareaWidth}px;"
-    bind:clientHeight={counterHeight}>{message}</pre>
+    userValue={message}
+    onInput={handleMessageInput}
+  />
   <input type="hidden" name={ActionNameMap.USER_ID} value={id} />
   <input type="hidden" name={ActionNameMap.PUBLICATION_ID} value={publicationId} />
 

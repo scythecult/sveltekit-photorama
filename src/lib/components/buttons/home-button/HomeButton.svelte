@@ -11,7 +11,6 @@
   const { className = '' }: HomeButtonProps = $props();
 </script>
 
-<!-- TODO update href depended on an auth -->
 <Link className={(isActive) => (isActive ? `${className} active` : className)} href={AppRoute.PUBLICATIONS}>
   <CustomIcon iconName={IconName.HOME} />
 </Link>

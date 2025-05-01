@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import InteractionsButton from '$lib/components/buttons/interactions-button/InteractionsButton.svelte';
   import CommentList from '$lib/components/comment-list/CommentList.svelte';
   import Header from '$lib/components/header/Header.svelte';
@@ -19,12 +18,6 @@
       ? publications?.find((publication) => +publication.id === +commentId)?.comments || []
       : [];
   };
-
-  onMount(() => {
-    if (data.userInfo) {
-      userStore.setUserInfo(data.userInfo);
-    }
-  });
 
   const comments = $derived(getComments(data.publications, appStore.getPublicationId()));
   const userContacts = $derived(userStore.getContacts());
