@@ -22,10 +22,6 @@ export const actions: Actions = {
     const response = await fetch(`${PHOTORAMA_BASE_URL}/user/note`, {
       method: 'POST',
       body: JSON.stringify({ userId, noteMessage }),
-
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     console.log(response.headers);

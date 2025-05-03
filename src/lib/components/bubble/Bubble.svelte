@@ -1,5 +1,7 @@
 <script lang="ts">
   import './styles.css';
+  import { onMount } from 'svelte';
+  import Spinner from '../spinner/Spinner.svelte';
   import Textarea from '../textarea/Textarea.svelte';
 
   type BubbleProps = {
@@ -12,17 +14,24 @@
   };
 
   const { className = '', isPresentation, onClick, onInput, maxLength, presentationMessage }: BubbleProps = $props();
-  const classNameFinal = [
+  const classNameFinal = $derived([
     className,
     'bubble',
     isPresentation && 'bubble--presentation',
     isPresentation && presentationMessage && 'bubble--active',
-  ];
+  ]);
+  let isLoading = $state(true);
+
+  onMount(() => {
+    isLoading = false;
+  });
 </script>
 
 {#if isPresentation}
   <button class={classNameFinal} onclick={onClick}>
-    {#if presentationMessage}
+    {#if isLoading}
+      <Spinner />
+    {:else if presentationMessage}
       {presentationMessage}
     {:else}
       Note...

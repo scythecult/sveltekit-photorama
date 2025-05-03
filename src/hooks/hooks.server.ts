@@ -18,6 +18,8 @@ export const handle: Handle = sequence(paraglideHandle);
 export const handleFetch: HandleFetch = ({ event, request, fetch }) => {
   if (request.url.includes(PHOTORAMA_BASE_URL)) {
     request.headers.set('cookie', event.request.headers.get('cookie')!);
+    request.headers.set('Content-Type', 'application/json');
+    request.headers.set('credentials', 'include');
   }
 
   return fetch(request);

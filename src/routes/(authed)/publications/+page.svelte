@@ -14,9 +14,7 @@
   const { data } = $props();
 
   const getComments = (publications: Publication[] | undefined, commentId: string) => {
-    return commentId !== null
-      ? publications?.find((publication) => +publication.id === +commentId)?.comments || []
-      : [];
+    return commentId !== null ? publications?.find((publication) => publication.id === commentId)?.comments || [] : [];
   };
 
   const comments = $derived(getComments(data.publications, appStore.getPublicationId()));

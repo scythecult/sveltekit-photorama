@@ -19,7 +19,7 @@ const createUserStore = () => {
     email: '',
     password: '',
     avatar: '/',
-    noteMessage: 'Bla bla check',
+    noteMessage: '',
     subscribedUsers: [],
   });
 

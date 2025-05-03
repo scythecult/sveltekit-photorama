@@ -1,5 +1,6 @@
 <script>
   import './styles.css';
+  import { page } from '$app/state';
   import Bubble from '$lib/components/bubble/Bubble.svelte';
   import { IconName, IconSize } from '$lib/components/custom-icon/constants';
   import CustomIcon from '$lib/components/custom-icon/CustomIcon.svelte';
@@ -16,10 +17,13 @@
   import { modalStore } from '$lib/store/modalStore.svelte';
   import { userStore } from '$lib/store/userStore.svelte';
 
+  const { children } = $props();
   const isModalOpen = $derived(modalStore.getVisibilityState());
   const modalId = $derived(modalStore.getId());
   const { name, id, noteMessage } = $derived(userStore.getUserInfo());
-  const { children } = $props();
+  const isActivityBarVisible = $derived(
+    !(page.url.pathname.includes(AppRoute.FOLLOWERS) || page.url.pathname.includes(AppRoute.FOLLOWING)),
+  );
   let modalType = $state();
 
   const togglePopup = () => {
@@ -90,24 +94,33 @@
         ><span class="profile-page__stats-count">30</span>{m.page_profile_following()}</Link
       >
     </div>
-    <div class="profile-page__activities">
-      <Link
-        className={(isActive) => (isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link')}
-        href={`/${name}`}><CustomIcon iconName={IconName.POSTS} /></Link
-      >
-      <Link
-        className={(isActive) => (isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link')}
-        href={`/${name}${AppRoute.FEED}`}><CustomIcon iconName={IconName.FEED} /></Link
-      >
-      <Link
-        className={(isActive) => (isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link')}
-        href={`/${name}${AppRoute.SAVED}`}><CustomIcon iconName={IconName.SAVED} /></Link
-      >
-      <Link
-        className={(isActive) => (isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link')}
-        href={`/${name}${AppRoute.TAGGED}`}><CustomIcon iconName={IconName.TAGGED} /></Link
-      >
-    </div>
+
+    {#if isActivityBarVisible}
+      <div class="profile-page__activities">
+        <Link
+          className={(isActive) =>
+            isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
+          href={`/${name}`}><CustomIcon iconName={IconName.POSTS} /></Link
+        >
+        <Link
+          className={(isActive) =>
+            isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
+          href={`/${name}${AppRoute.FEED}`}><CustomIcon iconName={IconName.FEED} /></Link
+        >
+        <Link
+          className={(isActive) =>
+            isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
+          href={`/${name}${AppRoute.SAVED}`}><CustomIcon iconName={IconName.SAVED} /></Link
+        >
+        <Link
+          className={(isActive) =>
+            isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
+          href={`/${name}${AppRoute.TAGGED}`}><CustomIcon iconName={IconName.TAGGED} /></Link
+        >
+      </div>
+    {:else}
+      search bar
+    {/if}
   </div>
   {@render children()}
 </section>

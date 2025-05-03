@@ -21,10 +21,6 @@ export const actions: Actions = {
     const response = await fetch(`${PHOTORAMA_BASE_URL}/accounts/signup`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
-
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     if (response.ok) {
@@ -36,12 +32,12 @@ export const actions: Actions = {
           path: '/',
         });
 
+        console.log('cookie in SIGNUP', { sessionId });
+        const result = await response.json();
+        console.log({ result });
+
         redirect(StatusCodes.PERMANENT_REDIRECT, AppRoute.PUBLICATIONS);
       }
-
-      console.log('cookie in SIGNUP', { sessionId });
-      const result = await response.json();
-      console.log({ result });
     }
   },
 };

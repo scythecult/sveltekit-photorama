@@ -24,7 +24,7 @@
   };
 
   const handleMessageFormSubmit = () => {
-    const commentNode = document.querySelector('.comment:last-child');
+    const commentNode = document.querySelector('.comments__list .comment:last-child');
 
     if (commentNode) {
       commentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });

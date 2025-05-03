@@ -172,3 +172,9 @@ select {
     transform: translate(-50%, 100%);
   }
 }
+
+@keyframes spinner {
+  to {
+    transform: rotate(1turn);
+  }
+}

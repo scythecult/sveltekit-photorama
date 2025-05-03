@@ -16,10 +16,6 @@ export const actions: Actions = {
     const response = await fetch(`${PHOTORAMA_BASE_URL}`, {
       method: 'POST',
       body: JSON.stringify({ username, password }),
-
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
     const result = await response.json();
@@ -34,12 +30,7 @@ export const actions: Actions = {
       // TODO Abstract fetch
       const response = await fetch(`${PHOTORAMA_BASE_URL}/publications/likes/${publicationId}`, {
         method: 'POST',
-        credentials: 'include',
         body: JSON.stringify({ publicationId, isLiked: convertStringToBoolean(isLiked) }),
-
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
 
       // TODO Add error handling
@@ -85,11 +76,7 @@ export const actions: Actions = {
       // TODO Abstract fetch
       const response = await fetch(`${PHOTORAMA_BASE_URL}/publications/comments`, {
         method: 'POST',
-        credentials: 'include',
         body: JSON.stringify({ publicationId, userId, message }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
 
       if (!response.ok) {

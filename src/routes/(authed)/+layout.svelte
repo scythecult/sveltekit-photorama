@@ -1,6 +1,5 @@
 <script lang="ts">
   // import { onMount } from 'svelte';
-  import Loader from '$lib/components/loader/Loader.svelte';
   import { userStore } from '$lib/store/userStore.svelte.js';
 
   const { children, data } = $props();
@@ -18,5 +17,5 @@
   // onMount(() => {});
 </script>
 
-<Loader />
+<!-- <Loader /> -->
 {@render children()}
