@@ -1,10 +1,11 @@
-/* eslint-disable no-console */
 import { redirect } from '@sveltejs/kit';
+import { parse } from 'cookie';
+import { HTTPMethod } from 'http-method-enum';
 import { StatusCodes } from 'http-status-codes';
+import { fetchData } from '$lib/api/fetchData';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { AppRoute, PHOTORAMA_BASE_URL } from '$lib/constants/app';
-import { CookieName } from '$lib/constants/common';
-import { getCookieByName, parseCookieHeaderValues } from '$lib/utils/utils';
+import { AppPath, AppRoute, PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import { CookieName } from '$lib/constants/request';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
@@ -16,25 +17,27 @@ export const actions: Actions = {
     const email = data.get(ActionNameMap.EMAIL) as string;
     const password = data.get(ActionNameMap.PASSWORD) as string;
 
-    console.log({ email, password });
-
-    const response = await fetch(`${PHOTORAMA_BASE_URL}/accounts/signup`, {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
+    const { response, jwtToken } = await fetchData(`${PHOTORAMA_BASE_URL}${AppPath.SIGNUP}`, HTTPMethod.POST, {
+      cookies,
+      params: {
+        body: { email, password },
+      },
     });
 
     if (response.ok) {
-      const parsedCookies = parseCookieHeaderValues(response.headers.getSetCookie());
-      const sessionId = getCookieByName(parsedCookies, CookieName.USER_SESSION_ID);
+      const parsedCookies = parse(response.headers.getSetCookie().join('; '));
+      const sessionId = parsedCookies[CookieName.USER_SESSION_ID];
+
+      if (jwtToken) {
+        cookies.set(CookieName.USER_JWT_TOKEN, jwtToken, {
+          path: '/',
+        });
+      }
 
       if (sessionId) {
         cookies.set(CookieName.USER_SESSION_ID, sessionId, {
           path: '/',
         });
-
-        console.log('cookie in SIGNUP', { sessionId });
-        const result = await response.json();
-        console.log({ result });
 
         redirect(StatusCodes.PERMANENT_REDIRECT, AppRoute.PUBLICATIONS);
       }

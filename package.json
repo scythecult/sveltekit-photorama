@@ -51,6 +51,8 @@
 	},
 	"dependencies": {
 		"@inlang/paraglide-js": "^2.0.12",
+		"cookie": "^1.0.2",
+		"http-method-enum": "^1.0.0",
 		"http-status-codes": "^2.3.0"
 	}
 }

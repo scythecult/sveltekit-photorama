@@ -1,29 +1,27 @@
-import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import { HTTPMethod } from 'http-method-enum';
+import { fetchData } from '$lib/api/fetchData.js';
+import { AppPath, PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import type { Publication } from '$lib/types/publication';
 import type { UserInfo } from '$lib/types/userInfo.js';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
 
-export const load = async ({ fetch }) => {
-  const rawUserInfoData = await fetch(`${PHOTORAMA_BASE_URL}/user`);
+export const load = async ({ cookies }) => {
+  const { data: userData } = await fetchData<{ user: UserInfo }>(
+    `${PHOTORAMA_BASE_URL}${AppPath.USER}`,
+    HTTPMethod.GET,
+    {
+      cookies,
+    },
+  );
 
-  if (!rawUserInfoData.ok) {
-    return;
-  }
-
-  const { data: userData } = (await rawUserInfoData.json()) || {};
-  const userInfo: UserInfo = userData.userInfo || {};
+  const userInfo = userData.user;
   const { name } = userInfo;
 
-  // TODO Prepare publications request params;
-
-  const rawPublicationsData = await fetch(`${PHOTORAMA_BASE_URL}/publications?userName=${name}`);
-
-  if (!rawPublicationsData.ok) {
-    return;
-  }
-
-  const { data: publicationsData } = (await rawPublicationsData.json()) || {};
-  const rawPublications: Publication[] = publicationsData.publications || [];
+  const { data: publicationsData } = await fetchData<{ publications: Publication[] }>(
+    `${PHOTORAMA_BASE_URL}${AppPath.PUBLICATIONS}?userName=${name}`,
+    HTTPMethod.GET,
+    { cookies },
+  );
 
   // if (!rawPublicationsData.ok) {
 
@@ -47,7 +45,7 @@ export const load = async ({ fetch }) => {
   // }
 
   // TODO Проверить если Publication.likes.user.id === currentUser.id => Publication.isLiked = true
-  const publications = rawPublications.map((publication) => ({
+  const publications = publicationsData.publications.map((publication) => ({
     ...publication,
     hashtags: extractHashtagsFromDescription(publication.description),
     description: clearDescriptionFromHashtags(publication.description),

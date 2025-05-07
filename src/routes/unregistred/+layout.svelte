@@ -7,7 +7,7 @@
   import { ModalType } from '$lib/components/modal/constants';
   import Modal from '$lib/components/modal/Modal.svelte';
   import { AppRoute } from '$lib/constants/app';
-  import { LocalStorageName } from '$lib/constants/common';
+  import { LocalStorageName } from '$lib/constants/request';
   import { m } from '$lib/paraglide/messages';
 
   const { children } = $props();

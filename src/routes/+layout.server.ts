@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import { StatusCodes } from 'http-status-codes';
 import { AppRoute, AUTHED_FORBIDDEN_URLS, UNAUTHED_FORBIDDEN_URLS } from '$lib/constants/app';
-import { CookieName } from '../lib/constants/common.js';
+import { CookieName } from '$lib/constants/request';
 
 export const load = async ({ cookies, url }) => {
   const { pathname } = url;

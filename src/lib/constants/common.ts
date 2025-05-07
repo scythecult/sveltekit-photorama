@@ -1,11 +1,3 @@
-export const LocalStorageName = {
-  FLOATING_MODAL_CLOSE_TIME: 'floating-modal-close-time',
-};
-
-export const CookieName = {
-  USER_SESSION_ID: 'session_id',
-};
-
 export const AppLocaleName = {
   RU: 'ru',
   EN: 'en',

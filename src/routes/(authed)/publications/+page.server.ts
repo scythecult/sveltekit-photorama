@@ -1,49 +1,35 @@
 /* eslint-disable no-console */
 import { fail } from '@sveltejs/kit';
+import { HTTPMethod } from 'http-method-enum';
 import { StatusCodes } from 'http-status-codes';
+import { fetchData } from '$lib/api/fetchData';
 import { ActionMap, ActionNameMap } from '$lib/constants/action';
-import { PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import { AppPath, PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import { convertStringToBoolean } from '$lib/utils/utils';
 import type { Actions } from '../../$types';
 
 export const actions: Actions = {
-  // TODO Add User Login Route
-  [ActionMap.LOGIN]: async ({ request, fetch }) => {
-    const data = await request.formData();
-    const username = data.get(ActionNameMap.USERNAME) as string;
-    const password = data.get(ActionNameMap.PASSWORD) as string;
-
-    const response = await fetch(`${PHOTORAMA_BASE_URL}`, {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-    });
-
-    const result = await response.json();
-    console.log({ result });
-  },
-  [ActionMap.LIKE]: async ({ request, fetch }) => {
+  [ActionMap.LIKE]: async ({ request, cookies }) => {
     const data = await request.formData();
     const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
     const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
 
     if (publicationId && isLiked) {
-      // TODO Abstract fetch
-      const response = await fetch(`${PHOTORAMA_BASE_URL}/publications/likes/${publicationId}`, {
-        method: 'POST',
-        body: JSON.stringify({ publicationId, isLiked: convertStringToBoolean(isLiked) }),
+      const { data } = await fetchData(`${PHOTORAMA_BASE_URL}${AppPath.LIKE}/${publicationId}`, HTTPMethod.POST, {
+        cookies,
+        params: {
+          body: { publicationId, isLiked: convertStringToBoolean(isLiked) },
+        },
       });
 
-      // TODO Add error handling
-      if (!response.ok) {
-        console.log('not OK');
-      }
-
-      const result = await response.json();
-
-      console.log({ result });
+      console.log({ data });
 
       return { publicationId };
     }
+
+    fail(StatusCodes.UNPROCESSABLE_ENTITY, {
+      description: `[${publicationId}] and [${isLiked}] is requred!`,
+    });
   },
   [ActionMap.COMMENT_LIKE]: async ({ request }) => {
     const data = await request.formData();
@@ -65,30 +51,27 @@ export const actions: Actions = {
 
     console.log('do comment', { commentId });
   },
-  [ActionMap.COMMENT_MESSAGE]: async ({ request, fetch }) => {
+  [ActionMap.COMMENT_MESSAGE]: async ({ request, cookies }) => {
     const data = await request.formData();
     const userId = data.get(ActionNameMap.USER_ID) as string;
     const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
     const message = data.get(ActionNameMap.MESSAGE) as string;
 
-    // TODO mb should validate comment message?
     if (publicationId && userId && message) {
-      // TODO Abstract fetch
-      const response = await fetch(`${PHOTORAMA_BASE_URL}/publications/comments`, {
-        method: 'POST',
-        body: JSON.stringify({ publicationId, userId, message }),
+      const { data } = await fetchData(`${PHOTORAMA_BASE_URL}${AppPath.COMMENT_MESSAGE}`, HTTPMethod.POST, {
+        cookies,
+        params: {
+          body: { publicationId, userId, message },
+        },
       });
 
-      if (!response.ok) {
-        return fail(StatusCodes.BAD_REQUEST, { message: 'Failed to create comment' });
-      }
-
-      const result = await response.json();
-      console.log({ result });
+      console.log({ data });
 
       return { userId, message };
     }
 
-    console.log('success', { userId, message });
+    fail(StatusCodes.UNPROCESSABLE_ENTITY, {
+      description: `[${publicationId}], [${message}] and [${userId}] is requred!`,
+    });
   },
 };
