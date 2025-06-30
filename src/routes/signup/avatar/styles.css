@@ -1,0 +1,79 @@
+.avatar-form__upload-input {
+  display: none;
+}
+
+.avatar-form__upload-button {
+  order: 1;
+}
+
+.avatar-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  justify-self: center;
+  gap: 10px;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  padding-top: 14px;
+}
+
+.avatar-preview__image-container {
+  width: 180px;
+  height: 180px;
+  background-color: rgb(var(--app-stub-user-picture));
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-preview__button--edit {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-self: center;
+  gap: 6px;
+  max-width: max-content;
+  background-color: rgb(var(--app-secondary-button));
+}
+
+.avatar-preview__errors {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.avatar-preview__error {
+  font-size: var(--app-14-font-size);
+  color: rgb(var(--app-error-or-destructive));
+}
+
+.avatar-preview__error--correct {
+  color: rgb(var(--app-primary-text));
+}
+
+.avatar-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 8px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.avatar-modal__title {
+  font-size: var(--app-20-font-size);
+  font-weight: var(--app-font-weight-semibold);
+  color: rgb(var(--app-primary-text));
+}
+
+.avatar-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.avatar-modal__button {
+  justify-content: flex-start;
+  text-align: left;
+}

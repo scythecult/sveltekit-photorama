@@ -1,0 +1,41 @@
+.tooltip {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  border: none;
+  background-color: transparent;
+}
+
+.tooltip__content {
+  position: absolute;
+  bottom: 100%;
+  width: max-content;
+  max-width: 210px;
+  padding: 6px;
+  font-size: var(--app-12-font-size);
+  background-color: rgb(var(--app-secondary-background));
+  border: 1px solid rgb(var(--app-border-color));
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition-property: opacity;
+  transition-duration: 0.3s;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+}
+
+.tooltip.tooltip--visible .tooltip__content {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.tooltip.left .tooltip__content {
+  left: 0;
+  right: auto;
+}
+
+.tooltip.right .tooltip__content {
+  left: auto;
+  right: 0;
+}

@@ -1,0 +1,11 @@
+.validation-spinner {
+  padding: 6px;
+}
+
+.validation-spinner__checkmark {
+  color: rgb(var(--app-success-or-constructive));
+}
+
+.validation-spinner__failmark {
+  color: rgb(var(--app-error-or-destructive));
+}

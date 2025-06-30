@@ -2,12 +2,15 @@
   import './styles.css';
   import { IconName, type IconNameValue, IconSize, type IconSizeValue } from './constants';
   import Arrow from './icons/Arrow.svelte';
+  import Checkmark from './icons/Checkmark.svelte';
   import Chevron from './icons/Chevron.svelte';
   import Comment from './icons/Comment.svelte';
   import Create from './icons/Create.svelte';
   import Dislike from './icons/Dislike.svelte';
+  import Failmark from './icons/Failmark.svelte';
   import Feed from './icons/Feed.svelte';
   import Home from './icons/Home.svelte';
+  import Info from './icons/Info.svelte';
   import Like from './icons/Like.svelte';
   import Options from './icons/Options.svelte';
   import PictureLike from './icons/PictureLike.svelte';
@@ -35,6 +38,9 @@
     [IconName.TAGGED]: Tagged,
     [IconName.FEED]: Feed,
     [IconName.POSTS]: Posts,
+    [IconName.INFO]: Info,
+    [IconName.CHECKMARK]: Checkmark,
+    [IconName.FAILMARK]: Failmark,
   };
 
   type CustomIconProps = {

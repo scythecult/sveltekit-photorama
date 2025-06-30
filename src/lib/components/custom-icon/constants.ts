@@ -15,6 +15,9 @@ export const IconName = {
   TAGGED: 'tagged',
   FEED: 'feed',
   POSTS: 'posts',
+  INFO: 'info',
+  CHECKMARK: 'checkmark',
+  FAILMARK: 'failmark',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;

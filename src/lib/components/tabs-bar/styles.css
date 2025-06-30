@@ -1,0 +1,28 @@
+.tabs-bar {
+  --height: 38px;
+  --width: 0;
+  --left: 0;
+  --top: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  align-items: center;
+  justify-items: center;
+  min-height: var(--height);
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: calc(var(--top) + var(--height));
+    width: var(--width);
+    left: var(--left);
+    height: 2px;
+    background-color: rgb(var(--app-always-white));
+    transition-property: top left;
+    transition-duration: 0.3s;
+  }
+}
+
+/* .tabs-bar > * {
+  position: relative;
+} */

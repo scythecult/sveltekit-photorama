@@ -1,0 +1,38 @@
+.confirm-form__terms {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 14px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-size: var(--app-14-font-size);
+  color: rgb(var(--app-primary-text));
+}
+
+.required-info {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 14px;
+}
+
+.required-info__title {
+  font-size: var(--app-20-font-size);
+  font-weight: var(--app-font-weight-semibold);
+  color: rgb(var(--app-primary-text));
+}
+
+.required-info__description {
+  font-size: var(--app-14-font-size);
+  color: rgb(var(--app-primary-text));
+}
+
+.required-info__list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 12px;
+}
+
+.required-info__link {
+  color: rgb(var(--app-primary-button));
+  text-transform: capitalize;
+}

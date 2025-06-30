@@ -1,0 +1,9 @@
+.suggested-email-domains {
+  gap: 4px;
+  height: var(--child-height);
+}
+
+.suggested-email-domain {
+  color: var(--app-primary-text);
+  background-color: rgb(var(--app-stroke));
+}
