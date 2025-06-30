@@ -2,7 +2,7 @@
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
   import { enhance } from '$app/forms';
-  import { ActionMap, ActionNameMap } from '$lib/constants/action';
+  import { FormActionName, InputName } from '$lib/constants/action';
   import Count from '../../count/Count.svelte';
   import { IconName, IconSize } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
@@ -23,15 +23,15 @@
   };
 
   const LikeActionSegmentMap = {
-    [LikeTypeMap.COMMENT]: ActionMap.COMMENT_LIKE,
-    [LikeTypeMap.ACTIONS]: ActionMap.LIKE,
-    [LikeTypeMap.PICTURE]: ActionMap.LIKE,
+    [LikeTypeMap.COMMENT]: FormActionName.COMMENT_LIKE,
+    [LikeTypeMap.ACTIONS]: FormActionName.LIKE,
+    [LikeTypeMap.PICTURE]: FormActionName.LIKE,
   };
 
   const LikeActionNameMap = {
-    [LikeTypeMap.COMMENT]: ActionNameMap.COMMENT_ID,
-    [LikeTypeMap.ACTIONS]: ActionNameMap.PUBLICATION_ID,
-    [LikeTypeMap.PICTURE]: ActionNameMap.PUBLICATION_ID,
+    [LikeTypeMap.COMMENT]: InputName.COMMENT_ID,
+    [LikeTypeMap.ACTIONS]: InputName.PUBLICATION_ID,
+    [LikeTypeMap.PICTURE]: InputName.PUBLICATION_ID,
   };
 
   const { className = '', id, likeType, likeCount, isLiked }: LikeButtonProps = $props();

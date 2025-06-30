@@ -13,7 +13,7 @@
   const showcaseTopics = $derived(data.topics.slice(NAV_TOPIC_AMOUNT));
 </script>
 
-<h1 class="explore-showcase__title">{m.page_explore_title()}</h1>
+<h1 class="explore-showcase__title">{m['explore_page.title']()}</h1>
 
 <Carousel className="explore-showcase__nav">
   {#each navTopics as { id, topic } (id)}

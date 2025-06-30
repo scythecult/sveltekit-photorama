@@ -12,8 +12,8 @@
 <Header className="explore-header">
   <Logo />
   <nav class="explore-header__nav">
-    <Link className="plain-button" href={AppRoute.ROOT}>{m.login_button_login()}</Link>
-    <Link className="primary-button" href={AppRoute.SIGNUP}>{m.page_register_title()}</Link>
+    <Link className="plain-button" href={AppRoute.ROOT}>{m['input.button_login']()}</Link>
+    <Link className="primary-button" href={AppRoute.SIGNUP}>{m['register_page.title']()}</Link>
   </nav>
 </Header>
 

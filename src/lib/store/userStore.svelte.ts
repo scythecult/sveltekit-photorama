@@ -3,10 +3,10 @@ import type { UserInfo } from '$lib/types/userInfo';
 
 export type UserState = {
   id: string;
-  name: string;
+  username: string;
   email: string;
   password: string;
-  avatar: string;
+  avatarUrl: string;
   publications?: Publication[];
   noteMessage?: string;
   subscribedUsers?: string[];
@@ -15,10 +15,10 @@ export type UserState = {
 const createUserStore = () => {
   const userStore = $state<UserState>({
     id: '',
-    name: '',
+    username: '',
     email: '',
     password: '',
-    avatar: '/',
+    avatarUrl: '/',
     noteMessage: '',
     subscribedUsers: [],
   });
@@ -29,14 +29,14 @@ const createUserStore = () => {
     },
 
     setUserInfo(userInfo: UserInfo) {
-      const { id, name, email, password, avatar, subscribedUsers, noteMessage } = userInfo;
+      const { id, username, email, password, avatarUrl, subscribedUsers, noteMessage } = userInfo;
 
       userStore.id = id;
-      userStore.name = name;
+      userStore.username = username;
       userStore.email = email;
       userStore.password = password;
       userStore.noteMessage = noteMessage;
-      userStore.avatar = avatar;
+      userStore.avatarUrl = avatarUrl;
       userStore.subscribedUsers = subscribedUsers;
     },
 

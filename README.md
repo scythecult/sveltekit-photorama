@@ -36,3 +36,13 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Codestyle
+
+### .svelte scripts
+
+Сначала идут импорты в алфавитном порядке (es-lint plugins)
+Далее если есть: state-руны
+Далее если есть: derived-руны
+Далее если есть: snaphots-объекты
+Далее если есть: handle-функции

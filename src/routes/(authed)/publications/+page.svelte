@@ -22,7 +22,7 @@
   const modalId = $derived(modalStore.getId());
   const isModalOpen = $derived(modalStore.getVisibilityState());
 
-  const togglePopup = () => {
+  const toggleModal = () => {
     modalStore.toggleModalVisibility();
   };
 </script>
@@ -37,7 +37,7 @@
   <PublicationList publications={data.publications} />
 </section>
 <!-- comments modal-->
-<Modal isOpen={isModalOpen} onClose={togglePopup}>
+<Modal isOpen={isModalOpen} onClose={toggleModal}>
   <!-- comment list -->
   {#if modalId === ModalId.COMMENT}
     <CommentList {comments} />

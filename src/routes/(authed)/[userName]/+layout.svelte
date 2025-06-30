@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import './styles.css';
   import { page } from '$app/state';
   import Bubble from '$lib/components/bubble/Bubble.svelte';
@@ -7,6 +7,7 @@
   import NoteForm from '$lib/components/forms/note-form/NoteForm.svelte';
   import Header from '$lib/components/header/Header.svelte';
   import Link from '$lib/components/link/Link.svelte';
+  import type { ModalTypeValue } from '$lib/components/modal/constants';
   import { ModalType } from '$lib/components/modal/constants';
   import Modal from '$lib/components/modal/Modal.svelte';
   import { UserAvatarSize } from '$lib/components/user-avatar/constants';
@@ -20,11 +21,11 @@
   const { children } = $props();
   const isModalOpen = $derived(modalStore.getVisibilityState());
   const modalId = $derived(modalStore.getId());
-  const { name, id, noteMessage } = $derived(userStore.getUserInfo());
+  const { username, id, noteMessage } = $derived(userStore.getUserInfo());
   const isActivityBarVisible = $derived(
     !(page.url.pathname.includes(AppRoute.FOLLOWERS) || page.url.pathname.includes(AppRoute.FOLLOWING)),
   );
-  let modalType = $state();
+  let modalType = $state<ModalTypeValue | undefined>();
 
   const togglePopup = () => {
     modalStore.toggleModalVisibility();
@@ -49,7 +50,7 @@
   >
 
   <button class="profile-header__name" onclick={handleUsernameClick}
-    >{name}<CustomIcon
+    >{username}<CustomIcon
       className="profile-header__name-icon"
       iconSize={IconSize.SMALL}
       iconName={IconName.CHEVRON}
@@ -70,28 +71,28 @@
       </div>
 
       <div class="profile-page__settings">
-        <button class="profile-page__settings-button profile-page__settings-button--name">{name}</button>
+        <button class="profile-page__settings-button profile-page__settings-button--name">{username}</button>
         <div class="profile-page__settings-actions">
           <Link
             className="profile-page__settings-button profile-page__settings-button--edit primary-button"
-            href={`${AppRoute.ACCOUNTS}${AppRoute.EDIT}`}>{m.page_profile_edit()}</Link
+            href={`${AppRoute.ACCOUNTS}${AppRoute.EDIT}`}>{m['profile_page.edit']()}</Link
           >
           <Link
             className="profile-page__settings-button profile-page__settings-button--archive primary-button"
-            href={`${AppRoute.ARCHIVE}${AppRoute.PUBLICATIONS}`}>{m.page_profile_view()}</Link
+            href={`${AppRoute.ARCHIVE}${AppRoute.PUBLICATIONS}`}>{m['profile_page.view']()}</Link
           >
         </div>
       </div>
     </div>
     <div class="profile-page__stats">
-      <Link className="profile-page__stats-link" href={`/${name}`}
-        ><span class="profile-page__stats-count">30</span> {m.page_profile_posts()}</Link
+      <Link className="profile-page__stats-link" href={`/${username}`}
+        ><span class="profile-page__stats-count">30</span> {m['profile_page.posts']()}</Link
       >
-      <Link className="profile-page__stats-link" href={`/${name}${AppRoute.FOLLOWERS}`}
-        ><span class="profile-page__stats-count">30</span>{m.page_profile_followers()}</Link
+      <Link className="profile-page__stats-link" href={`/${username}${AppRoute.FOLLOWERS}`}
+        ><span class="profile-page__stats-count">30</span>{m['profile_page.followers']()}</Link
       >
-      <Link className="profile-page__stats-link" href={`/${name}${AppRoute.FOLLOWING}`}
-        ><span class="profile-page__stats-count">30</span>{m.page_profile_following()}</Link
+      <Link className="profile-page__stats-link" href={`/${username}${AppRoute.FOLLOWING}`}
+        ><span class="profile-page__stats-count">30</span>{m['profile_page.following']()}</Link
       >
     </div>
 
@@ -100,22 +101,22 @@
         <Link
           className={(isActive) =>
             isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
-          href={`/${name}`}><CustomIcon iconName={IconName.POSTS} /></Link
+          href={`/${username}`}><CustomIcon iconName={IconName.POSTS} /></Link
         >
         <Link
           className={(isActive) =>
             isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
-          href={`/${name}${AppRoute.FEED}`}><CustomIcon iconName={IconName.FEED} /></Link
+          href={`/${username}${AppRoute.FEED}`}><CustomIcon iconName={IconName.FEED} /></Link
         >
         <Link
           className={(isActive) =>
             isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
-          href={`/${name}${AppRoute.SAVED}`}><CustomIcon iconName={IconName.SAVED} /></Link
+          href={`/${username}${AppRoute.SAVED}`}><CustomIcon iconName={IconName.SAVED} /></Link
         >
         <Link
           className={(isActive) =>
             isActive ? 'profile-page__activities-link active' : 'profile-page__activities-link'}
-          href={`/${name}${AppRoute.TAGGED}`}><CustomIcon iconName={IconName.TAGGED} /></Link
+          href={`/${username}${AppRoute.TAGGED}`}><CustomIcon iconName={IconName.TAGGED} /></Link
         >
       </div>
     {:else}

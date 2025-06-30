@@ -1,24 +1,31 @@
-.signup-email-form {
+.signup-form {
   --child-height: 44px;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: repeat(3, minmax(var(--child-height), max-content));
+  grid-template-rows: repeat(auto-fit, minmax(var(--child-height), max-content));
   align-items: center;
   gap: 6px;
-  padding-right: 40px;
-  padding-left: 40px;
 }
 
-.signup-email-form--disabled {
-  pointer-events: none;
+.signup-form__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.suggested-email-domains {
-  gap: 4px;
-  height: var(--child-height);
+.signup-form__title {
+  font-size: var(--app-20-font-size);
+  font-weight: var(--app-font-weight-semibold);
+  color: rgb(var(--app-primary-text));
 }
 
-.suggested-email-domain {
-  color: var(--app-primary-text);
-  background-color: rgb(var(--app-stroke));
+.signup-form__description {
+  font-size: var(--app-14-font-size);
 }
+
+/* .signup-form__button {
+  padding: 12px;
+  color: rgb(var(--app-secondary-text));
+  border: 1px solid currentColor;
+  border-radius: 6px;
+} */

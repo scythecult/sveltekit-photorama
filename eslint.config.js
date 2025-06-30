@@ -85,6 +85,7 @@ export default ts.config(
         'error',
         {
           caughtErrors: 'none',
+          argsIgnorePattern: '^_',
         },
       ],
 

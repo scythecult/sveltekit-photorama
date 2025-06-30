@@ -35,6 +35,16 @@ select {
   font: inherit;
 }
 
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 :root {
   /* font */
   --app-font-family:
@@ -51,14 +61,16 @@ select {
 
   /* colors */
   --app-primary-text: 0, 0, 0;
-  --app-always-white: 255, 255, 255;
+  --app-always-white: 250, 250, 250;
   --app-always-black: 0, 0, 0;
   --app-secondary-text: 115, 115, 115;
   --app-primary-bg: 250, 250, 250;
   --app-primary-link: 0, 55, 107;
   --app-primary-button: 0, 149, 246;
   --app-secondary-button: 54, 54, 54;
+  --app-secondary-button-text: 115, 115, 115;
   --app-badge: 255, 48, 64;
+  --app-stub-user-picture: 215, 215, 215;
   --app-primary-icon: 38, 38, 38;
   --app-secondary-icon: 38, 38, 38;
   --app-gradient: 43.83deg, #ffd400 -48.57%, #ff7000 -5.59%, #ff0067 38.42%, #e700cb 83.44%;
@@ -69,8 +81,10 @@ select {
   --app-secondary-background: 250, 250, 250;
   --app-bubble-background: 85, 85, 85;
   --app-error-or-destructive: 237, 73, 86;
+  --app-success-or-constructive: 2, 225, 2;
   --app-border-color: 85, 85, 85;
   --app-overlay-background: 0, 0, 0, 0.5;
+  --app-tab-active: 174, 173, 173;
 
   @media (prefers-color-scheme: dark) {
     --app-primary-text: 245, 245, 245;
@@ -82,6 +96,9 @@ select {
     --app-secondary-background: 18, 18, 18;
     --app-stroke: 85, 85, 85;
     --app-bubble-background: 0, 0, 0;
+    --app-tab-active: 133, 133, 133;
+    --app-stub-user-picture: 155, 155, 155;
+    --app-secondary-button-text: 250, 250, 250;
   }
 
   --app-nav-bar-z-index: 1;
@@ -104,7 +121,9 @@ select {
   --app-toggle-animation: 0.45s ease-in-out toggle;
 }
 
-.primary-button {
+.primary-button,
+.secondary-button,
+.plain-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,21 +134,31 @@ select {
   font-weight: var(--app-font-weight-semibold);
   color: rgb(var(--app-always-white));
   background-color: rgb(var(--app-primary-button));
-  border: none;
-  border-radius: 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
 
   &:disabled {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 }
 
+.secondary-button {
+  color: rgb(var(--app-secondary-button-text));
+  background-color: transparent;
+  border: 1px solid currentColor;
+}
+
 .plain-button {
-  padding: 0;
-  font-size: var(--app-14-font-size);
-  font-weight: var(--app-font-weight-semibold);
   color: rgb(var(--app-primary-button));
   background-color: transparent;
-  border: none;
 }
 
 @media (prefers-color-scheme: dark) {

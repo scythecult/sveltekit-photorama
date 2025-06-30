@@ -20,10 +20,10 @@ type FetchDataRequestOptions = {
   body?: string;
 };
 
-type FetchDataResponsePayload<Payload = Record<string, unknown>> = {
+type FetchDataResponsePayload<ResponsePayload = Record<string, unknown>> = {
   message?: string;
   jwtToken?: string;
-  data: Payload;
+  data: ResponsePayload;
   response: Response;
 };
 
@@ -48,11 +48,11 @@ const onRequestError = (error: unknown, url: string, requestOptions: RequestInit
   throw new HttpError(message, StatusCodes.INTERNAL_SERVER_ERROR, url, requestOptions);
 };
 
-export const fetchData = async <Payload>(
+export const fetchData = async <ResponsePayload>(
   url: string,
   method: HTTPMethod = HTTPMethod.GET,
   options?: FetchDataOptions,
-): Promise<FetchDataResponsePayload<Payload>> => {
+): Promise<FetchDataResponsePayload<ResponsePayload>> => {
   const newHeaders = new Headers(DefaultHeader);
   const requestOptions: FetchDataRequestOptions = {
     method,

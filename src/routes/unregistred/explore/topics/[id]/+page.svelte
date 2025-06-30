@@ -24,9 +24,7 @@
   </div>
 {:else}
   <div class="explore__no-topics">
-    <HighlightedText phrase={m.page_explore_no_topics()} />
-    <Link className="explore__no-topics-link primary-button" href={AppRoute.EXPLORE}
-      >{m.page_explore_no_topics_here()}</Link
-    >
+    <HighlightedText phrase={m['explore_page.no_topics']()} />
+    <Link className="explore__no-topics-link primary-button" href={AppRoute.EXPLORE}>{m['explore_page.link']()}</Link>
   </div>
 {/if}

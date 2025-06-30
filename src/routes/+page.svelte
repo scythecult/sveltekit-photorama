@@ -6,14 +6,14 @@
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import Logo from '$lib/components/logos/main-logo/Logo.svelte';
-  import { AppRoute } from '$lib/constants/app';
+  import { AppPath, AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
   import { getRandomInteger } from '$lib/utils/utils';
 
   const SloganMap: Record<string, string> = {
-    1: m.login_slogan_1(),
-    2: m.login_slogan_2(),
-    3: m.login_slogan_3(),
+    1: m['login_page.slogan_1'](),
+    2: m['login_page.slogan_2'](),
+    3: m['login_page.slogan_3'](),
   };
 
   let isLoginFormVisible = $state(false);
@@ -38,14 +38,23 @@
     <div class="login__greet">
       <HighlightedText phrase={getRawSlogan()} />
       <p class="login__actions">
-        <button class="plain-button" onclick={handleLoginButtonClick} type="button">{m.login_button_login()}</button>
-        {m.login_or()}
-        <Link className="plain-button" href={AppRoute.SIGNUP}>{m.signup_button_register()}</Link>
+        <button class="login__action-button plain-button" onclick={handleLoginButtonClick} type="button"
+          >{m['input.button_login']()}</button
+        >
+        {m['common.or']()}
+        <!-- TODO Detect we are on mobile or not -->
+        <Link className="login__action-button plain-button" href={`${AppRoute.SIGNUP}${AppPath.EMAIL}`}
+          >{m['input.button_register']()}</Link
+        >
       </p>
     </div>
   {:else}
     <div class="login__form">
       <LoginForm />
+      <p class="login-form__register">
+        {m['signup_page.welcome_text']()}
+        <Link className="plain-button" href={`${AppRoute.SIGNUP}${AppPath.EMAIL}`}>{m['input.button_register']()}</Link>
+      </p>
     </div>
   {/if}
 </section>

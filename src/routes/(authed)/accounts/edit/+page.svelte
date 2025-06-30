@@ -2,8 +2,8 @@
   import Link from '$lib/components/link/Link.svelte';
   import { userStore } from '$lib/store/userStore.svelte';
 
-  const { name } = $derived(userStore.getUserInfo());
+  const { username } = $derived(userStore.getUserInfo());
 </script>
 
-<Link href={`/${name}`}>Back Arrow</Link>
+<Link href={`/${username}`}>Back Arrow</Link>
 <p>edit page</p>

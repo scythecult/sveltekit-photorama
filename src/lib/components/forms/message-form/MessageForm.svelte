@@ -4,7 +4,7 @@
   import { StatusCodes } from 'http-status-codes';
   import { enhance } from '$app/forms';
   import Textarea from '$lib/components/textarea/Textarea.svelte';
-  import { ActionMap, ActionNameMap } from '$lib/constants/action';
+  import { FormActionName, InputName } from '$lib/constants/action';
   import { userStore } from '$lib/store/userStore.svelte';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
@@ -50,17 +50,12 @@
   };
 </script>
 
-<form class={classNameFinal} use:enhance={handleSubmit} action="?/{ActionMap.COMMENT_MESSAGE}" method="POST">
+<form class={classNameFinal} use:enhance={handleSubmit} action="?/{FormActionName.COMMENT_MESSAGE}" method="POST">
   <UserAvatar />
 
-  <Textarea
-    name={ActionNameMap.MESSAGE}
-    placeholder="Add comment..."
-    userValue={message}
-    onInput={handleMessageInput}
-  />
-  <input type="hidden" name={ActionNameMap.USER_ID} value={id} />
-  <input type="hidden" name={ActionNameMap.PUBLICATION_ID} value={publicationId} />
+  <Textarea name={InputName.MESSAGE} placeholder="Add comment..." userValue={message} onInput={handleMessageInput} />
+  <input type="hidden" name={InputName.USER_ID} value={id} />
+  <input type="hidden" name={InputName.PUBLICATION_ID} value={publicationId} />
 
   {#if isSubmitButtonVisible}
     <button class="message-form__submit" type="submit"><CustomIcon iconName={IconName.ARROW} /></button>

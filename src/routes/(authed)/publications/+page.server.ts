@@ -3,16 +3,16 @@ import { fail } from '@sveltejs/kit';
 import { HTTPMethod } from 'http-method-enum';
 import { StatusCodes } from 'http-status-codes';
 import { fetchData } from '$lib/api/fetchData';
-import { ActionMap, ActionNameMap } from '$lib/constants/action';
+import { FormActionName, InputName } from '$lib/constants/action';
 import { AppPath, PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import { convertStringToBoolean } from '$lib/utils/utils';
 import type { Actions } from '../../$types';
 
 export const actions: Actions = {
-  [ActionMap.LIKE]: async ({ request, cookies }) => {
+  [FormActionName.LIKE]: async ({ request, cookies }) => {
     const data = await request.formData();
-    const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
-    const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
+    const publicationId = data.get(InputName.PUBLICATION_ID) as string;
+    const isLiked = data.get(InputName.IS_LIKED) as string;
 
     if (publicationId && isLiked) {
       const { data } = await fetchData(`${PHOTORAMA_BASE_URL}${AppPath.LIKE}/${publicationId}`, HTTPMethod.POST, {
@@ -31,10 +31,10 @@ export const actions: Actions = {
       description: `[${publicationId}] and [${isLiked}] is requred!`,
     });
   },
-  [ActionMap.COMMENT_LIKE]: async ({ request }) => {
+  [FormActionName.COMMENT_LIKE]: async ({ request }) => {
     const data = await request.formData();
-    const commentId = data.get(ActionNameMap.COMMENT_ID) as string;
-    const isLiked = data.get(ActionNameMap.IS_LIKED) as string;
+    const commentId = data.get(InputName.COMMENT_ID) as string;
+    const isLiked = data.get(InputName.IS_LIKED) as string;
 
     console.log('update guest-users comment like count', {
       commentId,
@@ -45,17 +45,17 @@ export const actions: Actions = {
       return { commentId };
     }
   },
-  [ActionMap.COMMENT]: async ({ request }) => {
+  [FormActionName.COMMENT]: async ({ request }) => {
     const data = await request.formData();
-    const commentId = data.get(ActionNameMap.COMMENT_ID) as string;
+    const commentId = data.get(InputName.COMMENT_ID) as string;
 
     console.log('do comment', { commentId });
   },
-  [ActionMap.COMMENT_MESSAGE]: async ({ request, cookies }) => {
+  [FormActionName.COMMENT_MESSAGE]: async ({ request, cookies }) => {
     const data = await request.formData();
-    const userId = data.get(ActionNameMap.USER_ID) as string;
-    const publicationId = data.get(ActionNameMap.PUBLICATION_ID) as string;
-    const message = data.get(ActionNameMap.MESSAGE) as string;
+    const userId = data.get(InputName.USER_ID) as string;
+    const publicationId = data.get(InputName.PUBLICATION_ID) as string;
+    const message = data.get(InputName.MESSAGE) as string;
 
     if (publicationId && userId && message) {
       const { data } = await fetchData(`${PHOTORAMA_BASE_URL}${AppPath.COMMENT_MESSAGE}`, HTTPMethod.POST, {

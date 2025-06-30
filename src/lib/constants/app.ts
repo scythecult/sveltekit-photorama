@@ -22,6 +22,15 @@ const AppName = {
   ARCHIVE: 'ARCHIVE',
   COMMENTS: 'COMMENTS',
   LIKES: 'LIKES',
+  EMAIL: 'EMAIL',
+  PHONE: 'PHONE',
+  USERNAME: 'USERNAME',
+  PASSWORD: 'PASSWORD',
+  BIRTHDATE: 'BIRTHDATE',
+  FULLNAME: 'FULLNAME',
+  PICTURE: 'PICTURE',
+  AVATAR: 'AVATAR',
+  CONFIRM: 'CONFIRM',
 } as const;
 
 export const PHOTORAMA_BASE_URL = 'http://localhost:9666/photorama/api/v1';
@@ -49,6 +58,15 @@ export const AppRoute = {
   [AppName.ARCHIVE]: '/archive',
   [AppName.COMMENTS]: '/comments',
   [AppName.LIKES]: '/likes',
+  [AppName.EMAIL]: '/email',
+  [AppName.PHONE]: '/phone',
+  [AppName.USERNAME]: '/username',
+  [AppName.FULLNAME]: '/fullname',
+  [AppName.PASSWORD]: '/password',
+  [AppName.BIRTHDATE]: '/birthdate',
+  [AppName.PICTURE]: '/picture',
+  [AppName.AVATAR]: '/avatar',
+  [AppName.CONFIRM]: '/confirm',
 };
 
 export const AUTHED_FORBIDDEN_URLS = [AppRoute.ROOT, AppRoute.SIGNUP];
@@ -58,8 +76,18 @@ export const AppPath = {
   COMMENT_MESSAGE: '/publications/comments',
   LIKE: '/publications/likes',
   SIGNUP: '/accounts/signup',
+  SIGNUP_EMAIL: '/accounts/signup/email',
+  SIGNUP_SUGGESTED_USERNAME: '/accounts/signup/suggested-username',
+  SIGNUP_CONFIRM: '/accounts/signup/confirm',
   USER: '/user',
+  EMAIL: '/email',
   PUBLICATIONS: '/publications',
+  IMAGES: '/images/signup',
+} as const;
+
+export const AppSearchParam = {
+  SUGGESTED_USERNAME: 'suggestedUserName',
+  USERNAME: 'userName',
 } as const;
 
 export const AppTitle = {

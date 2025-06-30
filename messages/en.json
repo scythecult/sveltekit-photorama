@@ -1,38 +1,121 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"locale": "English",
-	"not_found_error_title": "Unfortunately, this page is unavailable.",
-	"not_found_error_description": "You may have used an invalid link or the page has been removed.",
-	"not_found_error_link": "Back to Photorama.",
-	"common_user_error": "Pease enter {field} in correct format",
-	"email_error": "Pease enter email in correct format",
-	"phone_error": "Pease enter phone in correct format",
-	"login_slogan_1": "Register to see $life moments$ of your friends",
-	"login_slogan_2": "Share interesting moments with those who $understand you$",
-	"login_slogan_3": "Check out these $life moments$ shared by close friends",
-	"login_button_login": "Login",
-	"login_or": "or",
-	"login_user_placeholder": "Phone, username or email",
-	"login_password_placeholder": "Password",
-	"login_password_error": "Password should contain at least {value} characters",
-	"login_password_reset": "Forgot password?",
-	"signup_welcome_text": "Don't have an account?",
-	"signup_button_register": "Register",
-	"signup_email_placeholder": "Email",
-	"page_explore_title": "Interesting",
-	"page_register_title": "Register",
-	"page_publications_comments_title": "Comments",
-	"page_publications_comments_no_comments": "There is no comments yet",
-	"page_publications_comments_first_comment": "Post your first comment",
-	"page_explore_no_topics": "There is no related topics yet, $but you can find it$",
-	"page_explore_no_topics_here": "Here",
-	"page_profile_edit": "Edit profile",
-	"page_profile_view": "View archive",
-	"page_profile_posts": "posts",
-	"page_profile_followers": "followers",
-	"page_profile_following": "following",
-	"aria_lang": "Switch language",
-	"aria_close": "Close",
-	"floating_modal_title": "More content in app",
-	"floating_modal_description": "Search for information about what interests you and find new inspiring topics."
+	"common": {
+		"or": "or"
+	},
+	"not_found_page": {
+		"title": "Unfortunately, this page is unavailable.",
+		"description": "You may have used an invalid link or the page has been removed.",
+		"link": "Back to Photorama."
+	},
+	"login_page": {
+		"slogan_1": "Register to see $life moments$ of your friends",
+		"slogan_2": "Share interesting moments with those who $understand you$",
+		"slogan_3": "Check out these $life moments$ shared by close friends"
+	},
+	"input": {
+		"avatar_file_type_error": "Invalid file type, please use following:",
+		"avatar_file_size_error_1": "Invalid file size:",
+		"avatar_file_size_error_2": "should be less than {allowed}",
+		"common_user_error": "Pease enter {field} in correct format",
+		"button_login": "Login",
+		"button_next": "Next",
+		"button_show": "Show",
+		"button_register": "Register",
+		"button_skip": "Skip",
+		"button_add_picture": "Add Picture",
+		"button_take_photo": "Take photo",
+		"button_edit": "Edit",
+		"button_done": "Done",
+		"button_change_photo": "Change picture",
+		"button_agree": "I agree",
+		"email_error": "Pease enter email in correct format",
+		"email_error_in_use": "Email is already in use",
+		"phone_error": "Pease enter phone in correct format",
+		"password_error": "Password should contain at least {count} letters long numbers and special characters (!?#)",
+		"password_placeholder": "Password",
+		"password_reset": "Forgot password?",
+		"user_placeholder": "Phone, username or email",
+		"email_placeholder": "Email",
+		"phone_placeholder": "Phone",
+		"fullname_placeholder": "Full name",
+		"username_placeholder": "Username",
+		"username_error": "Username should contain at least {count} chars",
+		"picture_placeholder": "Choose from filesystem",
+		"date_placeholder": "Date of birth",
+		"date_error": "You must be at least {count} years old to sign up for Photorama!",
+		"calc_date_placeholder": [
+			{
+				"declarations": [
+					"input count",
+					"local countPlural = count: plural"
+				],
+				"selectors": [
+					"countPlural"
+				],
+				"match": {
+					"countPlural=1": "({value} year old)",
+					"countPlural=other": "({value} years old)"
+				}
+			}
+		]
+	},
+	"tooltip": {
+		"email": "Enter the email address at whitch you ca be contacted. No one will see it on your profile.",
+		"fullname": "Add your name so that your friends can find you.",
+		"password": "Create a password at least {count} letters long numbers and special characters (!?#). It should be something that others cant't guess.",
+		"birthdate": "Use your own date of birth, even if this account for a business, a pet or something else. No one will see this on your profile.",
+		"username": "Add a username or use our suggestion. You can change this at any time."
+	},
+	"aria": {
+		"lang": "Switch language",
+		"close": "Close"
+	},
+	"main_page": {
+		"comments_title": "Comments",
+		"comments_no_comments": "There is no comments yet",
+		"comments_first_comment": "Post your first comment"
+	},
+	"profile_page": {
+		"edit": "Edit profile",
+		"view": "View archive",
+		"posts": "posts",
+		"followers": "followers",
+		"following": "following"
+	},
+	"explore_page": {
+		"title": "Interesting",
+		"no_topics": "There is no related topics yet, $but you can find it$",
+		"link": "Here"
+	},
+	"register_page": {
+		"title": "Register"
+	},
+	"modal": {
+		"floating_title": "More content in app",
+		"floating_description": "Search for information about what interests you and find new inspiring topics."
+	},
+	"terms": {
+		"signup": "By tapping 'I agree', you agree to create an account and to Photorama's Terms, Privacy Policy and Cookie Policy."
+	},
+	"signup_page": {
+		"welcome_text": "Don't have an account?",
+		"already_register_link": "Already have an account?",
+		"signup_by_phone": "Sign up with phone number",
+		"signup_by_email": "Sign up with email",
+		"email_title": "What's your email address?",
+		"phone_title": "What's your mobile phone number?",
+		"fullname_title": "Whats your name?",
+		"password_title": "Create a password",
+		"birthdate_title": "What's your date of birth?",
+		"username_title": "Create a username",
+		"photo_title": "Add a profile picture",
+		"photo_description": "Add a profile picture so what your friends know its you. Everyone will able to see your picture.",
+		"photo_loaded_title": "Profile picture added",
+		"modal_title": "Add picture",
+		"confirm_title": "Agree to Photorama's terms and policies",
+		"confirm_required_info_title": "Oops, it looks like we don't have all the information we need to continue.",
+		"confirm_required_info_description": "Please follow the links below to add info"
+	}
 }

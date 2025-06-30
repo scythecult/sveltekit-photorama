@@ -5,7 +5,7 @@
   import Bubble from '$lib/components/bubble/Bubble.svelte';
   import { UserAvatarSize } from '$lib/components/user-avatar/constants';
   import UserAvatar from '$lib/components/user-avatar/UserAvatar.svelte';
-  import { ActionMap, ActionNameMap } from '$lib/constants/action';
+  import { FormActionName, InputName } from '$lib/constants/action';
 
   type NoteFormProps = {
     userId: string;
@@ -39,11 +39,11 @@
   };
 </script>
 
-<form class="note-form" action="?/{ActionMap.CREATE_NOTE}" method="POST" use:enhance={handleSubmit}>
+<form class="note-form" action="?/{FormActionName.CREATE_NOTE}" method="POST" use:enhance={handleSubmit}>
   <h2 class="note-form__title">New note</h2>
 
-  <input type="hidden" name={ActionNameMap.USER_ID} value={userId} aria-hidden="true" />
-  <input type="hidden" name={ActionNameMap.NOTE_MESSAGE} value={noteMessage} aria-hidden="true" />
+  <input type="hidden" name={InputName.USER_ID} value={userId} aria-hidden="true" />
+  <input type="hidden" name={InputName.NOTE_MESSAGE} value={noteMessage} aria-hidden="true" />
 
   <div class="note-form__content">
     <Bubble className="note-form__bubble" onInput={handleBubbleInput} maxLength={MAX_NOTE_LENGTH} />

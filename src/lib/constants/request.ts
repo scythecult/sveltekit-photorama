@@ -1,10 +1,7 @@
-export const LocalStorageName = {
-  FLOATING_MODAL_CLOSE_TIME: 'floating-modal-close-time',
-};
-
 export const CookieName = {
   USER_SESSION_ID: 'session_id',
   USER_JWT_TOKEN: 'jwt_token',
+  SIGNUP_SESSION_ID: 'signup_session_id',
 };
 
 export const DefaultHeader = {

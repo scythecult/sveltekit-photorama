@@ -33,12 +33,12 @@
 </script>
 
 <div class="comments">
-  <h2 class="comments__title">{m.page_publications_comments_title()}</h2>
+  <h2 class="comments__title">{m['main_page.comments_title']()}</h2>
   <div class="comments__list" use:scrollToTop>
     {#if !comments?.length}
       <div class="comments__stub-container">
-        <Stub className="comments__stub">{m.page_publications_comments_no_comments()}</Stub>
-        <Stub className="comments__stub comments__stub--smaller">{m.page_publications_comments_first_comment()}</Stub>
+        <Stub className="comments__stub">{m['main_page.comments_no_comments']()}</Stub>
+        <Stub className="comments__stub comments__stub--smaller">{m['main_page.comments_first_comment']()}</Stub>
       </div>
     {:else}
       {#each comments as comment (comment.id)}

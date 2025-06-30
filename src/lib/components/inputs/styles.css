@@ -4,6 +4,7 @@
   --input-right-offset: 8px;
   --input-bottom-offset: 7px;
   --input-left-offset: 8px;
+  --embedded-icon-size: 36px;
   width: 100%;
   font-size: var(--app-12-font-size);
 }
@@ -50,7 +51,7 @@
 }
 
 .input__field {
-  width: 100%;
+  flex-grow: 1;
   height: var(--input-height);
   padding: var(--input-top-offset) var(--input-right-offset) var(--input-bottom-offset) var(--input-left-offset);
   background-color: inherit;
@@ -82,4 +83,12 @@
   padding: 4px;
   font-size: var(--app-12-font-size);
   color: rgb(var(--app-error-or-destructive));
+}
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-right: 8px;
 }

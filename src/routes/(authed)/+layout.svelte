@@ -5,6 +5,9 @@
   const { children, data } = $props();
 
   // TODO: search
+  // TODO: can be replaced by setContext
+  // https://svelte.dev/docs/svelte/context
+  // https://svelte.dev/docs/kit/state-management
   $effect(() => {
     if (data.userInfo) {
       // eslint-disable-next-line no-console

@@ -66,7 +66,7 @@
     class="modal__close"
     onpointerdown={handleCloseButtonPointerDown}
     onclick={handleCloseButtonClick}
-    aria-label={m.aria_close()}
+    aria-label={m['aria.close']()}
   ></button>
   <div class="modal__content">{@render children()}</div>
 </div>

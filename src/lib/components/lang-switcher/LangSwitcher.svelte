@@ -14,7 +14,7 @@
   onchange={handleLangSwitcherChange}
   bind:value={selected}
   name="lang"
-  aria-label={m.aria_lang()}
+  aria-label={m['aria.lang']()}
 >
   {#each APP_LOCALES as { value, text } (value)}
     <option {value}>{text}</option>

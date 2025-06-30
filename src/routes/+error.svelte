@@ -6,9 +6,9 @@
 </script>
 
 <section class="error">
-  <h2 class="error__title">{m.not_found_error_title()}</h2>
+  <h2 class="error__title">{m['not_found_page.title']()}</h2>
   <p class="error__description">
-    {m.not_found_error_description()}
-    <Link className="error__link" href={AppRoute.ROOT}>{m.not_found_error_link()}</Link>
+    {m['not_found_page.description']()}
+    <Link className="error__link" href={AppRoute.ROOT}>{m['not_found_page.link']()}</Link>
   </p>
 </section>

@@ -34,6 +34,12 @@
   color: rgb(var(--app-secondary-text));
 }
 
+.login__action-button {
+  display: inline-block;
+  width: auto;
+  padding: 0;
+}
+
 .login__login-button {
   padding: 0;
   color: rgb(var(--app-primary-button));

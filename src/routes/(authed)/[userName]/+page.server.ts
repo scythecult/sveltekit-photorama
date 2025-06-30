@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ActionMap, ActionNameMap } from '$lib/constants/action';
+import { FormActionName, InputName } from '$lib/constants/action';
 import { AppTitle, PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import type { Actions } from './$types';
 
@@ -12,10 +12,10 @@ export const load = async () => {
 };
 
 export const actions: Actions = {
-  [ActionMap.CREATE_NOTE]: async ({ fetch, request }) => {
+  [FormActionName.CREATE_NOTE]: async ({ fetch, request }) => {
     const data = await request.formData();
-    const userId = data.get(ActionNameMap.USER_ID) as string;
-    const noteMessage = data.get(ActionNameMap.NOTE_MESSAGE) as string;
+    const userId = data.get(InputName.USER_ID) as string;
+    const noteMessage = data.get(InputName.NOTE_MESSAGE) as string;
 
     console.log({ userId, noteMessage });
 

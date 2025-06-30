@@ -1,7 +1,7 @@
 <script lang="ts">
   import './styles.css';
   import { onMount } from 'svelte';
-  import Spinner from '../spinner/Spinner.svelte';
+  import Spinner from '../spinners/Spinner.svelte';
   import Textarea from '../textarea/Textarea.svelte';
 
   type BubbleProps = {

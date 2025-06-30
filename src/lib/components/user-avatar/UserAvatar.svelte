@@ -6,7 +6,7 @@
   import { IconName } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';
   import Link from '../link/Link.svelte';
-  import Spinner from '../spinner/Spinner.svelte';
+  import Spinner from '../spinners/Spinner.svelte';
   import { UserAvatarSize } from './constants';
 
   type UserAvatarProps = {
@@ -15,10 +15,10 @@
     isAvatarOnly?: boolean;
   };
 
-  const { avatar, name } = $derived(userStore.getUserInfo());
+  const { avatarUrl, username: username } = $derived(userStore.getUserInfo());
   const { className = '', avatarSize = UserAvatarSize.MEDIUM, isAvatarOnly = false }: UserAvatarProps = $props();
   const classNameFinal = ['user-avatar', className, avatarSize];
-  const userLinkHref = $derived(name ? `/${name}` : AppRoute.PROFILE);
+  const userLinkHref = $derived(username ? `/${username}` : AppRoute.PROFILE);
   let isLoading = $state(true);
 
   // TODO Make skeleton
@@ -28,16 +28,16 @@
 </script>
 
 <Link className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)} href={userLinkHref}>
-  {#if avatar}
+  {#if avatarUrl}
     {#if isLoading}
       <Spinner />
-    {:else if avatar.includes('http') || avatar.includes('https')}
-      <img class="user-avatar__image" src={avatar} alt={name} />
+    {:else if avatarUrl.includes('http') || avatarUrl.includes('https')}
+      <img class="user-avatar__image" src={avatarUrl} alt={username} />
     {:else}
       <CustomIcon iconName={IconName.PROFILE} />
     {/if}
-    {#if name && !isAvatarOnly}
-      <span class="user-avatar__name link">{name}</span>
+    {#if username && !isAvatarOnly}
+      <span class="user-avatar__name link">{username}</span>
     {/if}
   {/if}
 </Link>

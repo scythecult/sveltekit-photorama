@@ -15,7 +15,7 @@
 
 .login-form__register {
   justify-self: center;
-  padding: 1rem 0;
+  padding: 16px 0;
   text-align: center;
   font-size: var(--app-14-font-size);
   color: rgb(var(--app-secondary-text));

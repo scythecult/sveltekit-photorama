@@ -7,11 +7,12 @@
   import { ModalType } from '$lib/components/modal/constants';
   import Modal from '$lib/components/modal/Modal.svelte';
   import { AppRoute } from '$lib/constants/app';
-  import { LocalStorageName } from '$lib/constants/request';
   import { m } from '$lib/paraglide/messages';
+  import { FloatingModalLsResource } from '$lib/resources/FloatingModalLsResource';
 
   const { children } = $props();
 
+  const floatingModalLsResource = new FloatingModalLsResource();
   // 5 minutes
   const CLOSE_INTERVAL = 5 * 60 * 1000;
   let closedTime = $state('');
@@ -19,17 +20,17 @@
 
   const handleModalClose = () => {
     isModalOpen = false;
-    localStorage.setItem(LocalStorageName.FLOATING_MODAL_CLOSE_TIME, Date.now().toString());
+    floatingModalLsResource.save(Date.now().toString());
   };
 
   onMount(() => {
-    closedTime = localStorage.getItem(LocalStorageName.FLOATING_MODAL_CLOSE_TIME) || '';
+    closedTime = floatingModalLsResource.load();
   });
 
   $effect(() => {
     navigating.complete?.then(() => {
       const currentTime = Date.now().toString();
-      closedTime = localStorage.getItem(LocalStorageName.FLOATING_MODAL_CLOSE_TIME) || '';
+      closedTime = floatingModalLsResource.load();
 
       if (+closedTime + CLOSE_INTERVAL < +currentTime) {
         closedTime = '';
@@ -44,9 +45,11 @@
   <div class="unregistered-modal">
     <IconLogo className="unregistered-modal__logo" />
     <div class="unregistered-modal__content">
-      <h2 class="unregistered-modal__title">{m.floating_modal_title()}</h2>
-      <p class="unregistered-modal__description">{m.floating_modal_description()}</p>
+      <h2 class="unregistered-modal__title">{m['modal.floating_title']()}</h2>
+      <p class="unregistered-modal__description">{m['modal.floating_description']()}</p>
     </div>
-    <Link className="primary-button" href={AppRoute.SIGNUP} onClick={handleModalClose}>{m.page_register_title()}</Link>
+    <Link className="primary-button" href={AppRoute.SIGNUP} onClick={handleModalClose}
+      >{m['register_page.title']()}</Link
+    >
   </div>
 </Modal>

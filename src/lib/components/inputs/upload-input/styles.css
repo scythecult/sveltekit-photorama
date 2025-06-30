@@ -1,0 +1,5 @@
+.upload-input {
+  &:active {
+    opacity: 0.8;
+  }
+}

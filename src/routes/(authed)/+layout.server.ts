@@ -1,6 +1,6 @@
 import { HTTPMethod } from 'http-method-enum';
 import { fetchData } from '$lib/api/fetchData.js';
-import { AppPath, PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import { AppPath, AppSearchParam, PHOTORAMA_BASE_URL } from '$lib/constants/app';
 import type { Publication } from '$lib/types/publication';
 import type { UserInfo } from '$lib/types/userInfo.js';
 import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
@@ -15,10 +15,13 @@ export const load = async ({ cookies }) => {
   );
 
   const userInfo = userData.user;
-  const { name } = userInfo;
+
+  console.log({ userInfo });
+
+  const { username } = userInfo;
 
   const { data: publicationsData } = await fetchData<{ publications: Publication[] }>(
-    `${PHOTORAMA_BASE_URL}${AppPath.PUBLICATIONS}?userName=${name}`,
+    `${PHOTORAMA_BASE_URL}${AppPath.PUBLICATIONS}?${AppSearchParam.USERNAME}=${username}`,
     HTTPMethod.GET,
     { cookies },
   );
