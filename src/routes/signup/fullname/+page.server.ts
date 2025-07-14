@@ -6,6 +6,7 @@ export const actions: Actions = {
     const data = await request.formData();
     const fullname = data.get(InputName.FULLNAME) as string;
     // TODO Send fullname to server to verificate user exists or not
+    // eslint-disable-next-line no-console
     console.log({ fullname });
   },
 };

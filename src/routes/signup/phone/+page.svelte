@@ -2,7 +2,7 @@
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import { EMAIL_REGEXP } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import Link from '$lib/components/link/Link.svelte';
@@ -33,7 +33,7 @@
   <Tooltip>{m['tooltip.fullname']()}</Tooltip>
 {/snippet} -->
 
-<SignupForm
+<Form
   title={m['signup_page.phone_title']()}
   action="?/{FormActionName.SIGNUP_EMAIL}"
   autocomplete="off"
@@ -50,7 +50,7 @@
     userValue={phoneValue}
     errorMessage={m['input.email_error']()}
   />
-</SignupForm>
+</Form>
 <Link className="signup__link primary-button" href={`${AppRoute.SIGNUP}${AppRoute.EMAIL}`}
   >{m['signup_page.signup_by_email']()}</Link
 >

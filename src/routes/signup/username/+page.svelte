@@ -5,23 +5,23 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { fetchData } from '$lib/api/fetchData.js';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import { MIN_USERNAME_LENGTH } from '$lib/components/inputs/constants.js';
   import Input from '$lib/components/inputs/Input.svelte';
-  import ValidationSpinner from '$lib/components/spinners/validation-spinner/ValidationSpinner.svelte';
+  import ValidationSpinner from '$lib/components/loaders/spinners/validation-spinner/ValidationSpinner.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppPath, AppRoute, AppSearchParam, PHOTORAMA_BASE_URL } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupStore } from '$lib/store/signupStore.svelte';
+  import { signupState } from '$lib/state/signupState.svelte';
   import type { ResponseSignupSuggestedUsernamePayload } from '$lib/types/responsePayload.js';
   import { debounce, replaceSpaces } from '$lib/utils/utils';
 
   const USERNAME_INPUT_DEBOUNCE_TIME = 1000;
   const { data } = $props();
   const usernameState = $state({
-    value: signupStore.getProperty(InputName.USERNAME) || '',
+    value: signupState.getProperty(InputName.USERNAME) || '',
     isValid: true,
     isAvailable: true,
     isLoading: true,
@@ -34,7 +34,7 @@
     usernameState.value = signupSessionResource.loadUsername();
     usernameState.isAvailable = data.isSuggestedUserNameAvailable;
     usernameState.isLoading = data.isLoading;
-    usernameState.isValid = data.isSuggestedUserNameAvailable;
+    usernameState.isValid = usernameState.isAvailable;
   });
 
   const handleUsernameInput = (value: string) => {
@@ -64,7 +64,7 @@
       if (usernameState.isAvailable) {
         await update();
 
-        signupStore.setProperty(InputName.USERNAME, usernameState.value);
+        signupState.setProperty(InputName.USERNAME, usernameState.value);
         signupSessionResource.saveUsername(usernameState.value);
 
         goto(`${AppRoute.SIGNUP}${AppRoute.AVATAR}`);
@@ -85,7 +85,7 @@
   <Tooltip>{m['tooltip.username']()}</Tooltip>
 {/snippet}
 
-<SignupForm
+<Form
   title={m['signup_page.username_title']()}
   action="?/{FormActionName.SIGNUP_USERNAME}"
   method={HTTPMethod.POST}
@@ -104,4 +104,4 @@
     slotA={validationSpinner}
     slotB={tooltip}
   />
-</SignupForm>
+</Form>

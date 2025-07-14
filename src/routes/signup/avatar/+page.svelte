@@ -5,15 +5,14 @@
   import { goto } from '$app/navigation';
   import { IconName, IconSize } from '$lib/components/custom-icon/constants';
   import CustomIcon from '$lib/components/custom-icon/CustomIcon.svelte';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import UploadInput from '$lib/components/inputs/upload-input/UploadInput.svelte';
   import Modal from '$lib/components/modal/Modal.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/app';
   import { ALLOWED_FILE_TYPES, MAX_PICTURE_SIZE } from '$lib/constants/common';
   import { m } from '$lib/paraglide/messages';
-  import { modalStore } from '$lib/store/modalStore.svelte';
-  import { signupStore } from '$lib/store/signupStore.svelte';
+  import { signupState } from '$lib/state/signupState.svelte';
   import type { ResponseSignupAvatarErrorInfoPayload } from '$lib/types/responsePayload';
   import { createImageURL, formatFileSize, isFileSizeValid, isFileTypeValid } from '$lib/utils/utils';
 
@@ -21,6 +20,7 @@
   // TODO Check if avatar url exists, instead of submitting form call "goto"
   const avatarUploadState = $state({
     avatarUrl: data.avatarUrl,
+    isModalVisible: false,
     fileSize: 0,
     validationResult: {
       isFileSizeValid: true,
@@ -35,8 +35,7 @@
       ? FormActionName.SIGNUP_AVATAR
       : FormActionName.SIGNUP_AVATAR_DEFAULT,
   );
-  const userFullname = $derived(signupStore.getProperty(InputName.FULLNAME));
-  const isModalOpen = $derived(modalStore.getVisibilityState());
+  const userFullname = $derived(signupState.getProperty(InputName.FULLNAME));
   const isAvatarAvailable = $derived(Boolean(avatarUploadState.avatarUrl));
   const formTitleText = $derived(
     isAvatarAvailable ? m['signup_page.photo_loaded_title']() : m['signup_page.photo_title'](),
@@ -51,7 +50,7 @@
     isAvatarAvailable ? m['input.button_change_photo']() : m['input.button_add_picture'](),
   );
 
-  const toggleModal = () => modalStore.toggleModalVisibility();
+  const toggleModal = () => (avatarUploadState.isModalVisible = !avatarUploadState.isModalVisible);
 
   const handleUploadClick = () => {
     toggleModal();
@@ -99,7 +98,7 @@
 </script>
 
 <!-- /* TODO If no avatar file provided change action="?/{FormActionName.SIGNUP_AVATAR}" to "?/{FormActionName.SIGNUP_DEFAULT_AVATAR}" */ -->
-<SignupForm
+<Form
   className="avatar-form"
   title={formTitleText}
   enctype="multipart/form-data"
@@ -162,9 +161,9 @@
     isLabelSeparate
   />
   <button class={uploadButtonClassNameFinal} onclick={handleUploadClick} type="button">{uploadButtonText}</button>
-</SignupForm>
+</Form>
 
-<Modal isOpen={isModalOpen} onClose={toggleModal}>
+<Modal isOpen={avatarUploadState.isModalVisible} onClose={toggleModal}>
   <div class="avatar-modal">
     <h2 class="avatar-modal__title">{m['signup_page.modal_title']()}</h2>
 

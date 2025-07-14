@@ -18,6 +18,7 @@ export const IconName = {
   INFO: 'info',
   CHECKMARK: 'checkmark',
   FAILMARK: 'failmark',
+  USERS: 'users',
 } as const;
 
 export type IconNameKey = keyof typeof IconName;

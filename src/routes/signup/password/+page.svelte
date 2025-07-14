@@ -3,7 +3,7 @@
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import { MIN_PASSWORD_LENGTH, PASSWORD_REGEXP } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
@@ -11,7 +11,7 @@
   import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupStore } from '$lib/store/signupStore.svelte';
+  import { signupState } from '$lib/state/signupState.svelte';
 
   const passwordState = $state({
     value: '',
@@ -35,7 +35,7 @@
       await update();
 
       passwordState.isValid = true;
-      signupStore.setProperty(InputName.PASSWORD, passwordState.value);
+      signupState.setProperty(InputName.PASSWORD, passwordState.value);
       signupSessionResource.savePassword(passwordState.value);
 
       goto(`${AppRoute.SIGNUP}${AppRoute.BIRTHDATE}`);
@@ -47,7 +47,7 @@
   <Tooltip>{m['tooltip.password']({ count: MIN_PASSWORD_LENGTH })}</Tooltip>
 {/snippet}
 
-<SignupForm
+<Form
   title={m['signup_page.password_title']()}
   action="?/{FormActionName.SIGNUP_PASSWORD}"
   method={HTTPMethod.POST}
@@ -64,4 +64,4 @@
     errorMessage={m['input.password_error']({ count: MIN_PASSWORD_LENGTH })}
     slotB={tooltip}
   />
-</SignupForm>
+</Form>

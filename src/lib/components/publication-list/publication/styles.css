@@ -3,7 +3,7 @@
   padding-bottom: 8px;
 }
 
-.head {
+.publication__head {
   display: grid;
   grid-template-columns: minmax(32px, max-content) minmax(0, max-content);
   justify-content: space-between;
@@ -18,16 +18,16 @@
   padding: var(--app-layout-padding-d);
 }
 
-.actions {
+.publication__actions {
   display: flex;
   align-items: center;
   min-height: 40px;
-}
 
-.actions:has(.bookmark) .bookmark {
-  margin-left: auto;
-}
+  & > :first-child {
+    padding-left: 0;
+  }
 
-.actions:has(.like-button) .like-button {
-  padding-left: 0;
+  & > :last-child {
+    margin-left: auto;
+  }
 }

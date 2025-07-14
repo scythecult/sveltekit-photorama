@@ -52,6 +52,7 @@
 
 .input__field {
   flex-grow: 1;
+  width: 100%;
   height: var(--input-height);
   padding: var(--input-top-offset) var(--input-right-offset) var(--input-bottom-offset) var(--input-left-offset);
   background-color: inherit;

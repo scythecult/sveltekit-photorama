@@ -1,9 +1,11 @@
 <script lang="ts">
   import './styles.css';
   import type { Action } from 'svelte/action';
+  import { StateContextName } from '$lib/constants/context';
   import { m } from '$lib/paraglide/messages';
-  import { appStore } from '$lib/store/appStore.svelte';
+  import { type AppState } from '$lib/state/appState.svelte';
   import type { Comment } from '$lib/types/publication';
+  import { getStateContext } from '$lib/utils/context';
   import MessageForm from '../forms/message-form/MessageForm.svelte';
   import Stub from '../stub/Stub.svelte';
   import CommentItem from './comment/CommentItem.svelte';
@@ -13,7 +15,9 @@
   };
 
   const { comments }: CommentListProps = $props();
-  const publicationId = $derived(appStore.getPublicationId());
+  const appState = getStateContext<AppState>(StateContextName.APP);
+  const { getPublicationId } = $derived(appState() ?? {});
+  const publicationId = $derived(getPublicationId());
 
   const scrollToTop: Action = (node) => {
     $effect(() => {
@@ -46,7 +50,7 @@
       {/each}
     {/if}
   </div>
-  {#if publicationId !== null}
+  {#if publicationId}
     {#key publicationId}
       <MessageForm {publicationId} onSubmit={handleMessageFormSubmit} />
     {/key}

@@ -1,5 +1,6 @@
 <script lang="ts">
   import './styles.css';
+  import { UserAvatarMode } from '$lib/components/user-avatar/constants';
   import type { Comment } from '$lib/types/publication';
   import { LikeTypeMap } from '../../buttons/constants';
   import LikeButton from '../../buttons/like-button/LikeButton.svelte';
@@ -11,7 +12,7 @@
 </script>
 
 <div class="comment">
-  <UserAvatar className="comment__user-avatar" />
+  <UserAvatar mode={UserAvatarMode.IMAGE} />
 
   <div class="comment__body">
     <a class="comment__user link" href="/user?name={name}" target="_top" rel="noopener noreferrer">{name}</a>

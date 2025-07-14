@@ -1,0 +1,16 @@
+.publications-page-header {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.publications-page-header__logo {
+  width: 110px;
+}
+
+.publications-page-header__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}

@@ -12,10 +12,6 @@
   row-gap: var(--app-micro-layout-gap);
 }
 
-.comment__user-avatar .user-avatar__name {
-  display: none;
-}
-
 .comment__user {
   font-weight: var(--app-font-weight-semibold);
   color: var(--app-primary-text);

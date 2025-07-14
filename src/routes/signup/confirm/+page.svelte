@@ -4,7 +4,7 @@
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/app';
@@ -56,7 +56,7 @@
   };
 </script>
 
-<SignupForm
+<Form
   className="confirm-form"
   title={m['signup_page.confirm_title']()}
   buttonText={m['input.button_agree']()}
@@ -81,7 +81,7 @@
   <input type="hidden" name={InputName.FULLNAME} value={confirmState.fullname} />
   <input type="hidden" name={InputName.PASSWORD} value={confirmState.password} />
   <input type="hidden" name={InputName.USERNAME} value={confirmState.username} />
-</SignupForm>
+</Form>
 {#if isRequiredInfoVisible}
   <div class="required-info">
     <h2 class="required-info__title">{m['signup_page.confirm_required_info_title']()}</h2>

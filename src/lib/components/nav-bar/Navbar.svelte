@@ -7,6 +7,7 @@
   import UserAvatar from '../user-avatar/UserAvatar.svelte';
 </script>
 
+<!-- TODO Refactor -->
 <nav class="nav-bar">
   <HomeButton className="nav-bar__button" />
   <SearchButton className="nav-bar__button" />

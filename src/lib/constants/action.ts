@@ -27,13 +27,15 @@ export const InputName = {
   PUBLICATION_ID: 'publicationId',
   IS_LIKED: 'isLiked',
   COMMENT_ID: 'commentId',
-  MESSAGE: 'message',
+  COMMENT_MESSAGE: 'comment-message',
   NOTE_MESSAGE: 'note-message',
   FULLNAME: 'fullname',
   BIRTHDATE: 'birthdate',
   PICTURE: 'picture',
   AVATAR: 'avatar',
   AVATAR_URL: 'avatar-url',
+  BUBBLE: 'bubble',
+  AUDITORY: 'auditory',
 } as const;
 
 export const HASHTAG_REGEX = /#[a-zA-Z|а-яА-Я]+/gi;

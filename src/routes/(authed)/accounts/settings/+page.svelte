@@ -1,9 +1,12 @@
 <script lang="ts">
   import Link from '$lib/components/link/Link.svelte';
-  import { userStore } from '$lib/store/userStore.svelte';
+  import { StateContextName } from '$lib/constants/context';
+  import type { UserInfo } from '$lib/types/userInfo';
+  import { getStateContext } from '$lib/utils/context';
 
-  const { name } = $derived(userStore.getUserInfo());
+  const userState = getStateContext<UserInfo>(StateContextName.USER);
+  const { username } = $derived(userState());
 </script>
 
-<Link href={`/${name}`}>Back Arrow</Link>
+<Link href={`/${username}`}>Back Arrow</Link>
 <p>settings page</p>

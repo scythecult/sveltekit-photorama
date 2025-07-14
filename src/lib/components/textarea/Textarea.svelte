@@ -5,7 +5,7 @@
   type TextareaKeydonwHandler = Event & KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement };
 
   type TextareaProps = {
-    userValue: string;
+    userValue?: string;
     name: string;
     placeholder: string;
     className?: string;

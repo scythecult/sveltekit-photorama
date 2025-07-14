@@ -1,36 +1,70 @@
 import { HASHTAG_REGEX } from '$lib/constants/action';
 import { ALLOWED_FILE_TYPES, ImageDimension, MAX_PICTURE_SIZE } from '$lib/constants/common';
-import type { SimpleCookie } from '$lib/types/cookies';
 
+/**
+ * Extract all hashtags from a description.
+ *
+ * @param {string} description
+ * @returns {string[]} array of extracted hashtags
+ * @example
+ * extractHashtagsFromDescription('Hello #world') = ['world']
+ */
 export const extractHashtagsFromDescription = (description: string) =>
   (description.match(HASHTAG_REGEX) || []).map(String) || [];
 
+/**
+ * Remove all hashtags from a description.
+ *
+ * @param {string} description
+ * @returns {string} description without hashtags
+ * @example
+ * clearDescriptionFromHashtags('Hello #world') = 'Hello '
+ */
 export const clearDescriptionFromHashtags = (description: string) => description.replace(HASHTAG_REGEX, '').trim();
 
+/**
+ * Convert string to boolean.
+ *
+ * @param {string} value
+ * @returns boolean
+ * @example
+ * convertStringToBoolean('true') = true
+ * convertStringToBoolean('false') = false
+ */
 export const convertStringToBoolean = (value: string) => value === 'true';
 
-export const parseCookieHeaderValues = (cookies: string[]): SimpleCookie[] => {
-  if (cookies.length) {
-    return cookies.map((item) => {
-      const [cookiePair, pathRaw] = item.split(';');
-      const path = pathRaw.trim().replace(/\w+=/g, '');
-      const [name, value] = cookiePair.split(/=(.*)/s).filter(Boolean);
-
-      return { name, value, path };
-    });
-  }
-
-  return [];
-};
-
-export const getCookieByName = (cookies: SimpleCookie[], name: string) =>
-  cookies.find((item) => item.name === name)?.value;
-
+/**
+ * Get random integer between min and max value.
+ *
+ * @param min min value
+ * @param max max value
+ * @returns integer between min and max
+ * @example
+ * const randomInteger(4) = getRandomInteger(1, 10);
+ */
 export const getRandomInteger = (min: number, max: number) => Math.floor(min + Math.random() * (max + 1 - min));
 
+/**
+ * Divide incoming phrase by "$" symbol.
+ * If no "$" symbol in phrase, return { start: phrase, middle: '', end: '' }
+ *
+ * @param {string} rawPhrase incoming phrase
+ * @returns \{ start, middle, end } divided phrase
+ * @example
+ * const { start, middle, end } = dividePhrase('Hello $world$!');
+ */
 export const dividePhrase = (rawPhrase: string) => {
   const startIndex = rawPhrase.indexOf('$');
   const endIndex = rawPhrase.lastIndexOf('$') + 1;
+
+  if (startIndex === -1 || endIndex === -1) {
+    return {
+      start: rawPhrase,
+      middle: '',
+      end: '',
+    };
+  }
+
   const start = rawPhrase.slice(0, startIndex);
   const middle = rawPhrase.slice(startIndex, endIndex).replace(/\$/g, '');
   const end = rawPhrase.slice(endIndex).trim();
@@ -42,17 +76,56 @@ export const dividePhrase = (rawPhrase: string) => {
   };
 };
 
+/**
+ * Provides utility functions for date manipulation.
+ *
+ * @returns An object containing:
+ *   - today: A string representing today's date in 'YYYY-MM-DD' format.
+ *   - calculateYears: A function that calculates the number of years between
+ *     the current year and the year of the given date string.
+ *   - getYear: A function that extracts the year from a given date string.
+ */
 export const getDate = () => ({
   today: new Date().toISOString().slice(0, 10),
   calculateYears: (userValue: string) => new Date().getFullYear() - new Date(userValue).getFullYear(),
   getYear: (dateInputValue: string) => new Date(dateInputValue).getFullYear(),
 });
 
+/**
+ * Replaces all spaces in a string with a single space.
+ *
+ * @param {string} value - The input string to be processed.
+ * @returns {string} The resulting string with all spaces replaced by a single space.
+ * @example
+ * replaceSpaces('Hello   world') = 'Hello world'
+ */
 export const replaceSpaces = (value: string) => value.trim().replace(/\s/g, '');
 
+/**
+ * Creates a suggested username from a given full name.
+ *
+ * Reverses the full name order (i.e. 'John Doe' becomes 'Doe John'), removes
+ * all spaces, and lowercases the resulting string.
+ *
+ * @param userFullName The full name to generate a suggested username from.
+ * @returns A suggested username string.
+ * @example
+ * createSuggestedUsername('John Doe') = 'doejohn'
+ */
 export const createSuggestedUsername = (userFullName: string) =>
   replaceSpaces(userFullName.split(' ').reverse().join(' ').toLowerCase());
 
+/**
+ * Returns a debounced version of the given function.
+ *
+ * The debounced function will only be executed after the given wait period has
+ * passed since the last time the debounced function was called.
+ *
+ * @param {function} callback - The function to debounce.
+ * @param {number} wait - The wait period in milliseconds.
+ *
+ * @returns {function} The debounced function.
+ */
 export const debounce = <T>(callback: (...args: T[]) => void, wait: number) => {
   let timeout: ReturnType<typeof setTimeout>;
 
@@ -62,17 +135,55 @@ export const debounce = <T>(callback: (...args: T[]) => void, wait: number) => {
   };
 };
 
+/**
+ * Checks if a given file type is valid.
+ *
+ * If `fileTypes` is provided, then the function will check if the `fileType` is
+ * included in the `fileTypes` array. Otherwise, it will check if the `fileType`
+ * is included in the `ALLOWED_FILE_TYPES` array.
+ *
+ * @param {string} fileType - The file type to check.
+ * @param {string[]} [fileTypes] - An array of allowed file types.
+ * @returns {boolean} True if the file type is valid, false otherwise.
+ */
 export const isFileTypeValid = (fileType: string, fileTypes?: string[]) =>
   fileTypes?.length ? fileTypes.includes(fileType) : ALLOWED_FILE_TYPES.includes(fileType);
 
+/**
+ * Checks if a given file size is valid.
+ *
+ * @param {number} fileSize - The file size in bytes.
+ * @returns {boolean} True if the file size is valid, false otherwise.
+ */
 export const isFileSizeValid = (fileSize: number) => fileSize <= MAX_PICTURE_SIZE;
 
+/**
+ * Checks if the given image dimensions are valid.
+ *
+ * The dimensions are valid if both the width and height are within the range of
+ * `ImageDimension.min` and `ImageDimension.max`.
+ *
+ * @param {number} width - The width of the image.
+ * @param {number} height - The height of the image.
+ * @returns {boolean} True if the dimensions are valid, false otherwise.
+ */
 export const isImageDimensionsValid = (width: number, height: number) =>
   width <= ImageDimension.max &&
   height <= ImageDimension.max &&
   width >= ImageDimension.min &&
   height >= ImageDimension.min;
 
+/**
+ * Formats a given file size into a human-readable string.
+ *
+ * @param {number} fileSize - The file size in bytes.
+ * @returns {string} A human-readable string representing the file size.
+ *
+ * The formatting rules are as follows:
+ * - file size is less than 1 kilobyte (1e3 bytes): display file size in bytes.
+ * - file size is between 1 kilobyte (1e3 bytes) and 1 megabyte (1e6 bytes): display file size in kilobytes.
+ * - file size is equal to or greater than 1 megabyte (1e6 bytes): display file size in megabytes.
+ */
 export const formatFileSize = (fileSize: number) => {
   if (fileSize < 1e3) {
     return `${fileSize} bytes`;
@@ -83,6 +194,14 @@ export const formatFileSize = (fileSize: number) => {
   return `${(fileSize / 1e6).toFixed(1)} MB`;
 };
 
+/**
+ * Converts the given file to a base64 string.
+ *
+ * Returns a promise that resolves with a base64 string, or rejects with a DOMException.
+ *
+ * @param {File} file - The file to convert.
+ * @returns {Promise<string>} A promise resolving with the base64 string.
+ */
 export const convertToBase64 = (file: File) => {
   return new Promise<string>((resolve, reject) => {
     const fileReader = new FileReader();
@@ -99,8 +218,23 @@ export const convertToBase64 = (file: File) => {
   });
 };
 
+/**
+ * Creates an image URL from a given blob or media source.
+ *
+ * @param {Blob | MediaSource} blob - The blob or media source to create the URL from.
+ * @returns {string} The created image URL.
+ */
 export const createImageURL = (blob: Blob | MediaSource) => URL.createObjectURL(blob);
 
+/**
+ * Creates an image URL from a given base64 string.
+ *
+ * Fetches the base64 string, converts the response to a blob, and then creates
+ * an image URL from the blob.
+ *
+ * @param {string} base64 - The base64 string to create the URL from.
+ * @returns {Promise<string>} A promise resolving with the created image URL.
+ */
 export const getObjectURL = async (base64: string) => {
   const base64Response = await fetch(base64);
   const blob = await base64Response.blob();

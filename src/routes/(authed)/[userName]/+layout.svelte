@@ -7,40 +7,44 @@
   import NoteForm from '$lib/components/forms/note-form/NoteForm.svelte';
   import Header from '$lib/components/header/Header.svelte';
   import Link from '$lib/components/link/Link.svelte';
-  import type { ModalTypeValue } from '$lib/components/modal/constants';
   import { ModalType } from '$lib/components/modal/constants';
   import Modal from '$lib/components/modal/Modal.svelte';
-  import { UserAvatarSize } from '$lib/components/user-avatar/constants';
+  import { UserAvatarMode, UserAvatarSize } from '$lib/components/user-avatar/constants';
   import UserAvatar from '$lib/components/user-avatar/UserAvatar.svelte';
   import { AppRoute } from '$lib/constants/app';
   import { ModalId } from '$lib/constants/common';
+  import { StateContextName } from '$lib/constants/context';
   import { m } from '$lib/paraglide/messages';
-  import { modalStore } from '$lib/store/modalStore.svelte';
-  import { userStore } from '$lib/store/userStore.svelte';
+  import { type ModalState } from '$lib/state/modalState.svelte';
+  import type { UserInfo } from '$lib/types/userInfo';
+  import { getStateContext } from '$lib/utils/context';
 
   const { children } = $props();
-  const isModalOpen = $derived(modalStore.getVisibilityState());
-  const modalId = $derived(modalStore.getId());
-  const { username, id, noteMessage } = $derived(userStore.getUserInfo());
+  const userState = getStateContext<UserInfo>(StateContextName.USER);
+  const modalState = getStateContext<ModalState>(StateContextName.PROFILE_PAGE_MODAL);
+  const { username, fullname, id, noteMessage } = $derived(userState() ?? {});
+  const { getVisibilityState, getId, getType, setId, setType, toggleModalVisibility } = $derived(modalState() ?? {});
+  const isModalVisible = $derived(getVisibilityState());
+  const modalId = $derived(getId());
+  const modalType = $derived(getType());
   const isActivityBarVisible = $derived(
     !(page.url.pathname.includes(AppRoute.FOLLOWERS) || page.url.pathname.includes(AppRoute.FOLLOWING)),
   );
-  let modalType = $state<ModalTypeValue | undefined>();
 
   const togglePopup = () => {
-    modalStore.toggleModalVisibility();
+    toggleModalVisibility();
   };
 
   const handleUsernameClick = () => {
-    modalStore.setId(ModalId.PROFILE_NAME);
-    modalType = ModalType.SLIDE;
-    modalStore.toggleModalVisibility();
+    setId(ModalId.PROFILE_NAME);
+    setType(ModalType.SLIDE);
+    toggleModalVisibility();
   };
 
   const handleNoteClick = () => {
-    modalStore.setId(ModalId.NOTE);
-    modalType = ModalType.FLOATING;
-    modalStore.toggleModalVisibility();
+    setId(ModalId.NOTE);
+    setType(ModalType.FLOATING);
+    toggleModalVisibility();
   };
 </script>
 
@@ -67,11 +71,11 @@
           isPresentation
           presentationMessage={noteMessage}
         />
-        <UserAvatar className="profile-page__avatar" avatarSize={UserAvatarSize.XLARGE} />
+        <UserAvatar mode={UserAvatarMode.IMAGE} avatarSize={UserAvatarSize.XLARGE} />
       </div>
 
       <div class="profile-page__settings">
-        <button class="profile-page__settings-button profile-page__settings-button--name">{username}</button>
+        <button class="profile-page__settings-button profile-page__settings-button--name">{fullname}</button>
         <div class="profile-page__settings-actions">
           <Link
             className="profile-page__settings-button profile-page__settings-button--edit primary-button"
@@ -83,6 +87,7 @@
           >
         </div>
       </div>
+      <span class="profile-page__user-name">{username}</span>
     </div>
     <div class="profile-page__stats">
       <Link className="profile-page__stats-link" href={`/${username}`}
@@ -126,12 +131,15 @@
   {@render children()}
 </section>
 
-<Modal isOpen={isModalOpen} onClose={togglePopup} type={modalType}>
-  {#if modalId === ModalId.PROFILE_NAME}
-    Profile name content
-  {:else if modalId === ModalId.NOTE}
-    <NoteForm userId={id} onSubmit={togglePopup} />
-  {:else}
-    PROFILE actions
-  {/if}
+<Modal isOpen={isModalVisible} onClose={togglePopup} type={modalType}>
+  <!-- Reset all inner content state -->
+  {#key isModalVisible}
+    {#if modalId === ModalId.PROFILE_NAME}
+      Profile name content
+    {:else if modalId === ModalId.NOTE}
+      <NoteForm userId={id} onSubmit={togglePopup} />
+    {:else}
+      PROFILE actions
+    {/if}
+  {/key}
 </Modal>

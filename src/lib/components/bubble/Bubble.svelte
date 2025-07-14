@@ -1,7 +1,7 @@
 <script lang="ts">
   import './styles.css';
-  import { onMount } from 'svelte';
-  import Spinner from '../spinners/Spinner.svelte';
+  import { InputName } from '$lib/constants/action';
+  import { m } from '$lib/paraglide/messages';
   import Textarea from '../textarea/Textarea.svelte';
 
   type BubbleProps = {
@@ -20,25 +20,18 @@
     isPresentation && 'bubble--presentation',
     isPresentation && presentationMessage && 'bubble--active',
   ]);
-  let isLoading = $state(true);
-
-  onMount(() => {
-    isLoading = false;
-  });
 </script>
 
 {#if isPresentation}
   <button class={classNameFinal} onclick={onClick}>
-    {#if isLoading}
-      <Spinner />
-    {:else if presentationMessage}
+    {#if presentationMessage}
       {presentationMessage}
     {:else}
-      Note...
+      {m['input.button_note']()}
     {/if}
   </button>
 {:else}
   <div class={classNameFinal}>
-    <Textarea placeholder="Note..." {onInput} name="bubble" userValue="" {maxLength} />
+    <Textarea placeholder={m['input.button_note']()} {onInput} name={InputName.BUBBLE} {maxLength} />
   </div>
 {/if}

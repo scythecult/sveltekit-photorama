@@ -1,6 +1,8 @@
 <script lang="ts">
   import './styles.css';
+  import { m } from '$lib/paraglide/messages';
   import HashtagList from '../hashtag-list/HashtagList.svelte';
+  import { UserAvatarMode } from '../user-avatar/constants';
   import UserAvatar from '../user-avatar/UserAvatar.svelte';
 
   const MAX_CONTENT_LENGTH = 50;
@@ -27,13 +29,14 @@
 
   let isExpanded = $state(false);
   const isMoreButtonVisible = $derived(getFullContentLength(description, hashtags) > MAX_CONTENT_LENGTH && !isExpanded);
-  const isOnlyHashtagsVisible = !description.length;
+  const isOnlyHashtagsVisible = $derived(!description.length);
 
   const handleExpandClick = () => (isExpanded = !isExpanded);
 </script>
 
 <div class="caption">
-  <UserAvatar className="caption__user-avatar" />
+  <UserAvatar mode={UserAvatarMode.CAPTION} />
+  <!-- TODO Add liked by users list with link to page /liked_by -->
   <div class="description">
     {#if isOnlyHashtagsVisible}
       <HashtagList {hashtags} />
@@ -47,7 +50,9 @@
     {/if}
 
     {#if isMoreButtonVisible}
-      <button class="caption__expand-button" type="button" onclick={handleExpandClick}>more</button>
+      <button class="caption__expand-button" type="button" onclick={handleExpandClick}
+        >{m['input.button_more']()}</button
+      >
     {/if}
   </div>
 </div>

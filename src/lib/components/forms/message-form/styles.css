@@ -9,10 +9,6 @@
   font-size: var(--app-14-font-size);
 }
 
-.message-form .user-avatar__name {
-  display: none;
-}
-
 .message-form__textarea {
   display: flex;
   height: var(--app-line-height);

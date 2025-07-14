@@ -7,6 +7,7 @@ export const actions: Actions = {
     const password = data.get(InputName.PASSWORD) as string;
 
     // TODO Add server validation
+    // eslint-disable-next-line no-console
     console.log({ password });
   },
 };

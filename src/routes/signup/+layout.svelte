@@ -6,7 +6,7 @@
   import Header from '$lib/components/header/Header.svelte';
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
-  import Loader from '$lib/components/loader/Loader.svelte';
+  import Loader from '$lib/components/loaders/Loader.svelte';
   import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
 

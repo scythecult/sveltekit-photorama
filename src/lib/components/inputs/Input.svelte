@@ -21,6 +21,7 @@
     slotB?: Snippet;
     onInput?: (value: string) => void;
     onChange?: (value: string) => void;
+    onClick?: () => void;
     onKeyup?: (value?: string) => void;
   };
 
@@ -39,6 +40,7 @@
     slotB,
     onInput,
     onKeyup,
+    onClick,
   }: InputProps = $props();
   let isActive = $derived(type === 'date' || userValue.length > 0);
   let placeholderInitial = $state(placeholder);
@@ -111,6 +113,7 @@
       bind:value={userValue}
       oninput={handleInput}
       onkeyup={handleKeyup}
+      onclick={onClick}
     />
     {#if slotA}
       {@render slotA()}

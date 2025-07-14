@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { DefaultHeader } from '$lib/constants/request';
 import HttpError from '$lib/dto/HttpError';
 
+// TODO Refactor
 type FetchDataOptions = {
   headers?: Headers;
   cookies?: Cookies;

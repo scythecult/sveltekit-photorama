@@ -1,8 +1,10 @@
 <script lang="ts">
   import './styles.css';
   import { ModalId } from '$lib/constants/common';
-  import { appStore } from '$lib/store/appStore.svelte';
-  import { modalStore } from '$lib/store/modalStore.svelte';
+  import { StateContextName } from '$lib/constants/context';
+  import { type AppState } from '$lib/state/appState.svelte';
+  import type { ModalState } from '$lib/state/modalState.svelte';
+  import { getStateContext } from '$lib/utils/context';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
 
@@ -12,11 +14,15 @@
   };
 
   const { id, className = '' }: HomeButtonProps = $props();
+  const appState = getStateContext<AppState>(StateContextName.APP);
+  const { setPublicationId } = $derived(appState() ?? {});
+  const modalState = getStateContext<ModalState>(StateContextName.PUBLICATIONS_PAGE_MODAL);
+  const { setId, toggleModalVisibility } = $derived(modalState() ?? {});
 
   const handleSendClick = () => {
-    appStore.setPublicationId(id);
-    modalStore.setId(ModalId.SEND);
-    modalStore.toggleModalVisibility();
+    setPublicationId(id);
+    setId(ModalId.SEND);
+    toggleModalVisibility();
   };
 </script>
 

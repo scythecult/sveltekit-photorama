@@ -16,8 +16,9 @@ export const actions: Actions = {
     const data = await request.formData();
     const userId = data.get(InputName.USER_ID) as string;
     const noteMessage = data.get(InputName.NOTE_MESSAGE) as string;
+    const auditory = data.get(InputName.AUDITORY) as string;
 
-    console.log({ userId, noteMessage });
+    console.log({ userId, noteMessage, auditory });
 
     const response = await fetch(`${PHOTORAMA_BASE_URL}/user/note`, {
       method: 'POST',

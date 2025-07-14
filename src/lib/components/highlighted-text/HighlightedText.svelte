@@ -5,9 +5,11 @@
 
   type HighlightedTextProps = {
     phrase: string;
+    className?: string;
   };
 
-  const { phrase }: HighlightedTextProps = $props();
+  const { phrase, className }: HighlightedTextProps = $props();
+  const classNameFinal = [className, 'highlighted-text'];
   let dividedPhrase = $state({ start: '', middle: '', end: '' });
 
   onMount(() => {
@@ -15,7 +17,7 @@
   });
 </script>
 
-<div class="highlighted-text">
+<div class={classNameFinal}>
   {dividedPhrase.start}
   <span class="highlighted-text highlighted-text--colored"> {dividedPhrase.middle}</span>
   {dividedPhrase.end}

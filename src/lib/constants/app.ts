@@ -1,3 +1,4 @@
+// TODO Check for names usage
 const AppName = {
   DEFAULT: 'DEFAULT',
   ROOT: 'ROOT',
@@ -8,6 +9,7 @@ const AppName = {
   CREATE: 'CREATE',
   SEND: 'SEND',
   SIGNUP: 'SIGNUP',
+  LOGIN: 'LOGIN',
   RESET_PASSWORD: 'RESET_PASSWORD',
   UNREGISTRED: 'UNREGISTRED',
   PROFILE: 'PROFILE',
@@ -44,6 +46,7 @@ export const AppRoute = {
   [AppName.CREATE]: '/create',
   [AppName.SEND]: '/send',
   [AppName.SIGNUP]: '/signup',
+  [AppName.LOGIN]: '/login',
   [AppName.RESET_PASSWORD]: '/reset-password',
   [AppName.UNREGISTRED]: '/unregistred',
   [AppName.PROFILE]: '/profile',
@@ -69,7 +72,7 @@ export const AppRoute = {
   [AppName.CONFIRM]: '/confirm',
 };
 
-export const AUTHED_FORBIDDEN_URLS = [AppRoute.ROOT, AppRoute.SIGNUP];
+export const AUTHED_FORBIDDEN_URLS = [AppRoute.ROOT, AppRoute.SIGNUP, AppRoute.LOGIN];
 export const UNAUTHED_FORBIDDEN_URLS = [AppRoute.PUBLICATIONS, AppRoute.CREATE, AppRoute.PROFILE, AppRoute.EXPLORE];
 
 export const AppPath = {
@@ -85,6 +88,7 @@ export const AppPath = {
   IMAGES: '/images/signup',
 } as const;
 
+// TODO Change to kebab-case
 export const AppSearchParam = {
   SUGGESTED_USERNAME: 'suggestedUserName',
   USERNAME: 'userName',
@@ -92,8 +96,9 @@ export const AppSearchParam = {
 
 export const AppTitle = {
   [AppName.DEFAULT]: 'Photorama',
-  [AppName.SIGNUP]: 'Registration',
-  [AppName.EXPLORE]: 'Photorama • Registration',
-  [AppName.CREATE]: 'Photorama • Create',
-  [AppName.PROFILE]: 'Photorama • Profile',
+  [AppName.SIGNUP]: 'Registration • Photorama',
+  [AppName.LOGIN]: 'Login • Photorama',
+  [AppName.EXPLORE]: 'Registration • Photorama',
+  [AppName.CREATE]: 'Create • Photorama',
+  [AppName.PROFILE]: 'Profile • Photorama',
 };

@@ -11,12 +11,10 @@
 }
 
 .nav-bar__button {
+  min-width: 48px;
+  min-height: 48px;
   padding: var(--app-nav-button-padding);
   color: rgb(var(--app-primary-text));
-
-  .user-avatar__name {
-    display: none;
-  }
 }
 
 .nav-bar__button.active {

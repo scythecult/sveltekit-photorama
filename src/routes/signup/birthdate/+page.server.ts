@@ -7,6 +7,7 @@ export const actions: Actions = {
     const birthdate = data.get(InputName.BIRTHDATE) as string;
 
     // TODO Add server validation
+    // eslint-disable-next-line no-console
     console.log({ birthdate });
   },
 };

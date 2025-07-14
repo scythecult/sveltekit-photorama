@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { fetchData } from '$lib/api/fetchData';
 import { FormActionName, InputName } from '$lib/constants/action';
 import { AppPath, PHOTORAMA_BASE_URL } from '$lib/constants/app';
-import { CookieName } from '$lib/constants/request';
+import { COOKIE_DEFAULT_PATH, CookieName } from '$lib/constants/request';
 import type { ResponseSignupConfirmPayload } from '$lib/types/responsePayload';
 
 export const actions: Actions = {
@@ -50,19 +50,19 @@ export const actions: Actions = {
 
     if (jwtToken) {
       cookies.set(CookieName.USER_JWT_TOKEN, jwtToken, {
-        path: '/',
+        path: COOKIE_DEFAULT_PATH,
       });
     }
 
     if (sessionId) {
       cookies.set(CookieName.USER_SESSION_ID, sessionId, {
-        path: '/',
+        path: COOKIE_DEFAULT_PATH,
       });
     }
 
     if (signupSessionId) {
       cookies.delete(CookieName.SIGNUP_SESSION_ID, {
-        path: '/',
+        path: COOKIE_DEFAULT_PATH,
       });
     }
 

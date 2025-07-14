@@ -1,11 +1,15 @@
 <script lang="ts">
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
+  import { HTTPMethod } from 'http-method-enum';
   import { StatusCodes } from 'http-status-codes';
   import { enhance } from '$app/forms';
   import Textarea from '$lib/components/textarea/Textarea.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
-  import { userStore } from '$lib/store/userStore.svelte';
+  import { StateContextName } from '$lib/constants/context';
+  import { m } from '$lib/paraglide/messages';
+  import type { UserInfo } from '$lib/types/userInfo';
+  import { getStateContext } from '$lib/utils/context';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
   import UserAvatar from '../../user-avatar/UserAvatar.svelte';
@@ -16,44 +20,57 @@
     onSubmit?: () => void;
   };
 
-  const { id } = $derived(userStore.getUserInfo());
+  const userState = getStateContext<UserInfo>(StateContextName.USER);
+  const { id } = $derived(userState() ?? {});
   const { publicationId, className = '', onSubmit }: MessageFormProps = $props();
   const classNameFinal = ['message-form', className];
-  let creating = $state(false);
-  let message = $state('');
-  let errorMessage = $state('');
-  let isSubmitButtonVisible = $state(false);
+  const messageFormState = $state({
+    creating: false,
+    message: '',
+    errorMessage: '',
+  });
+  const isSubmitButtonVisible = $derived(Boolean(messageFormState.message.length) && !messageFormState.creating);
 
   const handleMessageInput = (value: string) => {
-    message = value;
-
-    isSubmitButtonVisible = message.length > 0 && !creating;
+    messageFormState.message = value;
   };
 
   const handleSubmit: SubmitFunction = async () => {
-    creating = true;
+    messageFormState.creating = true;
 
     return async ({ update, result }) => {
       await update();
 
-      creating = false;
+      messageFormState.creating = false;
 
       if (result.status !== StatusCodes.OK) {
-        errorMessage = result.type;
+        messageFormState.errorMessage = result.type;
 
         return;
       }
 
-      errorMessage = '';
+      messageFormState.message = '';
+      messageFormState.errorMessage = '';
       onSubmit?.();
     };
   };
 </script>
 
-<form class={classNameFinal} use:enhance={handleSubmit} action="?/{FormActionName.COMMENT_MESSAGE}" method="POST">
+<!-- TODO Refactor -->
+<form
+  class={classNameFinal}
+  use:enhance={handleSubmit}
+  action="?/{FormActionName.COMMENT_MESSAGE}"
+  method={HTTPMethod.POST}
+>
   <UserAvatar />
 
-  <Textarea name={InputName.MESSAGE} placeholder="Add comment..." userValue={message} onInput={handleMessageInput} />
+  <Textarea
+    name={InputName.COMMENT_MESSAGE}
+    placeholder={m['input.comment_message_placeholder']()}
+    userValue={messageFormState.message}
+    onInput={handleMessageInput}
+  />
   <input type="hidden" name={InputName.USER_ID} value={id} />
   <input type="hidden" name={InputName.PUBLICATION_ID} value={publicationId} />
 
@@ -61,7 +78,7 @@
     <button class="message-form__submit" type="submit"><CustomIcon iconName={IconName.ARROW} /></button>
   {/if}
 
-  {#if errorMessage}
-    <p class="message-form__error-message">{errorMessage}</p>
+  {#if messageFormState.errorMessage}
+    <p class="message-form__error-message">{messageFormState.errorMessage}</p>
   {/if}
 </form>

@@ -3,14 +3,14 @@
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import Input from '$lib/components/inputs/Input.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupStore } from '$lib/store/signupStore.svelte';
+  import { signupState } from '$lib/state/signupState.svelte';
   import { createSuggestedUsername } from '$lib/utils/utils';
 
   const fullnameState = $state({ value: '' });
@@ -30,8 +30,8 @@
       await update();
       const suggestedUsername = createSuggestedUsername(fullnameState.value);
 
-      signupStore.setProperty(InputName.FULLNAME, fullnameState.value);
-      signupStore.setProperty(InputName.USERNAME, suggestedUsername);
+      signupState.setProperty(InputName.FULLNAME, fullnameState.value);
+      signupState.setProperty(InputName.USERNAME, suggestedUsername);
       signupSessionResource.saveFullname(fullnameState.value);
       signupSessionResource.saveUsername(suggestedUsername);
 
@@ -44,7 +44,7 @@
   <Tooltip>{m['tooltip.fullname']()}</Tooltip>
 {/snippet}
 
-<SignupForm
+<Form
   title={m['signup_page.fullname_title']()}
   action="?/{FormActionName.SIGNUP_FULLNAME}"
   method={HTTPMethod.POST}
@@ -59,4 +59,4 @@
     userValue={fullnameState.value}
     slotB={tooltip}
   />
-</SignupForm>
+</Form>

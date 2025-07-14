@@ -5,29 +5,29 @@
   import { enhance } from '$app/forms';
   import { m } from '$lib/paraglide/messages';
 
-  type SignupFormMethod = 'POST' | 'GET';
+  type FormMethod = 'POST' | 'GET';
 
-  type SignupFormAutoHelpers = 'on' | 'off';
+  type FormAutoHelpers = 'on' | 'off';
 
-  type SignupFormEnctype = 'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain';
+  type FormEnctype = 'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain';
 
-  type SignupFormButtonType = 'primary' | 'secondary';
+  type FormButtonType = 'primary' | 'secondary';
 
-  type SignupFormProps = {
+  type FormProps = {
     title?: string;
     description?: string;
     buttonText?: string;
-    buttonType?: SignupFormButtonType;
+    buttonType?: FormButtonType;
     className?: string | (string | boolean)[];
     children: Snippet;
     action: string;
-    method: SignupFormMethod;
+    method: FormMethod;
     onSubmit: SubmitFunction;
     isSubmitButtonDisabled: boolean;
-    autocomplete?: SignupFormAutoHelpers;
-    autocapitalize?: SignupFormAutoHelpers;
-    autocorrect?: SignupFormAutoHelpers;
-    enctype?: SignupFormEnctype;
+    autocomplete?: FormAutoHelpers;
+    autocapitalize?: FormAutoHelpers;
+    autocorrect?: FormAutoHelpers;
+    enctype?: FormEnctype;
   };
 
   const {
@@ -42,24 +42,32 @@
     onSubmit,
     isSubmitButtonDisabled,
     ...restProps
-  }: SignupFormProps = $props();
-  const classNameFinal = ['signup-form', className];
+  }: FormProps = $props();
+  const classNameFinal = ['form', className];
   const submitButtonClassNameFinal = $derived([
-    'signup-form__button',
+    'form__button',
     buttonType === 'primary' ? 'primary-button' : 'plain-button',
   ]);
   const buttonTextFinal = $derived(buttonText ? buttonText : m['input.button_next']());
-  const isHeadingVisible = title || description;
+  const isHeadingVisible = $derived(title || description);
+
+  const handleKeydown = (evt: KeyboardEvent & { currentTarget: EventTarget & HTMLFormElement }) => {
+    const { key, ctrlKey, metaKey } = evt;
+
+    if (!isSubmitButtonDisabled && (key === 'Enter' || (key === 'Enter' && (ctrlKey || metaKey)))) {
+      evt.currentTarget.requestSubmit();
+    }
+  };
 </script>
 
-<form class={classNameFinal} {action} {method} use:enhance={onSubmit} {...restProps}>
+<form class={classNameFinal} {action} {method} onkeydown={handleKeydown} use:enhance={onSubmit} {...restProps}>
   {#if isHeadingVisible}
-    <div class="signup-form__heading">
+    <div class="form__heading">
       {#if title}
-        <h2 class="signup-form__title">{title}</h2>
+        <h2 class="form__title">{title}</h2>
       {/if}
       {#if description}
-        <p class="signup-form__description">{description}</p>
+        <p class="form__description">{description}</p>
       {/if}
     </div>
   {/if}

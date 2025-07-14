@@ -1,11 +1,16 @@
 <script lang="ts">
   import './styles.css';
   import type { SubmitFunction } from '@sveltejs/kit';
-  import { enhance } from '$app/forms';
+  import { HTTPMethod } from 'http-method-enum';
   import Bubble from '$lib/components/bubble/Bubble.svelte';
+  import { IconName, IconSize } from '$lib/components/custom-icon/constants';
+  import CustomIcon from '$lib/components/custom-icon/CustomIcon.svelte';
   import { UserAvatarSize } from '$lib/components/user-avatar/constants';
   import UserAvatar from '$lib/components/user-avatar/UserAvatar.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
+  import { UserAuditory } from '$lib/constants/user';
+  import { m } from '$lib/paraglide/messages';
+  import Form from '../form/Form.svelte';
 
   type NoteFormProps = {
     userId: string;
@@ -16,48 +21,104 @@
   const MAX_NOTE_LENGTH = 60;
   const MAX_NOTE_LENGTH_THRESHOLD = 5;
 
-  let creating = $state(false);
-  let noteMessage = $state('');
-  const isNoteLimitMessageVisible = $derived(noteMessage.length >= MAX_NOTE_LENGTH - MAX_NOTE_LENGTH_THRESHOLD);
-  const isSubmitButtonVisible = $derived(noteMessage.length && !creating);
   const { userId, onSubmit }: NoteFormProps = $props();
 
-  const handleBubbleInput = (value: string) => {
-    noteMessage = value;
-  };
+  const noteFormState = $state({
+    isCreating: false,
+    noteMessage: '',
+    publishAuditory: UserAuditory.SUBSCRIBED,
+    isPublishAuditoryVisible: false,
+  });
+  const isNoteLimitMessageVisible = $derived(
+    noteFormState.noteMessage.length >= MAX_NOTE_LENGTH - MAX_NOTE_LENGTH_THRESHOLD,
+  );
+  const isSubmitButtonDisabled = $derived(!noteFormState.noteMessage.length || noteFormState.isCreating);
+  const publishAuditoryText = $derived(
+    noteFormState.publishAuditory === UserAuditory.SUBSCRIBED
+      ? m['input.button_note_subscribed']()
+      : m['input.button_note_friends'](),
+  );
 
   const handleSubmit: SubmitFunction = () => {
-    creating = true;
+    noteFormState.isCreating = true;
 
     return async ({ update }) => {
       await update();
 
-      creating = false;
-      noteMessage = '';
+      noteFormState.isCreating = false;
+      noteFormState.noteMessage = '';
       onSubmit?.();
     };
   };
+
+  const handleBubbleInput = (value: string) => {
+    noteFormState.noteMessage = value;
+  };
+
+  const handlePublishAuditoryButtonClick = () => {
+    noteFormState.isPublishAuditoryVisible = true;
+  };
+
+  const handleAuditoryDropdownChange = () => {
+    noteFormState.isPublishAuditoryVisible = false;
+  };
 </script>
 
-<form class="note-form" action="?/{FormActionName.CREATE_NOTE}" method="POST" use:enhance={handleSubmit}>
-  <h2 class="note-form__title">New note</h2>
-
+<Form
+  className="note-form"
+  action="?/{FormActionName.CREATE_NOTE}"
+  method={HTTPMethod.POST}
+  onSubmit={handleSubmit}
+  buttonText={m['input.button_share']()}
+  buttonType="secondary"
+  {isSubmitButtonDisabled}
+>
   <input type="hidden" name={InputName.USER_ID} value={userId} aria-hidden="true" />
-  <input type="hidden" name={InputName.NOTE_MESSAGE} value={noteMessage} aria-hidden="true" />
+  <input type="hidden" name={InputName.NOTE_MESSAGE} value={noteFormState.noteMessage} aria-hidden="true" />
+  <input type="hidden" name={InputName.AUDITORY} value={noteFormState.publishAuditory} aria-hidden="true" />
 
   <div class="note-form__content">
     <Bubble className="note-form__bubble" onInput={handleBubbleInput} maxLength={MAX_NOTE_LENGTH} />
-    <UserAvatar className="note-form__avatar" avatarSize={UserAvatarSize.INHERIT} isAvatarOnly />
-    <div class="note-form__controls">
-      {#if isNoteLimitMessageVisible}
-        <p class="note-form__message-limit">
-          {noteMessage.length}/{MAX_NOTE_LENGTH}
-        </p>
-      {/if}
-      {#if isSubmitButtonVisible}
-        <button class="note-form__submit" type="submit">Share</button>
-      {/if}
-    </div>
+    <UserAvatar className="note-form__avatar" avatarSize={UserAvatarSize.INHERIT} />
+    {#if isNoteLimitMessageVisible}
+      <p class="note-form__message-limit">
+        {noteFormState.noteMessage.length}/{MAX_NOTE_LENGTH}
+      </p>
+    {/if}
   </div>
-  <div class="note-form__actions">note visibility</div>
-</form>
+</Form>
+<!-- TODO Move to component? -->
+<button class="auditory-button" onclick={handlePublishAuditoryButtonClick}
+  ><CustomIcon iconName={IconName.USERS} iconSize={IconSize.SMALL} /><span
+    >{m['input.button_note_publish']()}: <b>{publishAuditoryText}</b></span
+  >
+  <CustomIcon className="auditory-button__icon" iconName={IconName.CHEVRON} iconSize={IconSize.SMALL} />
+  {#if noteFormState.isPublishAuditoryVisible}
+    <span class="auditory-button__dropdown">
+      <label class="auditory-button__label" for="auditory-subscribed">
+        <input
+          class="auditory-button__radio"
+          type="radio"
+          name="auditory"
+          value={UserAuditory.SUBSCRIBED}
+          id="auditory-subscribed"
+          onchange={handleAuditoryDropdownChange}
+          bind:group={noteFormState.publishAuditory}
+        />
+        {m['input.radio_auditory_subscribed']()}
+      </label>
+      <label class="auditory-button__label" for="auditory-friends">
+        <input
+          class="auditory-button__radio"
+          type="radio"
+          name="auditory"
+          value={UserAuditory.FRIEDNDS}
+          id="auditory-friends"
+          onchange={handleAuditoryDropdownChange}
+          bind:group={noteFormState.publishAuditory}
+        />
+        {m['input.radio_auditory_friends']()}
+      </label>
+    </span>
+  {/if}
+</button>

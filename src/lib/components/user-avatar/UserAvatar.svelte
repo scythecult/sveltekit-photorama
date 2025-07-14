@@ -1,43 +1,42 @@
 <script lang="ts">
   import './styles.css';
-  import { onMount } from 'svelte';
   import { AppRoute } from '$lib/constants/app';
-  import { userStore } from '$lib/store/userStore.svelte';
+  import { StateContextName } from '$lib/constants/context';
+  import type { UserInfo } from '$lib/types/userInfo';
+  import { getStateContext } from '$lib/utils/context';
   import { IconName } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';
   import Link from '../link/Link.svelte';
-  import Spinner from '../spinners/Spinner.svelte';
-  import { UserAvatarSize } from './constants';
+  import { UserAvatarMode, UserAvatarSize } from './constants';
+
+  type UserAvatarMode = 'image' | 'caption' | 'full';
 
   type UserAvatarProps = {
     className?: string;
     avatarSize?: string;
     isAvatarOnly?: boolean;
+    mode?: UserAvatarMode;
   };
 
-  const { avatarUrl, username: username } = $derived(userStore.getUserInfo());
-  const { className = '', avatarSize = UserAvatarSize.MEDIUM, isAvatarOnly = false }: UserAvatarProps = $props();
+  const userState = getStateContext<UserInfo>(StateContextName.USER);
+  const { avatarUrl = '', username = '' } = $derived(userState() ?? {});
+  const { className = '', avatarSize = UserAvatarSize.MEDIUM, mode = UserAvatarMode.IMAGE }: UserAvatarProps = $props();
   const classNameFinal = ['user-avatar', className, avatarSize];
   const userLinkHref = $derived(username ? `/${username}` : AppRoute.PROFILE);
-  let isLoading = $state(true);
-
-  // TODO Make skeleton
-  onMount(() => {
-    isLoading = false;
-  });
+  const isUsernameVisible = $derived(username && mode !== UserAvatarMode.IMAGE);
+  const isImageVisible = $derived(mode !== UserAvatarMode.CAPTION);
+  const isImageExists = $derived(avatarUrl.includes('http') || avatarUrl.includes('https'));
 </script>
 
 <Link className={(isActive) => (isActive ? [...classNameFinal, 'active'] : classNameFinal)} href={userLinkHref}>
-  {#if avatarUrl}
-    {#if isLoading}
-      <Spinner />
-    {:else if avatarUrl.includes('http') || avatarUrl.includes('https')}
+  {#if isImageVisible}
+    {#if isImageExists}
       <img class="user-avatar__image" src={avatarUrl} alt={username} />
     {:else}
       <CustomIcon iconName={IconName.PROFILE} />
     {/if}
-    {#if username && !isAvatarOnly}
-      <span class="user-avatar__name link">{username}</span>
-    {/if}
+  {/if}
+  {#if isUsernameVisible}
+    <span class="user-avatar__name link">{username}</span>
   {/if}
 </Link>

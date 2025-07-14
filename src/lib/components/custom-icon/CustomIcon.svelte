@@ -20,6 +20,7 @@
   import Search from './icons/Search.svelte';
   import Share from './icons/Share.svelte';
   import Tagged from './icons/Tagged.svelte';
+  import Users from './icons/Users.svelte';
 
   const Icon = {
     [IconName.COMMENT]: Comment,
@@ -41,6 +42,7 @@
     [IconName.INFO]: Info,
     [IconName.CHECKMARK]: Checkmark,
     [IconName.FAILMARK]: Failmark,
+    [IconName.USERS]: Users,
   };
 
   type CustomIconProps = {

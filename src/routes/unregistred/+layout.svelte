@@ -16,10 +16,10 @@
   // 5 minutes
   const CLOSE_INTERVAL = 5 * 60 * 1000;
   let closedTime = $state('');
-  let isModalOpen = $derived(!closedTime);
+  let isModalVisible = $derived(!closedTime);
 
   const handleModalClose = () => {
-    isModalOpen = false;
+    isModalVisible = false;
     floatingModalLsResource.save(Date.now().toString());
   };
 
@@ -41,7 +41,7 @@
 
 {@render children()}
 
-<Modal isOpen={isModalOpen} type={ModalType.FLOATING} onClose={handleModalClose}>
+<Modal isOpen={isModalVisible} type={ModalType.FLOATING} onClose={handleModalClose}>
   <div class="unregistered-modal">
     <IconLogo className="unregistered-modal__logo" />
     <div class="unregistered-modal__content">

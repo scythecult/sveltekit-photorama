@@ -1,9 +1,11 @@
 .user-avatar {
   --logo-size: 32px;
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--app-micro-layout-gap);
   text-decoration: none;
+  min-height: var(--logo-size);
 
   &.small {
     --logo-size: 24px;

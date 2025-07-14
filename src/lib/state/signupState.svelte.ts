@@ -18,22 +18,22 @@ const initialState: SignupState = {
 
 type PropName = keyof typeof initialState;
 
-const createSignupStore = () => {
-  const signupStore = $state<SignupState>(initialState);
+const createSignupState = () => {
+  const signupState = $state<SignupState>(initialState);
 
   return {
     get state() {
-      return signupStore;
+      return signupState;
     },
 
     setProperty(propName: PropName, value: string) {
-      signupStore[propName] = value;
+      signupState[propName] = value;
     },
 
     getProperty(propName: PropName) {
-      return signupStore[propName];
+      return signupState[propName];
     },
   };
 };
 
-export const signupStore = createSignupStore();
+export const signupState = createSignupState();

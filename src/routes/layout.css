@@ -17,10 +17,3 @@
 .layout:has(.nav-bar) {
   padding-bottom: var(--app-nav-bar-height);
 }
-
-.main-page-header {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  align-items: center;
-  justify-content: space-between;
-}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import './styles.css';
 
-  // TODO
+  // TODO Refactor
   type UploadInputProps = {
     className?: string;
     name: string;

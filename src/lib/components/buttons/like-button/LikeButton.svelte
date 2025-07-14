@@ -39,25 +39,26 @@
   const actionName = LikeActionNameMap[likeType];
   const iconSize = LikeIconSizeMap[likeType];
   const isPictureMode = likeType === LikeTypeMap.PICTURE;
-  let disabled = $state(false);
-  let classNameFinal = $state(['like-button', className, isPictureMode && 'like-button--picture']);
+  let isLikeButtonDisabled = $state(false);
+  const classNameFinal = $derived([
+    'like-button',
+    className,
+    isPictureMode && 'like-button--picture',
+    isPictureMode && isLiked && 'like-button--animate',
+  ]);
 
   const handleSubmit: SubmitFunction = async () => {
-    disabled = true;
-
-    if (isPictureMode) {
-      classNameFinal = ['like-button', className, isPictureMode && 'like-button--picture like-button--animate'];
-    }
+    isLikeButtonDisabled = true;
 
     return async ({ update }) => {
-      disabled = false;
+      isLikeButtonDisabled = false;
       await update();
     };
   };
 </script>
 
 <form class={classNameFinal} action="?/{actionSegment}" method="POST" use:enhance={handleSubmit}>
-  <button class="like-button__submit" type="submit" {disabled}>
+  <button class="like-button__submit" type="submit" disabled={isLikeButtonDisabled}>
     {#if isPictureMode}
       <CustomIcon iconName={IconName.PICTURE_LIKE} {iconSize} />
     {:else if isLiked}

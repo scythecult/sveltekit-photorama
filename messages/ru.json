@@ -30,6 +30,15 @@
 		"button_done": "Завершить",
 		"button_change_photo": "Загрузить другое изображение",
 		"button_agree": "Я согласен с условиями",
+		"button_more": "ещё",
+		"button_note": "Заметка...",
+		"button_share": "Поделиться",
+		"button_note_publish": "Публикуем для",
+		"button_note_subscribed": "взаимные подписчики",
+		"button_note_friends": "близкие друзья",
+		"radio_auditory_subscribed": "Взаимные подписчики",
+		"radio_auditory_friends": "Близкие друзья",
+		"comment_message_placeholder": "Опубликуйте ваш первый комментарий...",
 		"email_error": "Пожалуйста введите почту в правильном формате",
 		"email_error_in_use": "Эл. почта уже используется",
 		"phone_error": "Пожалуйста введите телефон в правильном формате",
@@ -75,14 +84,16 @@
 	"main_page": {
 		"comments_title": "Комментарии",
 		"comments_no_comments": "У этой публикации пока нет комментариев",
-		"comments_first_comment": "Опубликуйте ваш первый комментарий"
+		"comments_first_comment": "Опубликуйте ваш первый комментарий",
+		"publications_empty": "Пока нет публикаций"
 	},
 	"profile_page": {
 		"edit": "Редактировать профиль",
 		"view": "Посмотреть архив",
 		"posts": "публикации",
 		"followers": "подписчики",
-		"following": "подписки"
+		"following": "подписки",
+		"note_title": "Новая заметка"
 	},
 	"explore_page": {
 		"title": "Интересное",

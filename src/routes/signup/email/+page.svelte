@@ -5,7 +5,7 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import Carousel from '$lib/components/carousel/Carousel.svelte';
-  import SignupForm from '$lib/components/forms/signup-form/SignupForm.svelte';
+  import Form from '$lib/components/forms/form/Form.svelte';
   import { EMAIL_REGEXP } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import Link from '$lib/components/link/Link.svelte';
@@ -16,7 +16,7 @@
   import { m } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupStore } from '$lib/store/signupStore.svelte';
+  import { signupState } from '$lib/state/signupState.svelte';
   import type { ResponseSignupEmailPayload } from '$lib/types/responsePayload';
 
   const SuggestedLocalEmailDomain = {
@@ -79,7 +79,7 @@
         if (emailState.isAvailable) {
           await update();
 
-          signupStore.setProperty(InputName.EMAIL, emailState.value);
+          signupState.setProperty(InputName.EMAIL, emailState.value);
           signupSessionResource.saveEmail(emailState.value);
 
           goto(`${AppRoute.SIGNUP}${AppRoute.FULLNAME}`);
@@ -97,7 +97,7 @@
   <Tooltip>{m['tooltip.email']()}</Tooltip>
 {/snippet}
 
-<SignupForm
+<Form
   title={m['signup_page.email_title']()}
   action="?/{FormActionName.SIGNUP_EMAIL}"
   method={HTTPMethod.POST}
@@ -122,7 +122,7 @@
       >
     {/each}
   </Carousel>
-</SignupForm>
+</Form>
 <Link className="signup__link primary-button" href={`${AppRoute.SIGNUP}${AppRoute.PHONE}`}
   >{m['signup_page.signup_by_phone']()}</Link
 >

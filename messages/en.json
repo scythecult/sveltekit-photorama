@@ -30,6 +30,15 @@
 		"button_done": "Done",
 		"button_change_photo": "Change picture",
 		"button_agree": "I agree",
+		"button_more": "more",
+		"button_note": "Note...",
+		"button_share": "Share",
+		"button_note_publish": "Shared with",
+		"button_note_subscribed": "followers you follow back",
+		"button_note_friends": "close friends",
+		"radio_auditory_subscribed": "Followers you follow back",
+		"radio_auditory_friends": "Close friends",
+		"comment_message_placeholder": "Add comment...",
 		"email_error": "Pease enter email in correct format",
 		"email_error_in_use": "Email is already in use",
 		"phone_error": "Pease enter phone in correct format",
@@ -75,14 +84,16 @@
 	"main_page": {
 		"comments_title": "Comments",
 		"comments_no_comments": "There is no comments yet",
-		"comments_first_comment": "Post your first comment"
+		"comments_first_comment": "Post your first comment",
+		"publications_empty": "No publications found"
 	},
 	"profile_page": {
 		"edit": "Edit profile",
 		"view": "View archive",
 		"posts": "posts",
 		"followers": "followers",
-		"following": "following"
+		"following": "following",
+		"note_title": "New note"
 	},
 	"explore_page": {
 		"title": "Interesting",
