@@ -1,5 +1,4 @@
-import { HASHTAG_REGEX } from '$lib/constants/action';
-import { ALLOWED_FILE_TYPES, ImageDimension, MAX_PICTURE_SIZE } from '$lib/constants/common';
+import { PUBLICATIONS_DESCRIPTION_HASHTAG_REGEXP } from '$lib/constants/common';
 
 /**
  * Extract all hashtags from a description.
@@ -10,7 +9,7 @@ import { ALLOWED_FILE_TYPES, ImageDimension, MAX_PICTURE_SIZE } from '$lib/const
  * extractHashtagsFromDescription('Hello #world') = ['world']
  */
 export const extractHashtagsFromDescription = (description: string) =>
-  (description.match(HASHTAG_REGEX) || []).map(String) || [];
+  (description.match(PUBLICATIONS_DESCRIPTION_HASHTAG_REGEXP) || []).map(String) || [];
 
 /**
  * Remove all hashtags from a description.
@@ -20,7 +19,8 @@ export const extractHashtagsFromDescription = (description: string) =>
  * @example
  * clearDescriptionFromHashtags('Hello #world') = 'Hello '
  */
-export const clearDescriptionFromHashtags = (description: string) => description.replace(HASHTAG_REGEX, '').trim();
+export const clearDescriptionFromHashtags = (description: string) =>
+  description.replace(PUBLICATIONS_DESCRIPTION_HASHTAG_REGEXP, '').trim();
 
 /**
  * Convert string to boolean.
@@ -136,44 +136,6 @@ export const debounce = <T>(callback: (...args: T[]) => void, wait: number) => {
 };
 
 /**
- * Checks if a given file type is valid.
- *
- * If `fileTypes` is provided, then the function will check if the `fileType` is
- * included in the `fileTypes` array. Otherwise, it will check if the `fileType`
- * is included in the `ALLOWED_FILE_TYPES` array.
- *
- * @param {string} fileType - The file type to check.
- * @param {string[]} [fileTypes] - An array of allowed file types.
- * @returns {boolean} True if the file type is valid, false otherwise.
- */
-export const isFileTypeValid = (fileType: string, fileTypes?: string[]) =>
-  fileTypes?.length ? fileTypes.includes(fileType) : ALLOWED_FILE_TYPES.includes(fileType);
-
-/**
- * Checks if a given file size is valid.
- *
- * @param {number} fileSize - The file size in bytes.
- * @returns {boolean} True if the file size is valid, false otherwise.
- */
-export const isFileSizeValid = (fileSize: number) => fileSize <= MAX_PICTURE_SIZE;
-
-/**
- * Checks if the given image dimensions are valid.
- *
- * The dimensions are valid if both the width and height are within the range of
- * `ImageDimension.min` and `ImageDimension.max`.
- *
- * @param {number} width - The width of the image.
- * @param {number} height - The height of the image.
- * @returns {boolean} True if the dimensions are valid, false otherwise.
- */
-export const isImageDimensionsValid = (width: number, height: number) =>
-  width <= ImageDimension.max &&
-  height <= ImageDimension.max &&
-  width >= ImageDimension.min &&
-  height >= ImageDimension.min;
-
-/**
  * Formats a given file size into a human-readable string.
  *
  * @param {number} fileSize - The file size in bytes.
@@ -241,3 +203,17 @@ export const getObjectURL = async (base64: string) => {
 
   return createImageURL(blob);
 };
+
+/**
+ * Transforms a given file type to ensure it has the 'image/' prefix.
+ *
+ * If the file type already starts with 'image/', it is returned unchanged.
+ * Otherwise, the function prefixes the file type with 'image/'.
+ *
+ * @param {string} fileType - The file type to transform.
+ * @returns {string} The transformed file type with the 'image/' prefix.
+ */
+export const transformFileTypeName = (fileType: string) =>
+  fileType.startsWith('image/') ? fileType : `image/${fileType}`;
+
+export const transformFileTypeNames = (fileTypes: string[]) => fileTypes.map(transformFileTypeName);

@@ -2,7 +2,7 @@
   import './styles.css';
   import { AppRoute } from '$lib/constants/app';
   import { StateContextName } from '$lib/constants/context';
-  import type { UserInfo } from '$lib/types/userInfo';
+  import type { UserInfo } from '$lib/types/user';
   import { getStateContext } from '$lib/utils/context';
   import { IconName } from '../custom-icon/constants';
   import CustomIcon from '../custom-icon/CustomIcon.svelte';

@@ -1,33 +1,37 @@
-import { type Actions } from '@sveltejs/kit';
+import { type Actions, error, fail } from '@sveltejs/kit';
 import { HTTPMethod } from 'http-method-enum';
-import { fetchData } from '$lib/api/fetchData';
+import { StatusCodes } from 'http-status-codes';
 import { FormActionName, InputName } from '$lib/constants/action';
 import { AppPath, PHOTORAMA_BASE_URL } from '$lib/constants/app';
-import type { ResponseSignupEmailPayload } from '$lib/types/responsePayload';
+import type { EmailPayload, ResponsePayload } from '$lib/types/responsePayload';
+import { checkIsEmailValid } from '$lib/utils/validation';
 
 export const actions: Actions = {
-  // TODO Add User Login Route
   // TODO Implement email confirmation service
-  [FormActionName.SIGNUP_EMAIL]: async ({ cookies, request }) => {
-    const data = await request.formData();
-    const email = data.get(InputName.EMAIL) as string;
+  [FormActionName.SIGNUP_EMAIL]: async ({ fetch, request }) => {
+    const formData = await request.formData();
+    const email = formData.get(InputName.EMAIL) as string;
+    const isValid = checkIsEmailValid(email);
 
-    const {
-      response,
-      message,
-      data: { isEmailAvailable },
-    } = await fetchData<ResponseSignupEmailPayload>(`${PHOTORAMA_BASE_URL}${AppPath.SIGNUP_EMAIL}`, HTTPMethod.POST, {
-      cookies,
-      params: {
-        body: { email },
-      },
+    if (!isValid) {
+      return fail(StatusCodes.UNPROCESSABLE_ENTITY, {
+        isValid,
+      });
+    }
+
+    const response = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.SIGNUP_EMAIL}`, {
+      method: HTTPMethod.POST,
+      body: JSON.stringify({ email }),
     });
 
     if (response.ok) {
-      return {
-        isEmailAvailable,
-        message,
-      };
+      const {
+        data: { isAvailable },
+      }: ResponsePayload<EmailPayload> = await response.json();
+
+      return { isAvailable };
     }
+
+    error(StatusCodes.INTERNAL_SERVER_ERROR);
   },
 };

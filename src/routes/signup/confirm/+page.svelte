@@ -1,6 +1,5 @@
 <script lang="ts">
   import './styles.css';
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -10,24 +9,24 @@
   import { AppRoute } from '$lib/constants/app';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import type { ResponseSignupConfirmRequiredInfoPayload } from '$lib/types/responsePayload';
-  import type { SignupUserInfo } from '$lib/types/userInfo';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import type { User } from '$lib/types/user';
 
-  const confirmState = $state<SignupUserInfo>({
+  const confirmState = $state<User & { emptyFields: string[] }>({
     birthdate: '',
     email: '',
     fullname: '',
     password: '',
     username: '',
+    emptyFields: [],
   });
-  let signupUserInfoEmptyFields = $state<string[]>([]);
-  const isSubmitButtonDisabled = $derived(Boolean(signupUserInfoEmptyFields.length));
-  const isRequiredInfoVisible = $derived(Boolean(signupUserInfoEmptyFields.length));
+  const isSubmitButtonDisabled = $derived(Boolean(confirmState.emptyFields.length));
+  const isRequiredFieldsInfoVisible = $derived(Boolean(confirmState.emptyFields.length));
 
   const signupSessionRecource = new SignupSessionResource();
 
   onMount(() => {
-    const userInfo = signupSessionRecource.loadAll() as SignupUserInfo;
+    const userInfo = signupSessionRecource.loadAll();
 
     confirmState.birthdate = userInfo.birthdate;
     confirmState.email = userInfo.email;
@@ -36,18 +35,15 @@
     confirmState.username = userInfo.username;
   });
 
-  const handleConfirmSubmit: SubmitFunction = () => {
-    // TODO Think about validation SignUpStorage + sessionStorage
+  const handleConfirmSubmit: TypedSubmitFunction = () => {
     return async ({ update, result }) => {
-      await update();
-
-      if (result.type === 'failure') {
-        const data = result.data as ResponseSignupConfirmRequiredInfoPayload;
-
-        signupUserInfoEmptyFields = data.emptyFields;
+      if (result.type === 'failure' && result.data) {
+        confirmState.emptyFields = result.data.emptyFields;
       }
 
       if (result.type === 'success') {
+        await update();
+
         signupSessionRecource.clearAll();
 
         goto(AppRoute.PUBLICATIONS);
@@ -82,12 +78,12 @@
   <input type="hidden" name={InputName.PASSWORD} value={confirmState.password} />
   <input type="hidden" name={InputName.USERNAME} value={confirmState.username} />
 </Form>
-{#if isRequiredInfoVisible}
+{#if isRequiredFieldsInfoVisible}
   <div class="required-info">
     <h2 class="required-info__title">{m['signup_page.confirm_required_info_title']()}</h2>
     <p class="required-info__description">{m['signup_page.confirm_required_info_description']()}</p>
     <ul class="required-info__list">
-      {#each signupUserInfoEmptyFields as emptyField (emptyField)}
+      {#each confirmState.emptyFields as emptyField (emptyField)}
         <li class="required-info__item">
           <Link className="required-info__link" href={`${AppRoute.SIGNUP}/${emptyField}`}>{emptyField}</Link>
         </li>

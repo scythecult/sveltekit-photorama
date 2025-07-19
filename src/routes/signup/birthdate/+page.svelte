@@ -1,25 +1,33 @@
 <script lang="ts">
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import Form from '$lib/components/forms/form/Form.svelte';
-  import { MIN_YEARS_OLD_AMOUNT } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute, AppSearchParam } from '$lib/constants/app';
+  import { MIN_YEARS_OLD_AMOUNT } from '$lib/constants/validation';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupState } from '$lib/state/signupState.svelte';
-  import { getDate } from '$lib/utils/utils';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import { getDate } from '$lib/utils/common';
+  import { checkIsBirthdateValid } from '$lib/utils/validation';
 
   const birthdateState = $state({
     value: '',
     isValid: true,
+    isServerError: false,
   });
 
   const isSubmitButtonDisabled = $derived(!birthdateState.value || !birthdateState.isValid);
+  const errorMessage = $derived.by(() => {
+    if (!birthdateState.isValid) {
+      return m['input.date_error']({ count: MIN_YEARS_OLD_AMOUNT });
+    }
+
+    return m['error.server_error']();
+  });
   const signupSessionResource = new SignupSessionResource();
 
   onMount(() => {
@@ -30,20 +38,31 @@
     const userYearsOld = getDate().calculateYears(value);
 
     birthdateState.value = value;
-    birthdateState.isValid = userYearsOld >= MIN_YEARS_OLD_AMOUNT;
+    birthdateState.isValid = checkIsBirthdateValid(userYearsOld);
+    birthdateState.isServerError = false;
   };
 
-  const handleBirthdateFormSubmit: SubmitFunction = () => {
-    return async ({ update }) => {
-      await update();
+  const handleBirthdateFormSubmit: TypedSubmitFunction = () => {
+    return async ({ update, result }) => {
+      // Server validation result
+      if (result.type === 'failure' && result.data) {
+        birthdateState.isValid = Boolean(result.data.isValid);
+      }
 
-      birthdateState.isValid = true;
-      signupState.setProperty(InputName.BIRTHDATE, birthdateState.value);
-      signupSessionResource.saveBirthdate(birthdateState.value);
+      if (result.type === 'success') {
+        await update();
 
-      const userName = signupState.getProperty(InputName.USERNAME) || signupSessionResource.loadUsername();
+        signupSessionResource.saveBirthdate(birthdateState.value);
 
-      goto(`${AppRoute.SIGNUP}${AppRoute.USERNAME}?${AppSearchParam.SUGGESTED_USERNAME}=${userName}`);
+        const username = signupSessionResource.loadUsername();
+
+        goto(`${AppRoute.SIGNUP}${AppRoute.USERNAME}?${AppSearchParam.NAME}=${username}`);
+      }
+
+      // Server error result
+      if (result.type === 'error') {
+        birthdateState.isServerError = true;
+      }
     };
   };
 </script>
@@ -66,7 +85,7 @@
     onInput={handleBirthdateInput}
     isError={!birthdateState.isValid}
     userValue={birthdateState.value}
-    errorMessage={m['input.date_error']({ count: MIN_YEARS_OLD_AMOUNT })}
+    {errorMessage}
     slotB={tooltip}
   />
 </Form>

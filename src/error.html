@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="%lang%">
+  <head>
+    <meta charset="utf-8" />
+    <title>%sveltekit.error.message%</title>
+    <link rel="stylesheet" href="/css/shared.css" />
+    <link rel="stylesheet" href="/css/error.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+  </head>
+  <body>
+    <!-- TODO Refactor -->
+    <section class="error">
+      <h1 class="error__title">Custom</h1>
+      <p class="error__description">
+        Status: %sveltekit.status%
+        <a class="error__link" href="/">Back to Photrama</a>
+      </p>
+      <p class="error__description">Message: %sveltekit.error.message%</p>
+    </section>
+  </body>
+</html>

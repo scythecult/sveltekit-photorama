@@ -14,6 +14,7 @@
   const classNameFinal = [className, 'validation-spinner'];
 </script>
 
+<!-- TODO refactor -->
 <div class={classNameFinal}>
   {#if !isLoading}
     {#if isVerified}

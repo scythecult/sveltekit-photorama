@@ -23,10 +23,10 @@ export const InputName = {
   USERNAME: 'username',
   PASSWORD: 'password',
   EMAIL: 'email',
-  USER_ID: 'userId',
-  PUBLICATION_ID: 'publicationId',
-  IS_LIKED: 'isLiked',
-  COMMENT_ID: 'commentId',
+  USER_ID: 'user-id',
+  PUBLICATION_ID: 'publication-id',
+  IS_LIKED: 'is-liked',
+  COMMENT_ID: 'comment-id',
   COMMENT_MESSAGE: 'comment-message',
   NOTE_MESSAGE: 'note-message',
   FULLNAME: 'fullname',
@@ -37,5 +37,3 @@ export const InputName = {
   BUBBLE: 'bubble',
   AUDITORY: 'auditory',
 } as const;
-
-export const HASHTAG_REGEX = /#[a-zA-Z|а-яА-Я]+/gi;

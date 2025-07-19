@@ -28,7 +28,18 @@ export const LocalStorageKey = {
   SIGNUP_AVATAR: 'photorama-signup-avatar',
 } as const;
 
+export const SIGNUP_SESSION_STORAGE_KEYS = [
+  LocalStorageKey.SIGNUP_EMAIL,
+  LocalStorageKey.SIGNUP_FULLNAME,
+  LocalStorageKey.SIGNUP_PASSWORD,
+  LocalStorageKey.SIGNUP_BIRTHDATE,
+  LocalStorageKey.SIGNUP_USERNAME,
+  LocalStorageKey.SIGNUP_AVATAR,
+] as const;
+
 export const PHOTORAMA_SIGNUP_LOCAL_STORAGE_KEY_REGEXP = /photorama-signup-/g;
+
+export const PUBLICATIONS_DESCRIPTION_HASHTAG_REGEXP = /#[a-zA-Z|а-яА-Я]+/gi;
 
 export const MAX_PICTURE_SIZE = 1.4 * 1024 * 1024;
 
@@ -37,4 +48,4 @@ export const ImageDimension = {
   max: 600,
 };
 
-export const ALLOWED_FILE_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
+export const PICTURE_ALLOWED_FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];

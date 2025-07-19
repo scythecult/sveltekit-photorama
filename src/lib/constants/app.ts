@@ -77,21 +77,22 @@ export const UNAUTHED_FORBIDDEN_URLS = [AppRoute.PUBLICATIONS, AppRoute.CREATE, 
 
 export const AppPath = {
   COMMENT_MESSAGE: '/publications/comments',
-  LIKE: '/publications/likes',
+  LIKES: '/publications/likes',
+  LOGIN: '/login',
   SIGNUP: '/accounts/signup',
   SIGNUP_EMAIL: '/accounts/signup/email',
-  SIGNUP_SUGGESTED_USERNAME: '/accounts/signup/suggested-username',
+  SIGNUP_SUGGESTED: '/accounts/signup/suggested',
   SIGNUP_CONFIRM: '/accounts/signup/confirm',
   USER: '/user',
   EMAIL: '/email',
+  USER_NOTE: '/user/note',
   PUBLICATIONS: '/publications',
   IMAGES: '/images/signup',
 } as const;
 
-// TODO Change to kebab-case
 export const AppSearchParam = {
-  SUGGESTED_USERNAME: 'suggestedUserName',
-  USERNAME: 'userName',
+  USERNAME: 'username',
+  NAME: 'name',
 } as const;
 
 export const AppTitle = {

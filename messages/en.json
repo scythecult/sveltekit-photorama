@@ -4,6 +4,9 @@
 	"common": {
 		"or": "or"
 	},
+	"error": {
+		"server_error": "Server error, please try again later"
+	},
 	"not_found_page": {
 		"title": "Unfortunately, this page is unavailable.",
 		"description": "You may have used an invalid link or the page has been removed.",
@@ -16,8 +19,10 @@
 	},
 	"input": {
 		"avatar_file_type_error": "Invalid file type, please use following:",
-		"avatar_file_size_error_1": "Invalid file size:",
-		"avatar_file_size_error_2": "should be less than {allowed}",
+		"avatar_file_size_error": "Invalid file size:",
+		"avatar_file_size_error_description": "should be less than {allowed}",
+		"avatar_file_dimensions_error": "Invalid file dimensions:",
+		"avatar_file_dimensions_error_description": "should be less than {max}px and larger than {min}px",
 		"common_user_error": "Pease enter {field} in correct format",
 		"button_login": "Login",
 		"button_next": "Next",
@@ -41,8 +46,9 @@
 		"comment_message_placeholder": "Add comment...",
 		"email_error": "Pease enter email in correct format",
 		"email_error_in_use": "Email is already in use",
+		"fullname_error": "Name should contain at least {count} chars",
 		"phone_error": "Pease enter phone in correct format",
-		"password_error": "Password should contain at least {count} letters long numbers and special characters (!?#)",
+		"password_error": "Password should contain at least {count} letters long, numbers and special characters (!?#)",
 		"password_placeholder": "Password",
 		"password_reset": "Forgot password?",
 		"user_placeholder": "Phone, username or email",
@@ -51,6 +57,7 @@
 		"fullname_placeholder": "Full name",
 		"username_placeholder": "Username",
 		"username_error": "Username should contain at least {count} chars",
+		"username_error_in_use": "Username is already in use",
 		"picture_placeholder": "Choose from filesystem",
 		"date_placeholder": "Date of birth",
 		"date_error": "You must be at least {count} years old to sign up for Photorama!",

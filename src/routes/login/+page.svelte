@@ -5,13 +5,13 @@
   import { goto } from '$app/navigation';
   import Form from '$lib/components/forms/form/Form.svelte';
   import Header from '$lib/components/header/Header.svelte';
-  import { MIN_NAME_LENGTH, MIN_PASSWORD_LENGTH } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import LangSwitcher from '$lib/components/lang-switcher/LangSwitcher.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import Logo from '$lib/components/logos/main-logo/Logo.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppPath, AppRoute } from '$lib/constants/app';
+  import { MIN_NAME_LENGTH, MIN_PASSWORD_LENGTH } from '$lib/constants/validation';
   import { m } from '$lib/paraglide/messages';
 
   // TODO Remove validation, input data should be sent to server to validate user input and find the user.

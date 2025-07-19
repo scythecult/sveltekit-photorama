@@ -1,6 +1,6 @@
 <script lang="ts">
   import { m } from '$lib/paraglide/messages';
-  import { getRandomInteger } from '$lib/utils/utils';
+  import { getRandomInteger } from '$lib/utils/common';
   import HighlightedText from '../highlighted-text/HighlightedText.svelte';
 
   type SloganProps = {

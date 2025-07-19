@@ -48,6 +48,7 @@
 }
 
 .avatar-preview__error--correct {
+  font-size: var(--app-12-font-size);
   color: rgb(var(--app-primary-text));
 }
 

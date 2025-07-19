@@ -10,10 +10,12 @@
   import { FormActionName, InputName } from '$lib/constants/action';
   import { UserAuditory } from '$lib/constants/user';
   import { m } from '$lib/paraglide/messages';
+  import type { Auditory } from '$lib/types/user';
   import Form from '../form/Form.svelte';
 
   type NoteFormProps = {
     userId: string;
+    auditory?: Auditory;
     className?: string;
     onSubmit?: () => void;
   };
@@ -21,12 +23,12 @@
   const MAX_NOTE_LENGTH = 60;
   const MAX_NOTE_LENGTH_THRESHOLD = 5;
 
-  const { userId, onSubmit }: NoteFormProps = $props();
+  const { userId, auditory, onSubmit }: NoteFormProps = $props();
 
   const noteFormState = $state({
     isCreating: false,
     noteMessage: '',
-    publishAuditory: UserAuditory.SUBSCRIBED,
+    publishAuditory: auditory || UserAuditory.SUBSCRIBED,
     isPublishAuditoryVisible: false,
   });
   const isNoteLimitMessageVisible = $derived(

@@ -1,7 +1,6 @@
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import HTTPMethod from 'http-method-enum';
 import { StatusCodes } from 'http-status-codes';
-import { fetchData } from '$lib/api/fetchData';
 import {
   AppPath,
   AppRoute,
@@ -10,71 +9,75 @@ import {
   PHOTORAMA_BASE_URL,
   UNAUTHED_FORBIDDEN_URLS,
 } from '$lib/constants/app';
-import { CookieName } from '$lib/constants/request';
-import type { Publication } from '$lib/types/publication';
-import type { UserInfo } from '$lib/types/userInfo';
-import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/utils';
+import { COOKIE_DEFAULT_PATH, CookieName } from '$lib/constants/request';
+import type { PublicationsPayload, ResponsePayload, UserPayload } from '$lib/types/responsePayload.js';
+import { clearDescriptionFromHashtags, extractHashtagsFromDescription } from '$lib/utils/common';
 
-export const load = async ({ cookies, url }) => {
+export const load = async ({ fetch, cookies, url }) => {
   const { pathname } = url;
   const sessionId = cookies.get(CookieName.USER_SESSION_ID);
 
+  // Guard for registered users
   if (sessionId && AUTHED_FORBIDDEN_URLS.includes(pathname)) {
     redirect(StatusCodes.PERMANENT_REDIRECT, AppRoute.PUBLICATIONS);
   }
 
+  // Guard for unregistered users
   if (!sessionId && !pathname.includes(AppRoute.UNREGISTRED) && UNAUTHED_FORBIDDEN_URLS.includes(pathname)) {
     const targetUrl = pathname.includes(AppRoute.PUBLICATIONS) ? AppRoute.ROOT : `${AppRoute.UNREGISTRED}${pathname}`;
 
     redirect(StatusCodes.SEE_OTHER, targetUrl);
   }
 
-  // TODO Refactor below
-  if (sessionId) {
-    const { data: userData } = await fetchData<{ user: UserInfo }>(
-      `${PHOTORAMA_BASE_URL}${AppPath.USER}`,
-      HTTPMethod.GET,
-      {
-        cookies,
-      },
-    );
+  // TODO Refactor below mb should use Promise static methods?
+  // Check for sessionId or JWT?
+  const userResponse = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.USER}`, {
+    method: HTTPMethod.GET,
+  });
 
-    const userInfo = userData.user;
-    const { username } = userInfo;
+  if (!userResponse.ok) {
+    if (userResponse.status === StatusCodes.UNAUTHORIZED) {
+      cookies.delete(CookieName.USER_SESSION_ID, {
+        path: COOKIE_DEFAULT_PATH,
+      });
 
-    const { data: publicationsData } = await fetchData<{ publications: Publication[] }>(
-      `${PHOTORAMA_BASE_URL}${AppPath.PUBLICATIONS}?${AppSearchParam.USERNAME}=${username}`,
-      HTTPMethod.GET,
-      { cookies },
-    );
+      cookies.delete(CookieName.USER_JWT_TOKEN, {
+        path: COOKIE_DEFAULT_PATH,
+      });
 
-    // if (!rawPublicationsData.ok) {
+      return;
+    }
 
-    //   error(StatusCodes.NOT_FOUND, {
-    //     code: StatusCodes.NOT_FOUND,
-    //     message: 'No pictures found',
-    //   });
-    // }
-    // if (!userInfo.name) {
-    //   error(StatusCodes.NOT_FOUND, {
-    //     code: StatusCodes.NOT_FOUND,
-    //     message: 'No user info found',
-    //   });
-    // }
+    error(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
 
-    // if (!rawPublications.length) {
-    //   error(StatusCodes.NOT_FOUND, {
-    //     code: StatusCodes.NOT_FOUND,
-    //     message: 'No pictures found',
-    //   });
-    // }
+  const {
+    data: { user },
+  }: ResponsePayload<UserPayload> = await userResponse.json();
+  const { username } = user;
 
-    const publications = publicationsData.publications.map((publication) => ({
+  const publicationsResponse = await fetch(
+    `${PHOTORAMA_BASE_URL}${AppPath.PUBLICATIONS}?${AppSearchParam.USERNAME}=${username}`,
+    {
+      method: HTTPMethod.GET,
+    },
+  );
+
+  if (!publicationsResponse.ok) {
+    error(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+
+  const {
+    data: { publications },
+  }: ResponsePayload<PublicationsPayload> = await publicationsResponse.json();
+
+  // TODO Transform publications
+  return {
+    user,
+    publications: publications.map((publication) => ({
       ...publication,
       hashtags: extractHashtagsFromDescription(publication.description),
       description: clearDescriptionFromHashtags(publication.description),
-    }));
-
-    return { userInfo, publications };
-  }
+    })),
+  };
 };

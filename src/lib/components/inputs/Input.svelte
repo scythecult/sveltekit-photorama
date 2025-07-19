@@ -2,7 +2,7 @@
   import './styles.css';
   import { onMount, type Snippet } from 'svelte';
   import { m } from '$lib/paraglide/messages';
-  import { getDate } from '$lib/utils/utils';
+  import { getDate } from '$lib/utils/common';
 
   type InputTypeProps = 'text' | 'password' | 'email' | 'date' | 'tel' | 'file';
 

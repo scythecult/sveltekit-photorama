@@ -4,6 +4,9 @@
 	"common": {
 		"or": "или"
 	},
+	"error": {
+		"server_error": "Произошла ошибка на сервере, пожалуйста, попробуйте ещё раз"
+	},
 	"not_found_page": {
 		"title": "К сожалению, эта страница недоступна.",
 		"description": "Возможно, вы воспользовались недействительной ссылкой или страница была удалена.",
@@ -16,8 +19,10 @@
 	},
 	"input": {
 		"avatar_file_type_error": "Неверный формат файла, пожалуйста выберите один из следующих:",
-		"avatar_file_size_error_1": "Неверный размер файла:",
-		"avatar_file_size_error_2": "файл должен быть меньше {allowed}",
+		"avatar_file_size_error": "Неверный размер файла:",
+		"avatar_file_size_error_description": "файл должен быть меньше {allowed}",
+		"avatar_file_dimensions_error": "Неверные пропорции изображения:",
+		"avatar_file_dimensions_error_description": "должно быть меньше {max}px и больше {min}px",
 		"common_user_error": "Пожалуйста введите {field} в правильном формате",
 		"button_login": "Войти",
 		"button_next": "Далее",
@@ -41,8 +46,9 @@
 		"comment_message_placeholder": "Опубликуйте ваш первый комментарий...",
 		"email_error": "Пожалуйста введите почту в правильном формате",
 		"email_error_in_use": "Эл. почта уже используется",
+		"fullname_error": "Имя должно содержать не менее {count} символов",
 		"phone_error": "Пожалуйста введите телефон в правильном формате",
-		"password_error": "Пароль должен содержать не менее {count} символов цифры и спец. символы (!?#)",
+		"password_error": "Пароль должен содержать не менее {count} символов, цифры и спец. символы (!?#)",
 		"password_placeholder": "Пароль",
 		"password_reset": "Забыли пароль?",
 		"user_placeholder": "Телефоне, имя или эл. почта",
@@ -51,6 +57,7 @@
 		"fullname_placeholder": "Полное имя",
 		"username_placeholder": "Имя пользователя",
 		"username_error": "Имя пользователя должно содержать не менее {count} символов",
+		"username_error_in_use": "Имя пользователя уже используется",
 		"picture_placeholder": "Выберите файл из системы",
 		"date_placeholder": "Дата рождения",
 		"date_error": "Вам должно быть не менее {count} лет, что бы создать аккаунт!",

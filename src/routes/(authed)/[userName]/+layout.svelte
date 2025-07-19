@@ -16,13 +16,14 @@
   import { StateContextName } from '$lib/constants/context';
   import { m } from '$lib/paraglide/messages';
   import { type ModalState } from '$lib/state/modalState.svelte';
-  import type { UserInfo } from '$lib/types/userInfo';
+  import type { UserInfo } from '$lib/types/user';
   import { getStateContext } from '$lib/utils/context';
 
   const { children } = $props();
   const userState = getStateContext<UserInfo>(StateContextName.USER);
   const modalState = getStateContext<ModalState>(StateContextName.PROFILE_PAGE_MODAL);
-  const { username, fullname, id, noteMessage } = $derived(userState() ?? {});
+  const { username, fullname, id, note } = $derived(userState() ?? {});
+  const { message, auditory } = $derived(note ?? { message: '', auditory: '' });
   const { getVisibilityState, getId, getType, setId, setType, toggleModalVisibility } = $derived(modalState() ?? {});
   const isModalVisible = $derived(getVisibilityState());
   const modalId = $derived(getId());
@@ -69,7 +70,7 @@
           className="profile-page__bubble"
           onClick={handleNoteClick}
           isPresentation
-          presentationMessage={noteMessage}
+          presentationMessage={message}
         />
         <UserAvatar mode={UserAvatarMode.IMAGE} avatarSize={UserAvatarSize.XLARGE} />
       </div>
@@ -137,7 +138,7 @@
     {#if modalId === ModalId.PROFILE_NAME}
       Profile name content
     {:else if modalId === ModalId.NOTE}
-      <NoteForm userId={id} onSubmit={togglePopup} />
+      <NoteForm userId={id} {auditory} onSubmit={togglePopup} />
     {:else}
       PROFILE actions
     {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import './styles.css';
   import { onMount } from 'svelte';
-  import { dividePhrase } from '$lib/utils/utils';
+  import { dividePhrase } from '$lib/utils/common';
 
   type HighlightedTextProps = {
     phrase: string;

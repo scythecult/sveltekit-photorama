@@ -1,73 +1,114 @@
 <script lang="ts">
   import './styles.css';
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
+  import { StatusCodes } from 'http-status-codes';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { fetchData } from '$lib/api/fetchData.js';
   import Form from '$lib/components/forms/form/Form.svelte';
-  import { MIN_USERNAME_LENGTH } from '$lib/components/inputs/constants.js';
   import Input from '$lib/components/inputs/Input.svelte';
   import ValidationSpinner from '$lib/components/loaders/spinners/validation-spinner/ValidationSpinner.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppPath, AppRoute, AppSearchParam, PHOTORAMA_BASE_URL } from '$lib/constants/app';
+  import { MIN_USERNAME_LENGTH } from '$lib/constants/validation';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupState } from '$lib/state/signupState.svelte';
-  import type { ResponseSignupSuggestedUsernamePayload } from '$lib/types/responsePayload.js';
-  import { debounce, replaceSpaces } from '$lib/utils/utils';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import type { ResponsePayload, UsernamePayload } from '$lib/types/responsePayload.js';
+  import { debounce, replaceSpaces } from '$lib/utils/common';
+  import { checkIsUsernameValid } from '$lib/utils/validation';
 
   const USERNAME_INPUT_DEBOUNCE_TIME = 1000;
+
   const { data } = $props();
   const usernameState = $state({
-    value: signupState.getProperty(InputName.USERNAME) || '',
+    value: '',
     isValid: true,
     isAvailable: true,
     isLoading: true,
+    isServerError: false,
   });
 
-  const isSubmitButtonDisabled = $derived(!usernameState.isValid || !usernameState.isAvailable);
+  const isUsernameError = $derived(!usernameState.isValid || !usernameState.isAvailable || usernameState.isServerError);
+  const isSubmitButtonDisabled = $derived(!usernameState.value || usernameState.isLoading || isUsernameError);
+  const errorMessage = $derived.by(() => {
+    if (!usernameState.isValid) {
+      return m['input.username_error']({ count: MIN_USERNAME_LENGTH });
+    }
+
+    if (!usernameState.isAvailable) {
+      return m['input.username_error_in_use']();
+    }
+
+    return m['error.server_error']();
+  });
   const signupSessionResource = new SignupSessionResource();
 
   onMount(() => {
-    usernameState.value = signupSessionResource.loadUsername();
-    usernameState.isAvailable = data.isSuggestedUserNameAvailable;
+    // Checking and validating on server while page loading from previous page request
+    usernameState.value = data.username;
+    usernameState.isAvailable = data.isAvailable;
     usernameState.isLoading = data.isLoading;
-    usernameState.isValid = usernameState.isAvailable;
+    usernameState.isValid = data.isValid;
   });
 
   const handleUsernameInput = (value: string) => {
     usernameState.value = replaceSpaces(value);
-    usernameState.isValid = usernameState.value.length >= MIN_USERNAME_LENGTH;
+    usernameState.isValid = checkIsUsernameValid(usernameState.value);
     usernameState.isLoading = true;
+    usernameState.isAvailable = true;
+    usernameState.isServerError = false;
   };
 
   const handleUsernameKeyup = debounce(async (_?: string) => {
-    const {
-      response,
-      data: { isSuggestedUserNameAvailable },
-    } = await fetchData<ResponseSignupSuggestedUsernamePayload>(
-      `${PHOTORAMA_BASE_URL}${AppPath.SIGNUP_SUGGESTED_USERNAME}?${AppSearchParam.SUGGESTED_USERNAME}=${usernameState.value}`,
-      HTTPMethod.GET,
-    );
+    if (isUsernameError) {
+      usernameState.isLoading = false;
 
-    if (response.ok) {
-      usernameState.isAvailable = isSuggestedUserNameAvailable;
+      return;
     }
 
-    usernameState.isLoading = false;
+    try {
+      const response = await fetch(
+        `${PHOTORAMA_BASE_URL}${AppPath.SIGNUP_SUGGESTED}?${AppSearchParam.USERNAME}=${usernameState.value}`,
+        { method: HTTPMethod.GET },
+      );
+
+      if (response.ok) {
+        const {
+          data: { isAvailable },
+        }: ResponsePayload<UsernamePayload> = await response.json();
+
+        usernameState.isAvailable = isAvailable;
+      }
+
+      if (response.status === StatusCodes.INTERNAL_SERVER_ERROR) {
+        usernameState.isServerError = true;
+      }
+    } catch (error) {
+      usernameState.isAvailable = false;
+    } finally {
+      usernameState.isLoading = false;
+    }
   }, USERNAME_INPUT_DEBOUNCE_TIME);
 
-  const handleUsernameFormSubmit: SubmitFunction = () => {
-    return async ({ update }) => {
-      if (usernameState.isAvailable) {
-        await update();
+  const handleUsernameFormSubmit: TypedSubmitFunction = () => {
+    return async ({ update, result }) => {
+      if (result.type === 'failure' && result.data) {
+        usernameState.isValid = Boolean(result.data.isValid);
+      }
 
-        signupState.setProperty(InputName.USERNAME, usernameState.value);
-        signupSessionResource.saveUsername(usernameState.value);
+      if (result.type === 'success') {
+        if (usernameState.isAvailable) {
+          await update();
 
-        goto(`${AppRoute.SIGNUP}${AppRoute.AVATAR}`);
+          signupSessionResource.saveUsername(usernameState.value);
+
+          goto(`${AppRoute.SIGNUP}${AppRoute.AVATAR}`);
+        }
+      }
+
+      if (result.type === 'error') {
+        usernameState.isServerError = true;
       }
     };
   };
@@ -77,7 +118,7 @@
   <ValidationSpinner
     className="username-page__validation-spinner"
     isLoading={usernameState.isLoading}
-    isVerified={usernameState.isAvailable && usernameState.isValid}
+    isVerified={!isUsernameError}
   />
 {/snippet}
 
@@ -99,8 +140,8 @@
     onInput={handleUsernameInput}
     onKeyup={handleUsernameKeyup}
     userValue={usernameState.value}
-    errorMessage={m['input.username_error']({ count: MIN_USERNAME_LENGTH })}
-    isError={!usernameState.isValid}
+    isError={isUsernameError}
+    {errorMessage}
     slotA={validationSpinner}
     slotB={tooltip}
   />

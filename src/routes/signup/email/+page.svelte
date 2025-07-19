@@ -1,12 +1,10 @@
 <script lang="ts">
   import './styles.css';
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import Carousel from '$lib/components/carousel/Carousel.svelte';
   import Form from '$lib/components/forms/form/Form.svelte';
-  import { EMAIL_REGEXP } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import Link from '$lib/components/link/Link.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
@@ -16,8 +14,8 @@
   import { m } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupState } from '$lib/state/signupState.svelte';
-  import type { ResponseSignupEmailPayload } from '$lib/types/responsePayload';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import { checkIsEmailValid } from '$lib/utils/validation';
 
   const SuggestedLocalEmailDomain = {
     [AppLocaleName.RU]: ['@yandex.ru', '@mail.ru', '@rambler.ru', '@bk.ru', '@list.ru'],
@@ -32,6 +30,7 @@
     currentDomain: '',
     isValid: true,
     isAvailable: true,
+    isServerError: false,
   });
 
   const suggestedEmailDomains = $derived(
@@ -39,11 +38,19 @@
       ? currentSuggestedLocalEmailDomain
       : currentSuggestedLocalEmailDomain.filter((domain) => domain === emailState.currentDomain),
   );
-  const isSubmitButtonDisabled = $derived(!emailState.value || !emailState.isValid);
-  const errorMessage = $derived(
-    !emailState.isValid && emailState.isAvailable ? m['input.email_error']() : m['input.email_error_in_use'](),
-  );
+  const isEmailError = $derived(!emailState.isValid || !emailState.isAvailable || emailState.isServerError);
+  const isSubmitButtonDisabled = $derived(!emailState.value || isEmailError);
+  const errorMessage = $derived.by(() => {
+    if (!emailState.isValid) {
+      return m['input.email_error']();
+    }
 
+    if (!emailState.isAvailable) {
+      return m['input.email_error_in_use']();
+    }
+
+    return m['error.server_error']();
+  });
   const signupSessionResource = new SignupSessionResource();
 
   onMount(() => {
@@ -52,8 +59,9 @@
 
   const handleEmailInput = (value: string) => {
     emailState.value = value;
-    emailState.isValid = EMAIL_REGEXP.test(emailState.value);
+    emailState.isValid = checkIsEmailValid(emailState.value);
     emailState.isAvailable = true;
+    emailState.isServerError = false;
 
     if (!emailState.value) {
       emailState.currentDomain = '';
@@ -64,30 +72,33 @@
     if (!emailState.currentDomain) {
       emailState.currentDomain = domain;
       emailState.value = `${emailState.value.replace(/@/g, '')}${emailState.currentDomain}`;
-      emailState.isValid = EMAIL_REGEXP.test(emailState.value);
+      emailState.isValid = checkIsEmailValid(emailState.value);
     }
   };
 
-  const handleEmailFormSubmit: SubmitFunction = () => {
+  const handleEmailFormSubmit: TypedSubmitFunction = () => {
     return async ({ update, result }) => {
-      if (result.type === 'success') {
-        const data = result.data! as ResponseSignupEmailPayload;
+      // Server validation result
+      if (result.type === 'failure' && result.data) {
+        emailState.isValid = Boolean(result.data.isValid);
+      }
 
-        emailState.isAvailable = data.isEmailAvailable;
-        emailState.isValid = data.isEmailAvailable;
+      // Server check is email available result
+      if (result.type === 'success' && result.data) {
+        emailState.isAvailable = Boolean(result.data.isAvailable);
 
         if (emailState.isAvailable) {
           await update();
 
-          signupState.setProperty(InputName.EMAIL, emailState.value);
           signupSessionResource.saveEmail(emailState.value);
 
           goto(`${AppRoute.SIGNUP}${AppRoute.FULLNAME}`);
-
-          emailState.isValid = true;
         }
+      }
 
-        // await update();
+      // Server error result
+      if (result.type === 'error') {
+        emailState.isServerError = true;
       }
     };
   };
@@ -109,12 +120,13 @@
     type="email"
     placeholder={m['input.email_placeholder']()}
     onInput={handleEmailInput}
-    isError={!emailState.isValid}
+    isError={isEmailError}
     userValue={emailState.value}
     {errorMessage}
     slotB={tooltip}
   />
 
+  <!-- TODO move to separate component -->
   <Carousel className="suggested-email-domains">
     {#each suggestedEmailDomains as domain (domain)}
       <button class="suggested-email-domain primary-button" onclick={() => handleEmailDomainClick(domain)} type="button"

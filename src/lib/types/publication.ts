@@ -1,4 +1,11 @@
-export type Comment = { id: string; avatar: string; message: string; name: string; likes?: string; isLiked: boolean };
+export type Comment = {
+  id: string;
+  avatar: string;
+  message: string;
+  username: string;
+  likes?: string;
+  isLiked: boolean;
+};
 
 export type Publication = {
   id: string;

@@ -1,30 +1,50 @@
-import type { UserInfo } from './userInfo';
+import type { Publication } from './publication';
+import type { Auditory, UserInfo } from './user';
 
-export type ResponseSignupEmailPayload = {
-  isEmailAvailable: boolean;
+export type ResponsePayload<Payload> = {
+  data: Payload;
+  isLoading?: boolean;
+  message?: string;
 };
 
-export type ResponseSignupSuggestedUsernamePayload = {
-  isSuggestedUserNameAvailable: boolean;
-  suggestedUserName: string;
+export type EmailPayload = {
+  isAvailable: boolean;
 };
 
-export type ResponseSignupAvatarErrorInfoPayload = {
-  validationResult: {
-    isFileSizeValid: boolean;
-    isFileTypeValid: boolean;
-    isImageDimensionsValid: boolean;
-  };
+export type UsernamePayload = {
+  isAvailable: boolean;
+  username: string;
 };
 
-export type ResponseSignupConfirmPayload = {
+export type UserPayload = {
   user: UserInfo;
 };
 
-export type ResponseSignupConfirmRequiredInfoPayload = {
-  emptyFields: string[];
+export type PublicationsPayload = {
+  publications: Publication[];
 };
 
-export type ResponseSignupAvatarPayload = {
+export type AvatarPayload = {
   avatarUrl: string;
+};
+
+export type PublicationsLikePayload = {
+  publications: Publication[];
+};
+
+export type PublicationsCommentPayload = {
+  userId: string;
+  message: string;
+};
+
+export type ConfirmPayload = {
+  jwtToken: string;
+  user: UserInfo;
+};
+
+export type UserNotePayload = {
+  note: {
+    message: string;
+    auditory: Auditory;
+  };
 };

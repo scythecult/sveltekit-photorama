@@ -16,7 +16,7 @@
   const profilePageModalState = $state(createModalState());
 
   // Set all necessary data/state in root layout to access it from anywhere
-  setStateContext(StateContextName.USER, () => data.userInfo);
+  setStateContext(StateContextName.USER, () => data.user);
   setStateContext(StateContextName.APP, () => appState);
   setStateContext(StateContextName.PUBLICATIONS_PAGE_MODAL, () => publicationsModalState);
   setStateContext(StateContextName.PROFILE_PAGE_MODAL, () => profilePageModalState);

@@ -1,4 +1,5 @@
 .validation-spinner {
+  min-width: 31px;
   padding: 6px;
 }
 

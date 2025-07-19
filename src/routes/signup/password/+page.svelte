@@ -1,24 +1,31 @@
 <script lang="ts">
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import Form from '$lib/components/forms/form/Form.svelte';
-  import { MIN_PASSWORD_LENGTH, PASSWORD_REGEXP } from '$lib/components/inputs/constants';
   import Input from '$lib/components/inputs/Input.svelte';
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/app';
+  import { MIN_PASSWORD_LENGTH } from '$lib/constants/validation';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupState } from '$lib/state/signupState.svelte';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import { checkIsPasswordValid } from '$lib/utils/validation';
 
   const passwordState = $state({
     value: '',
     isValid: true,
+    isServerError: false,
   });
-
   const isSubmitButtonDisabled = $derived(!passwordState.value || !passwordState.isValid);
+  const errorMessage = $derived.by(() => {
+    if (!passwordState.isValid) {
+      return m['input.password_error']({ count: MIN_PASSWORD_LENGTH });
+    }
+
+    return m['error.server_error']();
+  });
   const signupSessionResource = new SignupSessionResource();
 
   onMount(() => {
@@ -27,18 +34,29 @@
 
   const handlePasswordInput = (value: string) => {
     passwordState.value = value;
-    passwordState.isValid = PASSWORD_REGEXP.test(passwordState.value);
+    passwordState.isValid = checkIsPasswordValid(passwordState.value);
+    passwordState.isServerError = false;
   };
 
-  const handlePasswordFormSubmit: SubmitFunction = () => {
-    return async ({ update }) => {
-      await update();
+  const handlePasswordFormSubmit: TypedSubmitFunction = () => {
+    return async ({ update, result }) => {
+      // Server validation result
+      if (result.type === 'failure' && result.data) {
+        passwordState.isValid = Boolean(result.data.isValid);
+      }
 
-      passwordState.isValid = true;
-      signupState.setProperty(InputName.PASSWORD, passwordState.value);
-      signupSessionResource.savePassword(passwordState.value);
+      if (result.type === 'success') {
+        await update();
 
-      goto(`${AppRoute.SIGNUP}${AppRoute.BIRTHDATE}`);
+        signupSessionResource.savePassword(passwordState.value);
+
+        goto(`${AppRoute.SIGNUP}${AppRoute.BIRTHDATE}`);
+      }
+
+      // Server error result
+      if (result.type === 'error') {
+        passwordState.isServerError = true;
+      }
     };
   };
 </script>
@@ -61,7 +79,7 @@
     onInput={handlePasswordInput}
     isError={!passwordState.isValid}
     userValue={passwordState.value}
-    errorMessage={m['input.password_error']({ count: MIN_PASSWORD_LENGTH })}
+    {errorMessage}
     slotB={tooltip}
   />
 </Form>

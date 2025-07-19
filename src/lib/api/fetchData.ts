@@ -68,7 +68,7 @@ export const fetchData = async <ResponsePayload>(
   }
 
   if (options?.params?.body) {
-    requestOptions.body = JSON.stringify(options?.params?.body);
+    requestOptions.body = JSON.stringify(options.params.body);
   }
 
   try {

@@ -11,7 +11,7 @@
   import { type AppState } from '$lib/state/appState.svelte.js';
   import { type ModalState } from '$lib/state/modalState.svelte';
   import type { Publication } from '$lib/types/publication.js';
-  import type { UserInfo } from '$lib/types/userInfo.js';
+  import type { UserInfo } from '$lib/types/user.js';
   import { getStateContext } from '$lib/utils/context.js';
 
   const { data } = $props();

@@ -8,7 +8,7 @@
   import { FormActionName, InputName } from '$lib/constants/action';
   import { StateContextName } from '$lib/constants/context';
   import { m } from '$lib/paraglide/messages';
-  import type { UserInfo } from '$lib/types/userInfo';
+  import type { UserInfo } from '$lib/types/user';
   import { getStateContext } from '$lib/utils/context';
   import { IconName } from '../../custom-icon/constants';
   import CustomIcon from '../../custom-icon/CustomIcon.svelte';
@@ -71,6 +71,7 @@
     userValue={messageFormState.message}
     onInput={handleMessageInput}
   />
+  <!-- TODO Add hidden aria-fields -->
   <input type="hidden" name={InputName.USER_ID} value={id} />
   <input type="hidden" name={InputName.PUBLICATION_ID} value={publicationId} />
 

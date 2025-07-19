@@ -16,28 +16,28 @@
     isLiked: boolean;
   };
 
-  const LikeIconSizeMap = {
+  const LikeIconSize = {
     [LikeTypeMap.COMMENT]: IconSize.SMALL,
     [LikeTypeMap.ACTIONS]: IconSize.MEDIUM,
     [LikeTypeMap.PICTURE]: IconSize.INHERIT,
   };
 
-  const LikeActionSegmentMap = {
+  const LikeActionSegment = {
     [LikeTypeMap.COMMENT]: FormActionName.COMMENT_LIKE,
     [LikeTypeMap.ACTIONS]: FormActionName.LIKE,
     [LikeTypeMap.PICTURE]: FormActionName.LIKE,
   };
 
-  const LikeActionNameMap = {
+  const LikeActionInputName = {
     [LikeTypeMap.COMMENT]: InputName.COMMENT_ID,
     [LikeTypeMap.ACTIONS]: InputName.PUBLICATION_ID,
     [LikeTypeMap.PICTURE]: InputName.PUBLICATION_ID,
   };
 
   const { className = '', id, likeType, likeCount, isLiked }: LikeButtonProps = $props();
-  const actionSegment = LikeActionSegmentMap[likeType];
-  const actionName = LikeActionNameMap[likeType];
-  const iconSize = LikeIconSizeMap[likeType];
+  const actionSegment = LikeActionSegment[likeType];
+  const actionInputName = LikeActionInputName[likeType];
+  const iconSize = LikeIconSize[likeType];
   const isPictureMode = likeType === LikeTypeMap.PICTURE;
   let isLikeButtonDisabled = $state(false);
   const classNameFinal = $derived([
@@ -67,8 +67,8 @@
       <CustomIcon className="like" iconName={IconName.LIKE} {iconSize} />
     {/if}
   </button>
-  <input type="hidden" name={actionName} value={id} />
-  <input type="hidden" name="isLiked" value={!isLiked} />
+  <input type="hidden" name={actionInputName} value={id} />
+  <input type="hidden" name={InputName.IS_LIKED} value={!isLiked} />
   {#if likeCount}
     <Count count={likeCount} />
   {/if}

@@ -1,9 +1,8 @@
 import type { Actions } from '@sveltejs/kit';
 import { HTTPMethod } from 'http-method-enum';
-import { fetchData } from '$lib/api/fetchData';
 import { FormActionName, InputName } from '$lib/constants/action';
-import { AppTitle, PHOTORAMA_BASE_URL } from '$lib/constants/app';
-import type { UserInfo } from '$lib/types/userInfo';
+import { AppPath, AppTitle, PHOTORAMA_BASE_URL } from '$lib/constants/app';
+import type { ResponsePayload, UserPayload } from '$lib/types/responsePayload';
 
 export const load = async () => {
   return {
@@ -13,33 +12,23 @@ export const load = async () => {
 
 export const actions: Actions = {
   // TODO Add User Login Route
-  [FormActionName.LOGIN]: async ({ request, cookies }) => {
+  [FormActionName.LOGIN]: async ({ fetch, request }) => {
     const data = await request.formData();
     const username = data.get(InputName.USERNAME) as string;
     const password = data.get(InputName.PASSWORD) as string;
 
-    const {
-      data: { user },
-    } = await fetchData<{ user: UserInfo }>(`${PHOTORAMA_BASE_URL}/login`, HTTPMethod.POST, {
-      cookies,
-      params: {
-        body: { username, password },
-      },
+    const response = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.LOGIN}`, {
+      method: HTTPMethod.POST,
+      body: JSON.stringify({ username, password }),
     });
 
-    // eslint-disable-next-line no-console
-    console.info(user);
+    if (response.ok) {
+      const {
+        data: { user },
+      }: ResponsePayload<UserPayload> = await response.json();
 
-    // const response = await fetch(`${PHOTORAMA_BASE_URL}/login`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({ username, password }),
-
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // console.log(response.headers);
-    // const result = await response.json();
-    // console.log({ result });
+      // eslint-disable-next-line no-console
+      console.info(user);
+    }
   },
 };

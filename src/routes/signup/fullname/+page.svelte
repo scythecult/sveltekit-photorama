@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -8,13 +7,22 @@
   import Tooltip from '$lib/components/tooltip/Tooltip.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/app';
+  import { MIN_NAME_LENGTH } from '$lib/constants/validation';
   import { m } from '$lib/paraglide/messages';
   import { SignupSessionResource } from '$lib/resources/SignupSessionResource';
-  import { signupState } from '$lib/state/signupState.svelte';
-  import { createSuggestedUsername } from '$lib/utils/utils';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import { createSuggestedUsername } from '$lib/utils/common';
+  import { checkIsFullnameValid } from '$lib/utils/validation';
 
-  const fullnameState = $state({ value: '' });
-  const isSubmitButtonDisabled = $derived(!fullnameState.value);
+  const fullnameState = $state({ value: '', isValid: true, isServerError: false });
+  const isSubmitButtonDisabled = $derived(!fullnameState.value || !fullnameState.isValid);
+  const errorMessage = $derived.by(() => {
+    if (!fullnameState.isValid) {
+      return m['input.fullname_error']({ count: MIN_NAME_LENGTH });
+    }
+
+    return m['error.server_error']();
+  });
   const signupSessionResource = new SignupSessionResource();
 
   onMount(() => {
@@ -23,19 +31,32 @@
 
   const handleFullnameInput = (value: string) => {
     fullnameState.value = value;
+    fullnameState.isValid = checkIsFullnameValid(fullnameState.value);
+    fullnameState.isServerError = false;
   };
 
-  const handleFullnameFormSubmit: SubmitFunction = () => {
-    return async ({ update }) => {
-      await update();
-      const suggestedUsername = createSuggestedUsername(fullnameState.value);
+  const handleFullnameFormSubmit: TypedSubmitFunction = () => {
+    return async ({ update, result }) => {
+      // Server validation result
+      if (result.type === 'failure' && result.data) {
+        fullnameState.isValid = Boolean(result.data.isValid);
+      }
 
-      signupState.setProperty(InputName.FULLNAME, fullnameState.value);
-      signupState.setProperty(InputName.USERNAME, suggestedUsername);
-      signupSessionResource.saveFullname(fullnameState.value);
-      signupSessionResource.saveUsername(suggestedUsername);
+      if (result.type === 'success') {
+        await update();
 
-      goto(`${AppRoute.SIGNUP}${AppRoute.PASSWORD}`);
+        const suggestedUsername = createSuggestedUsername(fullnameState.value);
+
+        signupSessionResource.saveFullname(fullnameState.value);
+        signupSessionResource.saveUsername(suggestedUsername);
+
+        goto(`${AppRoute.SIGNUP}${AppRoute.PASSWORD}`);
+      }
+
+      // Server error result
+      if (result.type === 'error') {
+        fullnameState.isServerError = true;
+      }
     };
   };
 </script>
@@ -56,6 +77,8 @@
     type="text"
     placeholder={m['input.fullname_placeholder']()}
     onInput={handleFullnameInput}
+    isError={!fullnameState.isValid}
+    {errorMessage}
     userValue={fullnameState.value}
     slotB={tooltip}
   />

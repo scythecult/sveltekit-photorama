@@ -121,6 +121,12 @@ select {
   --app-toggle-animation: 0.45s ease-in-out toggle;
 }
 
+body {
+  font-family: var(--app-font-family);
+  color: rgb(var(--app-primary-text));
+  background-color: rgb(var(--app-primary-bg));
+}
+
 .primary-button,
 .secondary-button,
 .plain-button {

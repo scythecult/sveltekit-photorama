@@ -1,14 +1,10 @@
-import { LocalStorageKey, PHOTORAMA_SIGNUP_LOCAL_STORAGE_KEY_REGEXP } from '$lib/constants/common';
-import { convertToBase64, getObjectURL } from '$lib/utils/utils';
-
-const signupSessionKeys = [
-  LocalStorageKey.SIGNUP_EMAIL,
-  LocalStorageKey.SIGNUP_FULLNAME,
-  LocalStorageKey.SIGNUP_PASSWORD,
-  LocalStorageKey.SIGNUP_BIRTHDATE,
-  LocalStorageKey.SIGNUP_USERNAME,
-  LocalStorageKey.SIGNUP_AVATAR,
-] as const;
+import {
+  LocalStorageKey,
+  PHOTORAMA_SIGNUP_LOCAL_STORAGE_KEY_REGEXP,
+  SIGNUP_SESSION_STORAGE_KEYS,
+} from '$lib/constants/common';
+import type { User } from '$lib/types/user';
+import { convertToBase64, getObjectURL } from '$lib/utils/common';
 
 export class SignupSessionResource {
   loadEmail() {
@@ -64,15 +60,17 @@ export class SignupSessionResource {
   }
 
   loadAll() {
-    return signupSessionKeys.reduce<Record<string, string>>((acc, key) => {
-      acc[key.replace(PHOTORAMA_SIGNUP_LOCAL_STORAGE_KEY_REGEXP, '')] = window.sessionStorage.getItem(key) || '';
+    return SIGNUP_SESSION_STORAGE_KEYS.reduce<User>((acc, key) => {
+      const fieldName = key.replace(PHOTORAMA_SIGNUP_LOCAL_STORAGE_KEY_REGEXP, '') as keyof User;
+
+      acc[fieldName] = window.sessionStorage.getItem(key) || '';
 
       return acc;
-    }, {});
+    }, {} as User);
   }
 
   clearAll() {
-    signupSessionKeys.forEach((key) => {
+    SIGNUP_SESSION_STORAGE_KEYS.forEach((key) => {
       window.sessionStorage.removeItem(key);
     });
   }

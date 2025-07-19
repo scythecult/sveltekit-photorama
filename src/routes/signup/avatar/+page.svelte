@@ -1,6 +1,5 @@
 <script lang="ts">
   import './styles.css';
-  import type { SubmitFunction } from '@sveltejs/kit';
   import { HTTPMethod } from 'http-method-enum';
   import { goto } from '$app/navigation';
   import { IconName, IconSize } from '$lib/components/custom-icon/constants';
@@ -10,17 +9,18 @@
   import Modal from '$lib/components/modal/Modal.svelte';
   import { FormActionName, InputName } from '$lib/constants/action';
   import { AppRoute } from '$lib/constants/app';
-  import { ALLOWED_FILE_TYPES, MAX_PICTURE_SIZE } from '$lib/constants/common';
+  import { ImageDimension, MAX_PICTURE_SIZE, PICTURE_ALLOWED_FILE_TYPES } from '$lib/constants/common';
   import { m } from '$lib/paraglide/messages';
-  import { signupState } from '$lib/state/signupState.svelte';
-  import type { ResponseSignupAvatarErrorInfoPayload } from '$lib/types/responsePayload';
-  import { createImageURL, formatFileSize, isFileSizeValid, isFileTypeValid } from '$lib/utils/utils';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
+  import { createImageURL, formatFileSize, transformFileTypeNames } from '$lib/utils/common';
+  import { checkIsFileSizeValid, checkIsFileTypeValid } from '$lib/utils/validation';
 
   const { data } = $props();
   // TODO Check if avatar url exists, instead of submitting form call "goto"
   const avatarUploadState = $state({
     avatarUrl: data.avatarUrl,
     isModalVisible: false,
+    isServerError: false,
     fileSize: 0,
     validationResult: {
       isFileSizeValid: true,
@@ -29,13 +29,14 @@
       isImageDimensionsValid: true,
     },
   });
-  const isSubmitButtonDisabled = $derived(!Object.values(avatarUploadState.validationResult).every(Boolean));
+  const isAvatarError = $derived(
+    avatarUploadState.isServerError || !Object.values(avatarUploadState.validationResult).every(Boolean),
+  );
   const formActionUrl = $derived(
     avatarUploadState.fileSize || avatarUploadState.avatarUrl
       ? FormActionName.SIGNUP_AVATAR
       : FormActionName.SIGNUP_AVATAR_DEFAULT,
   );
-  const userFullname = $derived(signupState.getProperty(InputName.FULLNAME));
   const isAvatarAvailable = $derived(Boolean(avatarUploadState.avatarUrl));
   const formTitleText = $derived(
     isAvatarAvailable ? m['signup_page.photo_loaded_title']() : m['signup_page.photo_title'](),
@@ -58,15 +59,16 @@
 
   const handleUploadChange = async (file: File) => {
     const validationResult = {
-      isFileSizeValid: isFileSizeValid(file.size),
-      isFileTypeValid: isFileTypeValid(file.type),
+      isFileSizeValid: checkIsFileSizeValid(file.size),
+      isFileTypeValid: checkIsFileTypeValid(file.type),
       isImageDimensionsValid: true,
     };
 
     avatarUploadState.validationResult = validationResult;
     avatarUploadState.fileSize = file.size;
+    avatarUploadState.isServerError = false;
 
-    if (Object.values(validationResult).every(Boolean)) {
+    if (!isAvatarError) {
       const avatarUrl = createImageURL(file);
 
       avatarUploadState.avatarUrl = avatarUrl;
@@ -80,18 +82,20 @@
     console.info('open image editor');
   };
 
-  const handleAvatarSubmit: SubmitFunction = () => {
+  const handleAvatarSubmit: TypedSubmitFunction = () => {
     return async ({ update, result }) => {
-      await update();
-
-      if (result.type === 'failure' || result.type === 'success') {
-        const data = result.data as ResponseSignupAvatarErrorInfoPayload;
-
-        avatarUploadState.validationResult = data.validationResult;
+      if (result.type === 'failure' && result.data) {
+        avatarUploadState.validationResult = result.data.validationResult;
       }
 
       if (result.type === 'success') {
+        await update();
+
         goto(`${AppRoute.SIGNUP}${AppRoute.CONFIRM}`);
+      }
+
+      if (result.type === 'error') {
+        avatarUploadState.isServerError = true;
       }
     };
   };
@@ -108,13 +112,13 @@
   action="?/{formActionUrl}"
   method={HTTPMethod.POST}
   onSubmit={handleAvatarSubmit}
-  {isSubmitButtonDisabled}
+  isSubmitButtonDisabled={isAvatarError}
 >
   <!-- TODO Check for avatar component -->
   <div class="avatar-preview">
     {#if isAvatarAvailable}
       <div class="avatar-preview__image-container">
-        <img class="avatar-preview__image" src={avatarUploadState.avatarUrl} alt={userFullname} />
+        <img class="avatar-preview__image" src={avatarUploadState.avatarUrl} alt="User avatar" />
       </div>
       <button
         class="avatar-preview__button avatar-preview__button--edit primary-button"
@@ -131,21 +135,40 @@
     {/if}
   </div>
 
-  {#if !Object.values(avatarUploadState.validationResult).every(Boolean)}
+  <!-- Errors -->
+  {#if isAvatarError}
     <div class="avatar-preview__errors">
       {#if !avatarUploadState.validationResult.isFileTypeValid}
         <p class="avatar-preview__error">
           {m['input.avatar_file_type_error']()}
-          <span class="avatar-preview__error avatar-preview__error--correct">{ALLOWED_FILE_TYPES.join(', ')}</span>
+          <!-- TODO Make text smaller -->
+          <span class="avatar-preview__error avatar-preview__error--correct"
+            >{PICTURE_ALLOWED_FILE_TYPES.join(', ')}</span
+          >
         </p>
       {/if}
 
       {#if !avatarUploadState.validationResult.isFileSizeValid}
         <p class="avatar-preview__error">
-          {m['input.avatar_file_size_error_1']()}
+          {m['input.avatar_file_size_error']()}
           <span class="avatar-preview__error avatar-preview__error--correct">
-            {m['input.avatar_file_size_error_2']({ allowed: formatFileSize(MAX_PICTURE_SIZE) })}
+            {m['input.avatar_file_size_error_description']({ allowed: formatFileSize(MAX_PICTURE_SIZE) })}
           </span>
+        </p>
+      {/if}
+
+      {#if !avatarUploadState.validationResult.isImageDimensionsValid}
+        <p class="avatar-preview__error">
+          {m['input.avatar_file_dimensions_error']()}
+          <span class="avatar-preview__error avatar-preview__error--correct">
+            {m['input.avatar_file_dimensions_error_description']({ min: ImageDimension.min, max: ImageDimension.max })}
+          </span>
+        </p>
+      {/if}
+
+      {#if avatarUploadState.isServerError}
+        <p class="avatar-preview__error">
+          {m['error.server_error']()}
         </p>
       {/if}
     </div>
@@ -157,7 +180,7 @@
     name={InputName.AVATAR}
     onChange={handleUploadChange}
     placeholder={m['input.picture_placeholder']()}
-    accept={ALLOWED_FILE_TYPES.join()}
+    accept={transformFileTypeNames(PICTURE_ALLOWED_FILE_TYPES).join(', ')}
     isLabelSeparate
   />
   <button class={uploadButtonClassNameFinal} onclick={handleUploadClick} type="button">{uploadButtonText}</button>

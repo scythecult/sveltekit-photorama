@@ -6,16 +6,14 @@
   import LikeButton from '../../buttons/like-button/LikeButton.svelte';
   import UserAvatar from '../../user-avatar/UserAvatar.svelte';
 
-  type CommentProps = Comment & {};
-
-  const { id, name, message, isLiked }: CommentProps = $props();
+  const { id, username, message, isLiked }: Comment = $props();
 </script>
 
 <div class="comment">
   <UserAvatar mode={UserAvatarMode.IMAGE} />
 
   <div class="comment__body">
-    <a class="comment__user link" href="/user?name={name}" target="_top" rel="noopener noreferrer">{name}</a>
+    <a class="comment__user link" href="/user?name={username}" target="_top" rel="noopener noreferrer">{username}</a>
     <p class="comment__text">{message}</p>
     <div class="comment__actions">
       <button class="comment__reply-button">Reply</button>

@@ -1,9 +1,9 @@
 <script lang="ts">
   import './styles.css';
-  import type { SubmitFunction } from '@sveltejs/kit';
   import type { Snippet } from 'svelte';
   import { enhance } from '$app/forms';
   import { m } from '$lib/paraglide/messages';
+  import type { TypedSubmitFunction } from '$lib/types/actions';
 
   type FormMethod = 'POST' | 'GET';
 
@@ -22,7 +22,7 @@
     children: Snippet;
     action: string;
     method: FormMethod;
-    onSubmit: SubmitFunction;
+    onSubmit: TypedSubmitFunction;
     isSubmitButtonDisabled: boolean;
     autocomplete?: FormAutoHelpers;
     autocapitalize?: FormAutoHelpers;

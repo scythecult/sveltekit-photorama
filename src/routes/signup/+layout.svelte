@@ -31,7 +31,7 @@
     {@render children()}
   </div>
   {#if isRegisterLinkVisible}
-    <Link className="signup__already-register-link plain-button" href={AppRoute.ROOT}
+    <Link className="signup__already-register-link plain-button" href={AppRoute.LOGIN}
       >{m['signup_page.already_register_link']()}</Link
     >
   {/if}

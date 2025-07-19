@@ -1,0 +1,23 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px;
+  text-align: center;
+}
+
+.error__description {
+  font-size: var(--app-16-font-size);
+}
+
+.error__link {
+  color: rgb(var(--app-primary-link));
+}
+
+@media (min-width: 1220px) {
+  .error {
+    min-height: 100dvh;
+  }
+}
