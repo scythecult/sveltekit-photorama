@@ -53,6 +53,7 @@
   });
 
   const handleUsernameInput = (value: string) => {
+    // TODO force name lowercase
     usernameState.value = replaceSpaces(value);
     usernameState.isValid = checkIsUsernameValid(usernameState.value);
     usernameState.isLoading = true;

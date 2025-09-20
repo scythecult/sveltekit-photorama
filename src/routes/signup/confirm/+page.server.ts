@@ -44,21 +44,30 @@ export const actions: Actions = {
       });
     }
 
+    // TODO Lowercase username
     const response = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.SIGNUP_CONFIRM}`, {
       method: HTTPMethod.POST,
-      body: JSON.stringify({ username, fullname, birthdate, email, password }),
+      body: JSON.stringify({
+        user: {
+          username,
+          fullname,
+          birthdate,
+          email,
+          password,
+        },
+      }),
     });
 
     if (response.ok) {
       const {
-        data: { jwtToken },
+        data: { token },
       }: ResponsePayload<ConfirmPayload> = await response.json();
       const parsedCookies = parse(response.headers.getSetCookie().join('; '));
       const sessionId = parsedCookies[CookieName.USER_SESSION_ID];
       const signupSessionId = cookies.get(CookieName.SIGNUP_SESSION_ID);
 
-      if (jwtToken) {
-        cookies.set(CookieName.USER_JWT_TOKEN, jwtToken, {
+      if (token) {
+        cookies.set(CookieName.USER_TOKEN, token, {
           path: COOKIE_DEFAULT_PATH,
         });
       }

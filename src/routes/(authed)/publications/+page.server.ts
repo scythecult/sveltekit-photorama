@@ -19,7 +19,7 @@ export const actions: Actions = {
       });
     }
 
-    const response = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.LIKES}/${publicationId}`, {
+    const response = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.LIKES}`, {
       method: HTTPMethod.POST,
       body: JSON.stringify({ id: publicationId, isLiked: convertStringToBoolean(isLiked) }),
     });

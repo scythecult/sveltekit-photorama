@@ -1,6 +1,6 @@
 export const CookieName = {
-  USER_SESSION_ID: 'session_id',
-  USER_JWT_TOKEN: 'jwt_token',
+  USER_SESSION_ID: 'user_session_id',
+  USER_TOKEN: 'user_token',
   SIGNUP_SESSION_ID: 'signup_session_id',
 };
 

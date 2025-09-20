@@ -38,7 +38,7 @@ export type PublicationsCommentPayload = {
 };
 
 export type ConfirmPayload = {
-  jwtToken: string;
+  token: string;
   user: UserInfo;
 };
 

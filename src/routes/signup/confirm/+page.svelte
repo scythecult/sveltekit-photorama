@@ -30,8 +30,8 @@
 
     confirmState.birthdate = userInfo.birthdate;
     confirmState.email = userInfo.email;
-    confirmState.fullname = userInfo.fullname;
     confirmState.password = userInfo.password;
+    confirmState.fullname = userInfo.fullname;
     confirmState.username = userInfo.username;
   });
 
@@ -80,8 +80,12 @@
 </Form>
 {#if isRequiredFieldsInfoVisible}
   <div class="required-info">
-    <h2 class="required-info__title">{m['signup_page.confirm_required_info_title']()}</h2>
-    <p class="required-info__description">{m['signup_page.confirm_required_info_description']()}</p>
+    <h2 class="required-info__title">
+      {m['signup_page.confirm_required_info_title']()}
+    </h2>
+    <p class="required-info__description">
+      {m['signup_page.confirm_required_info_description']()}
+    </p>
     <ul class="required-info__list">
       {#each confirmState.emptyFields as emptyField (emptyField)}
         <li class="required-info__item">

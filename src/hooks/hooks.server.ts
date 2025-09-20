@@ -17,7 +17,13 @@ const paraglideHandle: Handle = ({ event, resolve }) =>
     });
   });
 
-export const handle: Handle = sequence(paraglideHandle);
+const logger: Handle = ({ event, resolve }) => {
+  // console.log(event.request);
+
+  return resolve(event);
+};
+
+export const handle: Handle = sequence(logger, paraglideHandle);
 
 export const handleError: HandleServerError = async ({ event, status, error }) => {
   // TODO Refactor
@@ -34,7 +40,7 @@ export const handleError: HandleServerError = async ({ event, status, error }) =
       path: COOKIE_DEFAULT_PATH,
     });
 
-    event.cookies.delete(CookieName.USER_JWT_TOKEN, {
+    event.cookies.delete(CookieName.USER_TOKEN, {
       path: COOKIE_DEFAULT_PATH,
     });
   }

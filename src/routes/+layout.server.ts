@@ -29,6 +29,10 @@ export const load = async ({ fetch, cookies, url }) => {
     redirect(StatusCodes.SEE_OTHER, targetUrl);
   }
 
+  if (!sessionId) {
+    return;
+  }
+
   // TODO Refactor below mb should use Promise static methods?
   // Check for sessionId or JWT?
   const userResponse = await fetch(`${PHOTORAMA_BASE_URL}${AppPath.USER}`, {
@@ -41,7 +45,7 @@ export const load = async ({ fetch, cookies, url }) => {
         path: COOKIE_DEFAULT_PATH,
       });
 
-      cookies.delete(CookieName.USER_JWT_TOKEN, {
+      cookies.delete(CookieName.USER_TOKEN, {
         path: COOKIE_DEFAULT_PATH,
       });
 

@@ -10,7 +10,4 @@ export const load = async ({ params, cookies }) => {
   if (!sessionId && userName) {
     redirect(StatusCodes.SEE_OTHER, AppRoute.ROOT);
   }
-
-  // eslint-disable-next-line no-console
-  console.log(`Do get request on server by current user ${params.userName}`);
 };
